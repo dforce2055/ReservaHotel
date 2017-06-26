@@ -8,7 +8,7 @@ public class Persona
   protected String direccion;
   protected String telefono;
   protected String email;
-  protected String estado;
+  protected String estado;//ACTIVA | INACTIVA
   
   public Persona(String nom, String ape, String tDoc, String nDoc, String dir, 
       String tel, String eMail)
