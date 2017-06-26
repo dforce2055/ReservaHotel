@@ -310,13 +310,21 @@ public class SistemaReserva
   }
   
   public int cantidadHabitacionesDeTipo(String tipoHabitacion)
-  { 
-    if (!existeTipoHabitacion(tipoHabitacion))
-      return 0;
+  {
+    boolean rta = existeTipoHabitacion(tipoHabitacion);
     int c = 0;
-    for (Habitacion h: habitaciones)
-      if (!h.estasInactiva() && h.tuTipoEs(tipoHabitacion)) 
-        c++;
+    if(rta == true)
+    {
+      for(Habitacion h:habitaciones)
+      {
+        boolean inactiva = h.estasInactiva();
+        if(inactiva == false)
+        {
+          if(h.tuTipoEs(tipoHabitacion))
+              c++;
+        }
+      }
+    }
     return c;
   }
   
