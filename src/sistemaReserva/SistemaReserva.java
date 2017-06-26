@@ -453,14 +453,26 @@ public class SistemaReserva
       System.out.println(tipos.elementAt(i) + ": " + minCantidadesDisponibles[i]);    
   } 
   
-  public Vector<String> getListadoHabitacionesDisponiblesHoyPorTipo(String tipo)
+
+  public Vector<String> getListadoHabitacionesDisponiblesHoyPorTipo(String tipoHabitacion)
   {
-    Vector<String> v = new Vector<String>();
-    if (existeTipoHabitacion(tipo))
+    boolean rta = existeTipoHabitacion(tipoHabitacion);
+    Vector <String> v = new Vector<String>();
+    if(rta)
     {
-      for (Habitacion h: habitaciones)
-        if (h.estasDisponible() && h.tuTipoEs(tipo))
-          v.add(h.getNumero()); 
+      for(Habitacion h:habitaciones)
+      {
+        boolean disponible = h.estasDisponible();
+        if(disponible)
+        {
+          boolean esDeTipo = h.tuTipoEs(tipoHabitacion);
+          if(esDeTipo)
+          {
+            String num = h.getNumero();
+            v.add(num);
+          }
+        }
+      }
     }
     return v;
   }
