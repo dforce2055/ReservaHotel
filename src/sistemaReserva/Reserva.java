@@ -12,7 +12,7 @@ public class Reserva
   private LocalDate fechaReserva;
   private double costoReserva;
   private String observaciones;
-  private String estado;
+  private String estado;//ACTIVA | CANCELADA | ARRIBADA
   private static int proxNumero;
   
   private static int getProxNumero()
