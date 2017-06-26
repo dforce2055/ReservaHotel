@@ -328,40 +328,38 @@ public class SistemaReserva
    *   2. Dia por dia, que haya por lo menos una habitacion que cumpla los 
    *      requisitos
    */
-  public boolean hayDisponibilidadPorTipo(String tipoHabitacion, LocalDate fIng, 
-      LocalDate fSal)
+  public boolean hayDisponibilidadPorTipo(String tipoHabitacion, LocalDate fechaIngreso, LocalDate fechaSalida)
   {  
-    if (!existeTipoHabitacion(tipoHabitacion))
-      return false;
-    if (!validarFecha(fIng, fSal))
-      return false; //fecha invalida
-    int cant = cantidadHabitacionesDeTipo(tipoHabitacion);
-    if (cant == 0)
-      return false; //no existen habitaciones de ese tipo
-    else
+    boolean rta = existeTipoHabitacion(tipoHabitacion);
+    if (rta == true)
     {
-      /** Se crean 2 vectores auxiliares con las reservas y estadias que son 
-       *  solo del tipo de habitacion buscado, para mejor rendimiento
-       */
-      Vector<Reserva> rTipo = buscarReservasPorTipo(tipoHabitacion); //reservas del tipo buscado
-      Vector<Estadia> eTipo = buscarEstadiasPorTipo(tipoHabitacion); //estadias del tipo buscado    
-      int disponibles;
-      LocalDate fAux = fIng; //fecha auxiliar: empieza en la fecha de ingreso, y se aumenta dia a dia hasta el dia de salida
-      while (fAux.isBefore(fSal)) 
+      rta = validarFecha(fechaIngreso, fechaSalida);
+      if (rta == true)
       {
-        disponibles = cant; //se parte desde que todas las habitaciones de este tipo estan disponibles, y se van descontando
-        for (Reserva r: rTipo)
-          if (r.tenesElDia(fAux))
-            disponibles--;
-        for (Estadia e: eTipo)
-          if (e.tenesElDia(fAux)) 
-            disponibles--;
-        if (disponibles == 0)
-          return false; //si en cualquiera de los dias no hay disponibilidad, quiere decir que no hay disponibilidad
-        fAux = fAux.plusDays(1); //se aumenta el auxiliar en 1 dia
-      }  
-      return true; //si en ninguno de los casos anteriores de devolvio falso, es porque hay disponibilidad
+        int cant = cantidadHabitacionesDeTipo(tipoHabitacion);
+        if (cant > 0) //deben existir habitaciones de ese tipo
+        {
+          //Se crean 2 vectores auxiliares con las reservas y estadias que son solo del tipo de habitacion buscado, para mejor rendimiento
+          Vector<Reserva> rTipo = buscarReservasPorTipo(tipoHabitacion); //reservas del tipo buscado
+          Vector<Estadia> eTipo = buscarEstadiasPorTipo(tipoHabitacion); //estadias del tipo buscado    
+          int disponibles = cant;
+          LocalDate fechaAux = fechaIngreso; //fecha auxiliar: empieza en la fecha de ingreso, y se aumenta dia a dia hasta el dia de salida
+          while (disponibles > 0 && fechaAux.isBefore(fechaSalida)) //si hay 0 disponibles hay que devolver falso
+          {
+            disponibles = cant; //se parte desde que todas las habitaciones de este tipo estan disponibles, y se van descontando
+            for (Reserva r: rTipo)
+              if (r.tenesElDia(fechaAux))
+                disponibles--;
+            for (Estadia e: eTipo)
+              if (e.tenesElDia(fechaAux)) 
+                disponibles--;
+            fechaAux = fechaAux.plusDays(1); //se aumenta el auxiliar en 1 dia
+          } 
+          return disponibles != 0; //si en ninguno de los casos anteriores de devolvio falso, es porque hay disponibilidad
+        }
+      }
     }
+    return false;
   }
   
   private Vector<Estadia> buscarEstadiasPorTipo(String tipoHabitacion)
