@@ -523,9 +523,8 @@ public class SistemaReserva
   
   public void modificarValorTarifa(String tipoHabitacion, double precio)
   {
-    if (existeTipoHabitacion(tipoHabitacion))
-    {
+    boolean rta = existeTipoHabitacion(tipoHabitacion);
+    if (rta == true)
       tarifario.modificarValorTarifa(tipoHabitacion, precio);
-    }
   }
 } 
