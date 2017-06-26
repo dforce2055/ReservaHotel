@@ -90,7 +90,7 @@ public class SistemaReserva
     return null;
   }
   
-  public Estadia buscarEstadia(int numero)
+  private Estadia buscarEstadia(int numero)
   {
     for (Estadia e: estadias)
       if (e.sosEstadia(numero))
@@ -364,7 +364,7 @@ public class SistemaReserva
     }
   }
   
-  public Vector<Estadia> buscarEstadiasPorTipo(String tipoHabitacion)
+  private Vector<Estadia> buscarEstadiasPorTipo(String tipoHabitacion)
   {
     Vector<Estadia> v = new Vector<Estadia>();
     if (existeTipoHabitacion(tipoHabitacion))
