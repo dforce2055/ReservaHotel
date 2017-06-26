@@ -5,8 +5,8 @@ public class Habitacion
   private String piso;
   private String descripcion;
   private String caracteristicas;
-  private String estado;
-  private String tipoHabitacion;
+  private String estado;//DISPONIBLE | OCUPADA | EN_MANTENIMIENTO | INACTIVA
+  private String tipoHabitacion;// INDIVIDUAL | DOBLE | TRIPLE
   
   public Habitacion(String numero, String piso, String descripcion, 
       String caracteristicas,String tipoHabitacion)
