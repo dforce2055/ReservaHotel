@@ -35,7 +35,7 @@ public class ItemTarifa
   //negocio
   public boolean sosItem(String tipo)
   {
-    return tipoHabitacion.equals(tipo);
+    return tipoHabitacion.equalsIgnoreCase(tipo);
   }
   
   public void darBaja()
