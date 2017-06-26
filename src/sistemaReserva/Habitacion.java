@@ -83,12 +83,12 @@ public class Habitacion
   //experimental
   public boolean tuTipoEs(String tipo)
   {
-    return tipo.equals(tipoHabitacion);
+    return tipo.equalsIgnoreCase(tipoHabitacion);
   }
   
   public boolean estasInactiva()
   {
-    return estado.equals("INACTIVA");
+    return estado.equalsIgnoreCase("INACTIVA");
   }
   
   public void ocupar()
@@ -98,6 +98,6 @@ public class Habitacion
   
   public boolean estasDisponible()
   {
-    return estado.equals("DISPONIBLE");
+    return estado.equalsIgnoreCase("DISPONIBLE");
   }
 }
