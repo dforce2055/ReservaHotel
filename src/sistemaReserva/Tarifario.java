@@ -73,8 +73,6 @@ public class Tarifario
   {
     ItemTarifa item = buscarItem(tipo);
     if (item != null)
-    {
       item.setPrecio(precio);
-    }
   }
 }
