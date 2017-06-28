@@ -461,6 +461,22 @@ public class SistemaReserva
       System.out.println(tipos.elementAt(i) + ": " + minCantidadesDisponibles[i]);    
   } 
   
+  public DisponibilidadesDTO consultarDisponiblesPorPeriodoDTO(LocalDate fIng, LocalDate fSal)
+  {
+    DisponibilidadesDTO d = new DisponibilidadesDTO();
+    boolean rta = validarFecha(fIng, fSal);
+    if (rta == true)
+    {
+      Vector<String> tipos = tarifario.getTipos();
+      int disp;
+      for (String t: tipos)
+      {
+        disp = calcularDisponibilidadPorTipo(t, fIng, fSal);
+        d.agregarItem(t, disp);
+      }
+    }   
+    return d;
+  }
 
   public Vector<String> getListadoHabitacionesDisponiblesHoyPorTipo(String tipoHabitacion)
   {
