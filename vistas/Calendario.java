@@ -1,5 +1,5 @@
 package vistas;
-import java.awt.EventQueue;
+/*import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -13,12 +13,12 @@ import java.awt.event.ActionEvent;
 public class Calendario extends JFrame
 {
 
-  private JPanel contentPane;
+  private JPanel contentPane;*/
 
   /**
    * Launch the application.
    */
-  public static void main(String[] args)
+/*  public static void main(String[] args)
   {
     EventQueue.invokeLater(new Runnable()
     {
@@ -37,7 +37,7 @@ public class Calendario extends JFrame
   /**
    * Create the frame.
    */
-  public Calendario()
+ /* public Calendario()
   {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setBounds(100, 100, 450, 300);
@@ -65,3 +65,4 @@ public class Calendario extends JFrame
     contentPane.add(boton);
   }
 }
+*/
