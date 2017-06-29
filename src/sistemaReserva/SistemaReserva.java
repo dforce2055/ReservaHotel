@@ -551,4 +551,194 @@ public class SistemaReserva
     if (rta == true)
       tarifario.modificarValorTarifa(tipoHabitacion, precio);
   }
+  
+  public boolean modificarReserva(int numero, int numeroCliente, String tipoHabitacion, LocalDate fechaIngreso, LocalDate fechaSalida, String observaciones)
+	{
+		Reserva reserva = buscarReserva(numero);
+		
+		if (reserva != null)
+		{
+			boolean resultado;
+			Cliente clienteReserva = reserva.getCliente();
+			String tipoHabitacionReserva = reserva.getTipoHabitacion();
+			LocalDate fechaIngresoReserva = reserva.getFechaIngreso();
+			LocalDate fechaSalidaReserva = reserva.getFechaSalida();
+			String observacionesReserva = reserva.getObservaciones();
+			
+			Cliente cliente = buscarCliente(numeroCliente);
+			
+			if (cliente != null && !cliente.equals(clienteReserva))
+				reserva.setCliente(cliente);
+			if (!observaciones.equals(observacionesReserva))
+				reserva.setObservaciones(observaciones);
+			
+			if (tipoHabitacion.equals(tipoHabitacionReserva))
+			{
+				if (fechaIngreso.equals(fechaIngresoReserva) && fechaSalida.equals(fechaSalidaReserva)) //no esta en el diagrama
+					return true;
+				if (fechaIngreso.isAfter(fechaIngresoReserva) && fechaIngreso.isBefore(fechaSalidaReserva))
+					reserva.setFechaIngreso(fechaIngreso);
+				if (fechaSalida.isBefore(fechaSalidaReserva) && fechaSalida.isAfter(fechaIngresoReserva))
+					reserva.setFechaSalida(fechaSalida);
+				
+				if (fechaIngreso.isBefore(fechaIngresoReserva))
+				{
+					resultado = hayDisponibilidadPorTipo(tipoHabitacionReserva, fechaIngreso, fechaIngresoReserva);
+					if (resultado == true)
+						reserva.setFechaIngreso(fechaIngreso);
+					else
+						return false;
+				}
+				
+				if (fechaSalida.isAfter(fechaSalidaReserva))
+				{
+					resultado = hayDisponibilidadPorTipo(tipoHabitacionReserva, fechaSalidaReserva, fechaSalida);
+					if (resultado == true)
+						reserva.setFechaSalida(fechaSalida);
+					else
+						return false;
+				}
+			}
+			
+			else
+			{
+				if (fechaIngreso.equals(fechaIngresoReserva) && fechaSalida.equals(fechaSalidaReserva))
+				{
+					resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngresoReserva, fechaSalidaReserva);
+					if (resultado == true)
+						reserva.setTipoHabitacion(tipoHabitacion);
+					else
+						return false;
+				}
+				
+				
+				else
+				{
+					if (fechaIngreso.isAfter(fechaIngresoReserva) && fechaIngreso.isBefore(fechaSalidaReserva))
+					{
+						resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngreso, fechaSalidaReserva);
+						if (resultado == true)
+						{
+							reserva.setTipoHabitacion(tipoHabitacion);
+							reserva.setFechaIngreso(fechaIngreso);
+							fechaIngresoReserva = reserva.getFechaIngreso();
+						}
+						else
+							return false;
+					}
+					
+					if (fechaIngreso.isBefore(fechaSalidaReserva) && fechaSalida.isAfter(fechaIngresoReserva))
+					{
+						resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngresoReserva, fechaSalida);
+						if (resultado == true)
+						{
+							reserva.setTipoHabitacion(tipoHabitacion);
+							reserva.setFechaSalida(fechaSalida);
+							fechaSalidaReserva = reserva.getFechaSalida();
+						}
+						else
+							return false;
+					}
+					
+					
+					if (fechaIngreso.isBefore(fechaIngresoReserva) && fechaSalida.isAfter(fechaSalidaReserva))
+					{
+						resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngreso, fechaSalida);
+						if (resultado == true)
+						{
+							reserva.setTipoHabitacion(tipoHabitacion);
+							reserva.setFechaIngreso(fechaIngreso);
+							reserva.setFechaSalida(fechaSalida);
+						}
+						else
+							return false;
+					}
+					
+					
+					
+					else
+					{
+						if (fechaIngreso.isBefore(fechaIngresoReserva))
+						{
+							resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngreso, fechaSalidaReserva);
+							if (resultado == true)
+							{
+								reserva.setTipoHabitacion(tipoHabitacion);
+								reserva.setFechaIngreso(fechaIngreso);
+							}
+							else
+								return false;
+						}
+						
+						if (fechaSalida.isAfter(fechaSalidaReserva))
+						{
+							resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngresoReserva, fechaSalida);
+							if (resultado == true)
+							{
+								reserva.setTipoHabitacion(tipoHabitacion);
+								reserva.setFechaSalida(fechaSalida);
+							}
+							else
+								return false;
+						}
+					}
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+  
+  public boolean modificarEstadia(int numero, int numeroCliente, LocalDate fechaSalida, String observaciones)
+	{
+		Estadia estadia = buscarEstadia(numero);
+		
+		if (estadia != null)
+		{
+			boolean resultado;
+			Cliente clienteEstadia = estadia.getCliente();
+			LocalDate fechaSalidaEstadia = estadia.getFechaSalida();
+			String observacionesEstadia = estadia.getObservaciones();
+			
+			Cliente cliente = buscarCliente(numeroCliente);
+			
+			if (cliente != null && !cliente.equals(clienteEstadia))
+				estadia.setCliente(cliente);
+			if (!observaciones.equals(observacionesEstadia))
+				estadia.setObservaciones(observaciones);
+			
+			if (!fechaSalida.equals(fechaSalidaEstadia))
+			{
+				if (fechaSalida.isBefore(fechaSalidaEstadia))
+					estadia.setFechaSalida(fechaSalida);
+				else
+				{
+					String tipo = estadia.getTipoHabitacion();
+					resultado = hayDisponibilidadPorTipo(tipo, fechaSalidaEstadia, fechaSalida);
+					if (resultado == true)
+						estadia.setFechaSalida(fechaSalida);
+					else
+						return false;
+				}
+			}
+			return true;
+		}
+		return false;
+	}
+  
+  public void modificarServicioAdicional(int numero, String descripcion, double precio)
+	{
+		ServicioAdicional servicio = buscarServicioAdicional(numero);
+		
+		if (servicio != null)
+		{
+			String descripcionServicio = servicio.getDescripcion();
+			double precioServicio = servicio.getPrecio();
+			
+			if (!descripcion.equals(descripcionServicio))
+				servicio.setDescripcion(descripcion);
+			if (precio != precioServicio)
+				servicio.setPrecio(precio);
+		}
+	}
 } 
