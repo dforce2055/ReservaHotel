@@ -1,3 +1,7 @@
+/* inicio de comentario inutil
+ * fin de comentario inutil
+ */
+
 package sistemaReserva;
 public class Cliente extends Persona
 {
