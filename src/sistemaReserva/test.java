@@ -8,6 +8,7 @@ public class test
   public static void main(String[] args)
   {
     SistemaReserva sis = new SistemaReserva();
+    /*
     sis.altaTarifa("Doble", 1000f);
     sis.altaTarifa("Triple", 1250f);
     sis.altaHabitacion("100", "1", "Habitacion 100", "lol", "Doble");
@@ -42,6 +43,9 @@ public class test
     
     sis.altaReserva(1, 1, "Doble", LocalDate.parse("2017-01-09"), LocalDate.parse("2017-01-10"), "segunda reserva");
     sis.consultarDisponiblesPorPeriodo(LocalDate.parse("2017-01-09"), LocalDate.parse("2017-01-10"));
+    */
+    CargaDatosPrueba prueba = new CargaDatosPrueba(sis);
+    prueba.CargarDatos();
   }
 
 }
