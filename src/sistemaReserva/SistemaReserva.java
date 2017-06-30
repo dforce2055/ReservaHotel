@@ -169,12 +169,12 @@ public class SistemaReserva
     }
   }
   
-  public void altaEstadiaConReserva(int nroReserva, String nroHabitacion)
+  public void altaEstadiaConReserva(int numeroReserva, String numeroHabitacion)
   { 
-    Reserva reserva = buscarReserva(nroReserva);
+    Reserva reserva = buscarReserva(numeroReserva);
     if (reserva != null)
     {
-      Habitacion habitacion = buscarHabitacion(nroHabitacion);
+      Habitacion habitacion = buscarHabitacion(numeroHabitacion);
       if (habitacion != null && habitacion.estasDisponible())
       {
         Estadia estadia = new Estadia(reserva, habitacion);
