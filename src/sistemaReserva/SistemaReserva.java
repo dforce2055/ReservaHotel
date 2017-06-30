@@ -132,7 +132,8 @@ public class SistemaReserva
   public void altaHabitacion(String numero, String piso, String descripcion, 
       String caracteristicas, String tipo)
   {
-    if (existeTipoHabitacion(tipo))
+    boolean resultado = existeTipoHabitacion(tipo); 
+    if (resultado == true)
     {
       Habitacion habitacion = buscarHabitacion(numero);
       if (habitacion == null)
