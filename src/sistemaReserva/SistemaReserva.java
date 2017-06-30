@@ -145,9 +145,11 @@ public class SistemaReserva
   }
   
   public void altaReserva(int codigoCliente, int legajoTrabajador, 
-      String tipoHabitacion, LocalDate fIng, LocalDate fSal, String observaciones)
+      String tipoHabitacion, LocalDate fechaIngreso, LocalDate fechaSalida, 
+      String observaciones)
   {
-    if (existeTipoHabitacion(tipoHabitacion))
+    boolean resultado = existeTipoHabitacion(tipoHabitacion); 
+    if (resultado == true)
     {
       Cliente cliente = buscarCliente(codigoCliente);
       if (cliente != null)
@@ -155,11 +157,11 @@ public class SistemaReserva
         Trabajador trabajador = buscarTrabajador(legajoTrabajador);
         if (trabajador != null)
         {
-          boolean resultado = hayDisponibilidadPorTipo(tipoHabitacion, fIng, fSal);
+          resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngreso, fechaSalida);
           if (resultado == true)
           {
             double costoReserva = tarifario.getPrecio(tipoHabitacion);
-            Reserva reserva = new Reserva(cliente, trabajador, tipoHabitacion, fIng, fSal, costoReserva, observaciones);
+            Reserva reserva = new Reserva(cliente, trabajador, tipoHabitacion, fechaIngreso, fechaSalida, costoReserva, observaciones);
             reservas.add(reserva);
           }
         }
