@@ -187,21 +187,22 @@ public class SistemaReserva
     }
   }
   
-  public void altaEstadiaSinReserva(String nroHabitacion, 
-      LocalDate fechaIngreso, LocalDate fechaSalida, int nroCliente, 
+  public void altaEstadiaSinReserva(String numeroHabitacion, 
+      LocalDate fechaIngreso, LocalDate fechaSalida, int numeroCliente, 
       int legajoTrabajador, String observaciones)
   {
-    Cliente cliente = buscarCliente(nroCliente);
+    Cliente cliente = buscarCliente(numeroCliente);
     if (cliente != null)
     {
       Trabajador trabajador = buscarTrabajador(legajoTrabajador);
       if (trabajador != null)
       {
-        Habitacion habitacion = buscarHabitacion(nroHabitacion);
+        Habitacion habitacion = buscarHabitacion(numeroHabitacion);
         if (habitacion != null && habitacion.estasDisponible())
         {
           String tipoHabitacion = habitacion.getTipoHabitacion();
-          if (hayDisponibilidadPorTipo(tipoHabitacion, fechaIngreso, fechaSalida)) //verificar por las dudas
+          boolean resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngreso, fechaSalida);//verificar por las dudas 
+          if (resultado == true) 
           {
             habitacion.ocupar();
             double precio = tarifario.getPrecio(tipoHabitacion);
