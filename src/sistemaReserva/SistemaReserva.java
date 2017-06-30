@@ -214,26 +214,6 @@ public class SistemaReserva
     }
   }
   
-  public void altaTarifa(String tipoHabitacion, double precio)
-  {
-    if (!existeTipoHabitacion(tipoHabitacion))
-    {
-      tarifario.agregarItem(tipoHabitacion, precio);
-    }
-  }
-  
-  public void bajaTarifa(String tipoHabitacion)
-  {
-    if (existeTipoHabitacion(tipoHabitacion))
-    {
-      //No se permite dar de baja una tarifa si hay habitaciones con ese tipo
-      if (cantidadHabitacionesDeTipo(tipoHabitacion) == 0)
-      {
-        tarifario.bajaItem(tipoHabitacion);
-      }
-    }
-  }
-  
   public void altaServicioAdicional(int codigo, String descripcion, double precio)
   {
     ServicioAdicional servicio = buscarServicioAdicional(codigo);
@@ -243,7 +223,27 @@ public class SistemaReserva
       servicios.add(servicio);
     }
   }
+
+  public void altaTarifa(String tipoHabitacion, double precio)
+  {
+    boolean resultado = existeTipoHabitacion(tipoHabitacion);
+    if (resultado == false)
+    {
+      tarifario.agregarItem(tipoHabitacion, precio);
+    }
+  }
   
+  public void bajaCliente(int codigo)
+  {
+    Cliente cliente = buscarCliente(codigo);
+    if (cliente != null)
+    {
+      cliente.darBaja();
+      clientesInactivos.add(cliente);
+      clientes.remove(cliente);
+    }
+  }
+
   public void bajaTrabajador(int legajo)
   {
     Trabajador trabajador = buscarTrabajador(legajo);
@@ -254,12 +254,36 @@ public class SistemaReserva
       trabajadores.remove(trabajador);
     }
   }
-  
+
   public void bajaHabitacion(String numero)
   {
     Habitacion habitacion = buscarHabitacion(numero);
     if (habitacion != null)
       habitacion.darBaja();
+  }
+
+  public void bajaServicio(int codigo)
+  {
+    ServicioAdicional servicio = buscarServicioAdicional(codigo);
+    if (servicio != null)
+    {
+      serviciosInactivos.add(servicio);
+      servicios.remove(servicio);
+    }
+  }
+
+  public void bajaTarifa(String tipoHabitacion)
+  {
+    boolean resultado = existeTipoHabitacion(tipoHabitacion); 
+    if (resultado == true)
+    {
+      int cantidad = cantidadHabitacionesDeTipo(tipoHabitacion);
+      //No se permite dar de baja una tarifa si hay habitaciones con ese tipo
+      if ( cantidad == 0)
+      {
+        tarifario.bajaItem(tipoHabitacion);
+      }
+    }
   }
   
   public void bajaReserva(int numero)
@@ -290,27 +314,6 @@ public class SistemaReserva
     if (t != null)
       rta = t.esTuContrasenia(pw);
     return rta;
-  }
-  
-  public void bajaCliente(int codigo)
-  {
-    Cliente cliente = buscarCliente(codigo);
-    if (cliente != null)
-    {
-      cliente.darBaja();
-      clientesInactivos.add(cliente);
-      clientes.remove(cliente);
-    }
-  }
-  
-  public void bajaServicio(int codigo)
-  {
-    ServicioAdicional servicio = buscarServicioAdicional(codigo);
-    if (servicio != null)
-    {
-      serviciosInactivos.add(servicio);
-      servicios.remove(servicio);
-    }
   }
   
   public int cantidadHabitacionesDeTipo(String tipoHabitacion)
