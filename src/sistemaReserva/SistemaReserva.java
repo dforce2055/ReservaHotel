@@ -286,6 +286,18 @@ public class SistemaReserva
     }
   }
   
+  public void bajaEstadia(int numero)
+  {
+    Estadia estadia = buscarEstadia(numero);
+    if (estadia != null)
+    {
+      Habitacion habitacion = estadia.getHabitacion();
+      habitacion.rehabilitar();
+      estadiasInactivas.add(estadia);
+      estadias.remove(estadia);
+    }
+  }
+
   public void cancelarReserva(int numero)
   {
     Reserva reserva = buscarReserva(numero);
@@ -503,16 +515,6 @@ public class SistemaReserva
     return tarifario.existeTipo(tipo);
   }
 
-  public void bajaEstadia(int numero)
-  {
-    Estadia estadia = buscarEstadia(numero);
-    if (estadia != null)
-    {
-      estadiasInactivas.add(estadia);
-      estadias.remove(estadia);
-    }
-  }
-  
   public double cerrarEstadia(int numero)
   {
     double total = 0;
