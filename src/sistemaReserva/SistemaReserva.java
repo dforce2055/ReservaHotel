@@ -49,6 +49,13 @@ public class SistemaReserva
     return null;
   }
   
+  private boolean existeClienteConEseDocumento(String tipoDoc, String numDoc)
+  {
+    Cliente cliente = buscarClientePorDocumento(tipoDoc, numDoc);
+    
+    return cliente == null;
+  }
+  
   private Trabajador buscarTrabajador(int legajo)
   {
     for (Trabajador t: trabajadores)
