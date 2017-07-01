@@ -764,15 +764,15 @@ public class SistemaReserva
   {
     boolean rta = existeTipoHabitacion(tipoHabitacion);
     Vector <String> v = new Vector<String>();
-    if(rta)
+    if(rta == true)
     {
       for(Habitacion h:habitaciones)
       {
         boolean disponible = h.estasDisponible();
-        if(disponible)
+        if(disponible == true)
         {
           boolean esDeTipo = h.tuTipoEs(tipoHabitacion);
-          if(esDeTipo)
+          if(esDeTipo == true)
           {
             String num = h.getNumero();
             v.add(num);
