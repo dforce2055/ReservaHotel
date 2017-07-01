@@ -339,6 +339,53 @@ public class SistemaReserva
     return total;
   }
 
+  public boolean modificarCliente(int numero, String nombre, String apellido, 
+      String tipoDoc, String numDoc, String direccion, String telefono, 
+      String email)
+  {
+    Cliente cliente = buscarCliente(numero);
+    
+    if (cliente != null)
+    {
+      String nombreCliente = cliente.getNombre(),
+      apellidoCliente = cliente.getApellido(),
+      tipoDocCliente = cliente.getTipoDocumento(),
+      numDocCliente = cliente.getNumeroDocumento(),
+      direccionCliente = cliente.getDireccion(),
+      telefonoCliente = cliente.getTelefono(),
+      emailCliente = cliente.getEmail();
+      
+      if (!nombre.equals(nombreCliente))
+        cliente.setNombre(nombre);
+      
+      if (!apellido.equals(apellidoCliente))
+        cliente.setApellido(apellido);
+      
+      if (!tipoDoc.equals(tipoDocCliente) || !numDoc.equals(numDocCliente))
+      {
+        Cliente clienteBuscadoPorDNI = buscarClientePorDocumento(tipoDoc, numDoc);
+        
+        if (clienteBuscadoPorDNI == null)//Sino existe un cliente con ese DNI
+        {
+          cliente.setTipoDocumento(tipoDoc);
+          cliente.setNumeroDocumento(numDoc);
+        }
+        else
+          return false;
+      }
+      if (!direccion.equals(direccionCliente))
+        cliente.setDireccion(direccion);
+      if (!telefono.equals(telefonoCliente))
+        cliente.setTelefono(telefono);
+      if (!email.equals(emailCliente))
+        cliente.setEmail(email);
+      
+      return true;
+    }
+    return false;
+  }
+  
+  
   public boolean loginTrabajador(String usuario, String pw)
   {
     boolean rta = false;
