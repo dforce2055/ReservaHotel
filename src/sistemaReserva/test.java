@@ -46,6 +46,7 @@ public class test
     */
     CargaDatosPrueba prueba = new CargaDatosPrueba(sis);
     prueba.CargarDatos();
+    System.out.println(sis.calcularDisponibilidadPorTipo("Triple", LocalDate.of(2017, 06, 29), LocalDate.of(2017, 06, 29)));
   }
 
 }
