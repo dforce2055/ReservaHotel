@@ -286,16 +286,6 @@ public class SistemaReserva
     }
   }
   
-  public void bajaReserva(int numero)
-  {
-    Reserva reserva = buscarReserva(numero);
-    if (reserva != null)
-    {
-      reservasInactivas.add(reserva);
-      reservas.remove(reserva);
-    }
-  }
-  
   public void cancelarReserva(int numero)
   {
     Reserva reserva = buscarReserva(numero);
