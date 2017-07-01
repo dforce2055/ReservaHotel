@@ -788,12 +788,12 @@ public class SistemaReserva
     return (fechaIngreso.compareTo(fechaSalida) < 0); //la fecha de salida no puede ser mayor o igual a la fecha de entrada
   }
 
-  public boolean loginTrabajador(String usuario, String pw)
+  public boolean loginTrabajador(String usuario, String password)
   {
     boolean rta = false;
-    Trabajador t = buscarTrabajadorPorUsuario(usuario);
-    if (t != null)
-      rta = t.esTuContrasenia(pw);
+    Trabajador trabajador = buscarTrabajadorPorUsuario(usuario);
+    if (trabajador != null)
+      rta = trabajador.esTuPassword(password);
     return rta;
   }
   
