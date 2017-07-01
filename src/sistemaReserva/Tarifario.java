@@ -54,7 +54,7 @@ public class Tarifario
       return item.getPrecio();
   }
   
-  public Vector<String> getTipos()
+  public Vector<String> getTiposActivos()
   {
     Vector<String> v = new Vector<String>();
     for (ItemTarifa item: items)
