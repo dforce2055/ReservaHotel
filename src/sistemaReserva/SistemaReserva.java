@@ -309,6 +309,36 @@ public class SistemaReserva
     }
   }
   
+  public double cerrarEstadia(int numero)
+  {
+    double total = 0;
+    Estadia estadia = buscarEstadia(numero);
+    if (estadia != null)
+    {
+      total = estadia.cerrarEstadia();
+      bajaEstadia(numero);
+    }
+    return total;
+  }
+
+  public double cerrarEstadiaAnticipada(int numero, LocalDate fechaSalida)
+  {
+    double total = 0;
+    Estadia estadia = buscarEstadia(numero);
+    if (estadia != null)
+    {
+      LocalDate fechaEntrada = estadia.getFechaIngreso();
+      boolean resultado = validarFecha(fechaEntrada, fechaSalida);
+      if (resultado == true)
+      {
+        estadia.setFechaSalida(fechaSalida);
+        total = estadia.cerrarEstadia();
+        bajaEstadia(numero);
+      }
+    }
+    return total;
+  }
+
   public boolean loginTrabajador(String usuario, String pw)
   {
     boolean rta = false;
@@ -515,35 +545,6 @@ public class SistemaReserva
     return tarifario.existeTipo(tipo);
   }
 
-  public double cerrarEstadia(int numero)
-  {
-    double total = 0;
-    Estadia estadia = buscarEstadia(numero);
-    if (estadia != null)
-    {
-      total = estadia.cerrarEstadia();
-      bajaEstadia(numero);
-    }
-    return total;
-  }
-  
-  public double cerrarEstadiaAnticipada(int numero, LocalDate fechaSalida)
-  {
-    double total = 0;
-    Estadia estadia = buscarEstadia(numero);
-    if (estadia != null)
-    {
-      LocalDate fechaEntrada = estadia.getFechaIngreso();
-      if (validarFecha(fechaEntrada, fechaSalida))
-      {
-        estadia.setFechaSalida(fechaSalida);
-        total = estadia.cerrarEstadia();
-        bajaEstadia(numero);
-      }
-    }
-    return total;
-  }
-  
   public void modificarValorTarifa(String tipoHabitacion, double precio)
   {
     boolean rta = existeTipoHabitacion(tipoHabitacion);
