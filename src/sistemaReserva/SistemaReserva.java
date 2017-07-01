@@ -686,15 +686,6 @@ public class SistemaReserva
       tarifario.modificarValorTarifa(tipoHabitacion, precio);
   }
 
-  public boolean loginTrabajador(String usuario, String pw)
-  {
-    boolean rta = false;
-    Trabajador t = buscarTrabajadorPorUsuario(usuario);
-    if (t != null)
-      rta = t.esTuContrasenia(pw);
-    return rta;
-  }
-  
   public int cantidadHabitacionesDeTipo(String tipoHabitacion)
   {
     boolean rta = existeTipoHabitacion(tipoHabitacion);
@@ -713,7 +704,14 @@ public class SistemaReserva
     }
     return c;
   }
-  
+
+  public boolean hayDisponibilidadPorTipo(String tipoHabitacion, 
+      LocalDate fechaIngreso, LocalDate fechaSalida)
+  {
+    int disp = calcularDisponibilidadPorTipo(tipoHabitacion, fechaIngreso, fechaSalida); 
+    return disp > 0;
+  }
+
   /** 
    * -El dia de salida en si no se computa como un dia de la estadia; 
    * una estadia del 1 al 7 de enero tiene 6 dias, saliendo el 7
@@ -758,10 +756,14 @@ public class SistemaReserva
     }
     return 0;
   }
-  public boolean hayDisponibilidadPorTipo(String tipoHabitacion, LocalDate fechaIngreso, LocalDate fechaSalida)
+
+  public boolean loginTrabajador(String usuario, String pw)
   {
-    int disp = calcularDisponibilidadPorTipo(tipoHabitacion, fechaIngreso, fechaSalida); 
-    return disp > 0;
+    boolean rta = false;
+    Trabajador t = buscarTrabajadorPorUsuario(usuario);
+    if (t != null)
+      rta = t.esTuContrasenia(pw);
+    return rta;
   }
   
   private Vector<Estadia> buscarEstadiasPorTipo(String tipoHabitacion)
