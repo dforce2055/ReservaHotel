@@ -445,6 +445,38 @@ public class SistemaReserva
     return false;
   }
   
+  public boolean modificarHabitacion(String numero, String piso, String descripcion, String caracteristicas, String tipo)
+  {
+    Habitacion habitacion = buscarHabitacion(numero);
+    
+    if (habitacion != null)
+    {
+      String pisoHabitacion = habitacion.getPiso(),
+      descripcionHabitacion = habitacion.getDescripcion(),
+      caracteristicasHabitacion = habitacion.getCaracteristicas(),
+      tipoHabitacion = habitacion.getTipoHabitacion();
+      
+      if (!piso.equals(pisoHabitacion))
+        habitacion.setPiso(piso);
+      if (!descripcion.equals(descripcionHabitacion))
+        habitacion.setDescripcion(descripcion);
+      if (!caracteristicas.equals(caracteristicasHabitacion))
+        habitacion.setCaracteristicas(caracteristicas);
+      
+      if (!tipo.equals(tipoHabitacion))
+      {
+        boolean resultado = existeTipoHabitacion(tipo);
+        
+        if (resultado == true)
+          habitacion.setTipoHabitacion(tipo);
+        else
+          return false;
+      }
+      return true;
+    }
+    return false;
+  }
+  
   public boolean loginTrabajador(String usuario, String pw)
   {
     boolean rta = false;
