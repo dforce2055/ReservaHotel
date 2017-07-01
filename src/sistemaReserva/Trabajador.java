@@ -73,7 +73,7 @@ public class Trabajador extends Persona
     this.legajo = legajo;
   }
 
-  public boolean esTuContrasenia(String pw)
+  public boolean esTuPassword(String pw)
   {
     return password == pw;
   }
