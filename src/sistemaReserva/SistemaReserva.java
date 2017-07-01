@@ -720,7 +720,8 @@ public class SistemaReserva
    *   2. Dia por dia, que haya por lo menos una habitacion que cumpla los 
    *      requisitos
    */
-  public int calcularDisponibilidadPorTipo(String tipoHabitacion, LocalDate fechaIngreso, LocalDate fechaSalida)
+  public int calcularDisponibilidadPorTipo(String tipoHabitacion, 
+      LocalDate fechaIngreso, LocalDate fechaSalida)
   {  
     boolean rta = existeTipoHabitacion(tipoHabitacion);
     if (rta == true)
@@ -743,18 +744,43 @@ public class SistemaReserva
             for (Reserva r: rTipo)
               if (r.tenesElDia(fechaAux))
                 disponibles--;
+            
             for (Estadia e: eTipo)
               if (e.tenesElDia(fechaAux)) 
                 disponibles--;
+            
             if (disponibles < menorCantDisponible)
               menorCantDisponible = disponibles;
             fechaAux = fechaAux.plusDays(1); //se aumenta el auxiliar en 1 dia
           } 
           return menorCantDisponible; //si en ninguno de los casos anteriores de devolvio falso, es porque hay disponibilidad
-          }
+        }
       }
     }
     return 0;
+  }
+
+  public Vector<String> getListadoHabitacionesDisponiblesHoyPorTipo(String tipoHabitacion)
+  {
+    boolean rta = existeTipoHabitacion(tipoHabitacion);
+    Vector <String> v = new Vector<String>();
+    if(rta)
+    {
+      for(Habitacion h:habitaciones)
+      {
+        boolean disponible = h.estasDisponible();
+        if(disponible)
+        {
+          boolean esDeTipo = h.tuTipoEs(tipoHabitacion);
+          if(esDeTipo)
+          {
+            String num = h.getNumero();
+            v.add(num);
+          }
+        }
+      }
+    }
+    return v;
   }
 
   public boolean loginTrabajador(String usuario, String pw)
@@ -864,29 +890,6 @@ public class SistemaReserva
       }
     }   
     return d;
-  }
-
-  public Vector<String> getListadoHabitacionesDisponiblesHoyPorTipo(String tipoHabitacion)
-  {
-    boolean rta = existeTipoHabitacion(tipoHabitacion);
-    Vector <String> v = new Vector<String>();
-    if(rta)
-    {
-      for(Habitacion h:habitaciones)
-      {
-        boolean disponible = h.estasDisponible();
-        if(disponible)
-        {
-          boolean esDeTipo = h.tuTipoEs(tipoHabitacion);
-          if(esDeTipo)
-          {
-            String num = h.getNumero();
-            v.add(num);
-          }
-        }
-      }
-    }
-    return v;
   }
 
   public boolean existeTipoHabitacion(String tipo)
