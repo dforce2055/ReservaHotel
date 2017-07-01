@@ -377,9 +377,9 @@ public class SistemaReserva
       
       if (!tipoDoc.equals(tipoDocCliente) || !numDoc.equals(numDocCliente))
       {
-        Cliente clienteBuscadoPorDNI = buscarClientePorDocumento(tipoDoc, numDoc);
+        boolean existeClienteConEseDocumento = existeClienteConEseDocumento(tipoDoc, numDoc);
         
-        if (clienteBuscadoPorDNI == null)//Sino existe un cliente con ese DNI
+        if (existeClienteConEseDocumento == false)//Sino existe un cliente con ese DNI
         {
           cliente.setTipoDocumento(tipoDoc);
           cliente.setNumeroDocumento(numDoc);
