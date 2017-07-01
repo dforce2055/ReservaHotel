@@ -80,6 +80,11 @@ public class Habitacion
     estado = "INACTIVA";
   }
   
+  public void rehabilitar()
+  {
+    estado = "DISPONIBLE";
+  }
+  
   //experimental
   public boolean tuTipoEs(String tipo)
   {
