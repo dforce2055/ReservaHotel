@@ -783,6 +783,11 @@ public class SistemaReserva
     return v;
   }
 
+  public boolean validarFecha(LocalDate fechaIngreso, LocalDate fechaSalida)
+  {
+    return (fechaIngreso.compareTo(fechaSalida) < 0); //la fecha de salida no puede ser mayor o igual a la fecha de entrada
+  }
+
   public boolean loginTrabajador(String usuario, String pw)
   {
     boolean rta = false;
@@ -814,11 +819,6 @@ public class SistemaReserva
           v.add(r);
     }
     return v;
-  }
-  
-  public boolean validarFecha(LocalDate fIng, LocalDate fSal)
-  {
-    return (fIng.compareTo(fSal) < 0); //la fecha de salida no puede ser mayor o igual a la fecha de entrada
   }
   
   /**
