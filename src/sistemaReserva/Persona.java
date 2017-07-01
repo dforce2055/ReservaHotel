@@ -4,7 +4,7 @@ public class Persona
   protected String nombre;
   protected String apellido;
   protected String tipoDocumento;
-  protected String numDocumento;
+  protected String numeroDocumento;
   protected String direccion;
   protected String telefono;
   protected String email;
@@ -16,7 +16,7 @@ public class Persona
     nombre = nom;
     apellido = ape;
     tipoDocumento = tDoc;
-    numDocumento = nDoc;
+    numeroDocumento = nDoc;
     direccion = dir;
     telefono = tel;
     email = eMail;
@@ -55,12 +55,12 @@ public class Persona
 
   public String getNumeroDocumento()
   {
-    return numDocumento;
+    return numeroDocumento;
   }
 
-  public void setNumDocumento(String numDocumento)
+  public void setNumeroDocumento(String numeroDocumento)
   {
-    this.numDocumento = numDocumento;
+    this.numeroDocumento = numeroDocumento;
   }
 
   public String getDireccion()
@@ -104,7 +104,7 @@ public class Persona
   //negocio
   public boolean esTuDocumento(String tipoDoc, String numDoc)
   {
-    return (tipoDocumento == tipoDoc && numDocumento == numDoc);
+    return (tipoDocumento == tipoDoc && numeroDocumento == numDoc);
   }
 
   public void darBaja()
