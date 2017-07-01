@@ -53,7 +53,7 @@ public class Persona
     this.tipoDocumento = tipoDocumento;
   }
 
-  public String getNumDocumento()
+  public String getNumeroDocumento()
   {
     return numDocumento;
   }
