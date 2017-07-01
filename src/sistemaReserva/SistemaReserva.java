@@ -65,6 +65,13 @@ public class SistemaReserva
     return null;
   }
   
+  private boolean existeTrabajadorConEseDocumento(String tipoDoc, String numDoc)
+  {
+    Trabajador trabajador = buscarTrabajadorPorDocumento(tipoDoc, numDoc);
+    
+    return trabajador == null;
+  }
+  
   //usado para el login
   private Trabajador buscarTrabajadorPorUsuario(String usuario)
   {
@@ -375,8 +382,10 @@ public class SistemaReserva
       }
       if (!direccion.equals(direccionCliente))
         cliente.setDireccion(direccion);
+      
       if (!telefono.equals(telefonoCliente))
         cliente.setTelefono(telefono);
+      
       if (!email.equals(emailCliente))
         cliente.setEmail(email);
       
@@ -385,6 +394,49 @@ public class SistemaReserva
     return false;
   }
   
+  public boolean modificarTrabajador(int legajo, String nombre, String apellido, String tipoDoc, String numDoc, String direccion, String telefono, String email)
+  {
+    Trabajador trabajador = buscarTrabajador(legajo);
+    
+    if (trabajador != null)
+    {
+      String nombreTrabajador = trabajador.getNombre(),
+      apellidoTrabajador = trabajador.getApellido(),
+      tipoDocTrabajador = trabajador.getTipoDocumento(),
+      numDocTrabajador = trabajador.getNumeroDocumento(),
+      direccionTrabajador = trabajador.getDireccion(),
+      telefonoTrabajador = trabajador.getTelefono(),
+      emailTrabajador = trabajador.getEmail();
+      
+      if (!nombre.equals(nombreTrabajador))
+        trabajador.setNombre(nombre);
+      if (!apellido.equals(apellidoTrabajador))
+        trabajador.setApellido(apellido);
+      
+      if (!tipoDoc.equals(tipoDocTrabajador) || !numDoc.equals(numDocTrabajador))
+      {
+        boolean existeTrabajadorConEseDocumento = existeTrabajadorConEseDocumento(tipoDoc, numDoc);
+        
+        
+        if (existeTrabajadorConEseDocumento == false)
+        {
+          trabajador.setTipoDocumento(tipoDoc);
+          trabajador.setNumeroDocumento(numDoc);
+        }
+        else
+          return false;
+      }
+      if (!direccion.equals(direccionTrabajador))
+        trabajador.setDireccion(direccion);
+      if (!telefono.equals(telefonoTrabajador))
+        trabajador.setTelefono(telefono);
+      if (!email.equals(emailTrabajador))
+        trabajador.setEmail(email);
+      
+      return true;
+    }
+    return false;
+  }
   
   public boolean loginTrabajador(String usuario, String pw)
   {
