@@ -679,6 +679,13 @@ public class SistemaReserva
     }
   }
 
+  public void modificarValorTarifa(String tipoHabitacion, double precio)
+  {
+    boolean rta = existeTipoHabitacion(tipoHabitacion);
+    if (rta == true)
+      tarifario.modificarValorTarifa(tipoHabitacion, precio);
+  }
+
   public boolean loginTrabajador(String usuario, String pw)
   {
     boolean rta = false;
@@ -883,12 +890,5 @@ public class SistemaReserva
   public boolean existeTipoHabitacion(String tipo)
   {
     return tarifario.existeTipo(tipo);
-  }
-
-  public void modificarValorTarifa(String tipoHabitacion, double precio)
-  {
-    boolean rta = existeTipoHabitacion(tipoHabitacion);
-    if (rta == true)
-      tarifario.modificarValorTarifa(tipoHabitacion, precio);
   }
 } 
