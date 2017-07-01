@@ -673,6 +673,7 @@ public class SistemaReserva
       
       if (!descripcion.equals(descripcionServicio))
         servicio.setDescripcion(descripcion);
+      
       if (precio != precioServicio)
         servicio.setPrecio(precio);
     }
