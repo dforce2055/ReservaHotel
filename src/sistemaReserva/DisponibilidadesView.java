@@ -1,11 +1,11 @@
 package sistemaReserva;
 import java.util.Vector;
 
-public class DisponibilidadesDTO
+public class DisponibilidadesView
 {
   private Vector<ItemDisponibilidad> items;
   
-  public DisponibilidadesDTO()
+  public DisponibilidadesView()
   {
     items = new Vector<ItemDisponibilidad>(); 
   }
