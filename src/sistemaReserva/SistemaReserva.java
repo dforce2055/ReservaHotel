@@ -797,6 +797,11 @@ public class SistemaReserva
     return rta;
   }
   
+  public boolean existeTipoHabitacion(String tipo)
+  {
+    return tarifario.existeTipo(tipo);
+  }
+
   private Vector<Estadia> buscarEstadiasPorTipo(String tipoHabitacion)
   {
     Vector<Estadia> v = new Vector<Estadia>();
@@ -827,13 +832,13 @@ public class SistemaReserva
    * (o sea un diccionario) 
    */ 
   public void consultarDisponiblesPorPeriodo(LocalDate fIng, LocalDate fSal)
-  {  //version 2.0, deberia andar mejor... si anda
+  {
     if (!validarFecha(fIng, fSal))
     {
       System.out.println("Fecha invalida!");
       return; //fecha invalida
     }
-    Vector<String> tipos = tarifario.getTipos(); //creo que seria mejor que tengamos un vector con los tipos y su abm, hay que ver como entraria en el diagrama  
+    Vector<String> tipos = tarifario.getTiposActivos(); //creo que seria mejor que tengamos un vector con los tipos y su abm, hay que ver como entraria en el diagrama  
     if (tipos == null)
     {
       System.out.println("No existe ningun tipo de habitacion!");
@@ -875,25 +880,21 @@ public class SistemaReserva
       System.out.println(tipos.elementAt(i) + ": " + minCantidadesDisponibles[i]);    
   } 
   
-  public DisponibilidadesDTO consultarDisponiblesPorPeriodoDTO(LocalDate fIng, LocalDate fSal)
+  public DisponibilidadesView consultarDisponiblesPorPeriodoView(
+      LocalDate fechaIngreso, LocalDate fechaSalida)
   {
-    DisponibilidadesDTO d = new DisponibilidadesDTO();
-    boolean rta = validarFecha(fIng, fSal);
+    DisponibilidadesView disponibilidades = new DisponibilidadesView();
+    boolean rta = validarFecha(fechaIngreso, fechaSalida);
     if (rta == true)
     {
-      Vector<String> tipos = tarifario.getTipos();
-      int disp;
-      for (String t: tipos)
+      Vector<String> tipos = tarifario.getTiposActivos();
+      int cantidadDisponible;
+      for (String tipo: tipos)
       {
-        disp = calcularDisponibilidadPorTipo(t, fIng, fSal);
-        d.agregarItem(t, disp);
+        cantidadDisponible = calcularDisponibilidadPorTipo(tipo, fechaIngreso, fechaSalida);
+        disponibilidades.agregarItem(tipo, cantidadDisponible);
       }
     }   
-    return d;
-  }
-
-  public boolean existeTipoHabitacion(String tipo)
-  {
-    return tarifario.existeTipo(tipo);
+    return disponibilidades;
   }
 } 
