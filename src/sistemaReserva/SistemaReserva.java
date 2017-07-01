@@ -622,7 +622,9 @@ public class SistemaReserva
     return false;
   }
 
-  public boolean modificarEstadia(int numero, int numeroCliente, LocalDate fechaSalida, String observaciones)
+  //Revizar costos adicionales de modificar Estadia y Habitacion
+  public boolean modificarEstadia(int numero, int numeroCliente, 
+      LocalDate fechaSalida, String observaciones)
   {
     Estadia estadia = buscarEstadia(numero);
     
@@ -637,6 +639,7 @@ public class SistemaReserva
       
       if (cliente != null && !cliente.equals(clienteEstadia))
         estadia.setCliente(cliente);
+      
       if (!observaciones.equals(observacionesEstadia))
         estadia.setObservaciones(observaciones);
       
