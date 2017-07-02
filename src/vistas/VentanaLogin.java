@@ -1,0 +1,142 @@
+package vistas;
+
+import java.awt.BorderLayout;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.border.EmptyBorder;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
+import java.awt.Toolkit;
+import java.awt.Font;
+import java.awt.Color;
+import java.awt.Dimension;
+
+import javax.swing.JTextField;
+import javax.swing.JButton;
+import javax.swing.JPasswordField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.awt.Window.Type;
+
+import sistemaReserva.SistemaReserva;
+import sistemaReserva.Trabajador;
+
+
+public class VentanaLogin extends JFrame
+{
+
+  private JPanel menuLogin;
+  private JTextField txtUsuario;
+  private JPasswordField passwordField;
+  private SistemaReserva sistema = new SistemaReserva();
+  
+
+  /**
+   * Launch the application.
+   */
+  public static void main(String[] args)
+  {
+    EventQueue.invokeLater(new Runnable()
+    {
+      public void run()
+      {
+        try{
+          VentanaLogin frame = new VentanaLogin();
+          frame.setVisible(true);
+        }catch(Exception e){
+          e.printStackTrace();
+        }
+      }
+    });
+  }
+
+  /**
+   * Create the frame.
+   */
+  public VentanaLogin()
+  {
+    
+    setAlwaysOnTop(true);
+    setResizable(false);//Que no lo puedan maximizar
+    //Dimension sizePantalla = Toolkit.getDefaultToolkit().getScreenSize();//Calcular el centro de la pantalla
+    setTitle("Sistema de Reserva");
+    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    
+    setBounds(280, 144, 800, 480);
+    menuLogin = new JPanel();
+    menuLogin.setBorder(new EmptyBorder(5, 5, 5, 5));
+    setContentPane(menuLogin);
+    menuLogin.setLayout(null);
+    
+    
+    JLabel lblBienvenido = new JLabel("Bienvenido");
+    lblBienvenido.setBounds(500, 108, 120, 20);
+    lblBienvenido.setForeground(Color.WHITE);
+    lblBienvenido.setFont(new Font("Ubuntu", Font.PLAIN, 20));
+    menuLogin.add(lblBienvenido);
+    
+    JLabel lblPorFavorInicie = new JLabel("Por favor inicie sesión");
+    lblPorFavorInicie.setBounds(500, 140, 180, 15);
+    lblPorFavorInicie.setForeground(Color.WHITE);
+    menuLogin.add(lblPorFavorInicie);
+    
+    
+    txtUsuario = new JTextField();
+    txtUsuario.setBounds(500, 175, 140, 19);
+    txtUsuario.setFont(new Font("Ubuntu", Font.PLAIN, 12));
+    txtUsuario.setText("usuario");
+    menuLogin.add(txtUsuario);
+    txtUsuario.setColumns(10);
+    txtUsuario.selectAll();
+    txtUsuario.requestFocus();
+    
+    passwordField = new JPasswordField();
+    passwordField.setBounds(500, 206, 140, 19);
+    passwordField.addFocusListener(new FocusAdapter() {
+      @Override
+      public void focusGained(FocusEvent arg0)
+      {
+        passwordField.setText("");
+      }
+    });
+    passwordField.setText("password");
+    menuLogin.add(passwordField);
+    
+    JButton btnIniciarSesin = new JButton("iniciar sesión");
+    btnIniciarSesin.setBounds(500, 237, 140, 25);
+    btnIniciarSesin.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent arg0)
+      {
+        String nombreUsuario = txtUsuario.getText();
+        String password = new String(passwordField.getPassword());
+       
+        if(sistema.loginTrabajador(nombreUsuario, password) == true)
+        {
+          Trabajador trabajador = sistema.buscarTrabajadorPorUsuario(nombreUsuario);
+          JOptionPane.showMessageDialog(null, "Bienvenido " + nombreUsuario + ".");
+          VentanaMenuPrincipal menuPrincipal = new VentanaMenuPrincipal(sistema, trabajador);
+          menuPrincipal.setVisible(true);
+          dispose();
+        }
+        else
+          JOptionPane.showMessageDialog(null, "Combinación de usuario "
+                + nombreUsuario.toUpperCase() + " y contraseña INCORRECTOS");
+      }
+    });
+    btnIniciarSesin.setFont(new Font("Ubuntu", Font.BOLD, 12));
+    menuLogin.add(btnIniciarSesin);
+    
+    JLabel lblNewLabel = new JLabel("fondo");
+    lblNewLabel.setBounds(0, 0, 800, 480);
+    lblNewLabel.setIcon(new ImageIcon(VentanaLogin.class.getResource("/imagenes/background.jpg")));
+    menuLogin.add(lblNewLabel);
+
+  }
+}
