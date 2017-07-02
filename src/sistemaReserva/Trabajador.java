@@ -75,12 +75,12 @@ public class Trabajador extends Persona
 
   public boolean esTuPassword(String pw)
   {
-    return password == pw;
+    return password.equals(pw);
   }
   
   public boolean esTuNombreUsuario(String user)
   {
-    return nombreUsuario == user;
+    return nombreUsuario.equalsIgnoreCase(user);
   }
     
   public boolean sosTrabajador(int legajo)
