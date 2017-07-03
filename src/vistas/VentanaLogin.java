@@ -61,14 +61,17 @@ public class VentanaLogin extends JFrame
    */
   public VentanaLogin()
   {
-    
     setAlwaysOnTop(true);
     setResizable(false);//Que no lo puedan maximizar
-    //Dimension sizePantalla = Toolkit.getDefaultToolkit().getScreenSize();//Calcular el centro de la pantalla
     setTitle("Sistema de Reserva");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
-    setBounds(280, 144, 800, 480);
+    //Posición en pantalla
+    Dimension sizePantalla = Toolkit.getDefaultToolkit().getScreenSize();
+    int centroALoAncho = (int)(sizePantalla.getWidth() - 800)/2;
+    int centroALoAlto = (int)(sizePantalla.getHeight() - 480)/2;
+    setBounds(centroALoAncho, centroALoAlto, 800, 480);
+    
     menuLogin = new JPanel();
     menuLogin.setBorder(new EmptyBorder(5, 5, 5, 5));
     setContentPane(menuLogin);
