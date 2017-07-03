@@ -94,16 +94,16 @@ public class VentanaMenuPrincipal extends JFrame
     btnAltaDeTrabajador.setBounds(420, 145, 180, 25);
     menuPrincipal.add(btnAltaDeTrabajador);
     
-    JButton btnAltaDeHabitacin = new JButton("Alta de Habitación");
-    btnAltaDeHabitacin.addMouseListener(new MouseAdapter() {
+    JButton btnAltaDeHabitacion = new JButton("Alta de Habitacion");
+    btnAltaDeHabitacion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e){
         VentanaAltaHabitacion altaHabitacion = new VentanaAltaHabitacion(sistema);
         altaHabitacion.setVisible(true);
       }
     });
-    btnAltaDeHabitacin.setBounds(420, 182, 180, 25);
-    menuPrincipal.add(btnAltaDeHabitacin);
+    btnAltaDeHabitacion.setBounds(420, 182, 180, 25);
+    menuPrincipal.add(btnAltaDeHabitacion);
     
     JButton btnAltaDeEstadia = new JButton("Alta de Estadia");
     btnAltaDeEstadia.setEnabled(false);
@@ -119,7 +119,7 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnAltaDeEstadia);
     
     JButton btnAltaDeReserva = new JButton("Alta de Reserva");
-    btnAltaDeReserva.setEnabled(false);
+    btnAltaDeReserva.setEnabled(true);
     btnAltaDeReserva.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
@@ -155,8 +155,8 @@ public class VentanaMenuPrincipal extends JFrame
     btnEditarTrabajador.setBounds(612, 145, 180, 25);
     menuPrincipal.add(btnEditarTrabajador);
     
-    JButton btnEditarHabitacin = new JButton("Editar Habitación");
-    btnEditarHabitacin.addMouseListener(new MouseAdapter() {
+    JButton btnEditarHabitacion = new JButton("Editar Habitacion");
+    btnEditarHabitacion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
       {
@@ -164,8 +164,8 @@ public class VentanaMenuPrincipal extends JFrame
         editarHabitacion.setVisible(true);
       }
     });
-    btnEditarHabitacin.setBounds(612, 182, 180, 25);
-    menuPrincipal.add(btnEditarHabitacin);
+    btnEditarHabitacion.setBounds(612, 182, 180, 25);
+    menuPrincipal.add(btnEditarHabitacion);
     
     JButton btnEditarEstadia = new JButton("Editar Estadia");
     btnEditarEstadia.setEnabled(false);
@@ -181,7 +181,7 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnEditarEstadia);
     
     JButton btnEditarReserva = new JButton("Editar Reserva");
-    btnEditarReserva.setEnabled(false);
+    btnEditarReserva.setEnabled(true);
     btnEditarReserva.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
