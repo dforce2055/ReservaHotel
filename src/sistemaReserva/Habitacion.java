@@ -105,4 +105,11 @@ public class Habitacion
   {
     return estado.equalsIgnoreCase("DISPONIBLE");
   }
+  
+  public HabitacionView getView()
+  {
+	  HabitacionView hv = new HabitacionView(numero, piso, descripcion, caracteristicas,
+			  tipoHabitacion);
+	  return hv;
+  }
 }

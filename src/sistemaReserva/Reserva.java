@@ -166,4 +166,13 @@ public class Reserva
   {
     estado = "ARRIBADA";
   }
+  
+  public ReservaView getView()
+  {
+	  ClienteView cv = cliente.getView();
+	  TrabajadorView tv = trabajador.getView();
+	  ReservaView rv = new ReservaView(nroReserva, cv, tv, tipoHabitacion,
+				fechaIngreso, fechaSalida, fechaReserva, costoReserva,observaciones, estado);
+	  return rv;
+  }
 }
