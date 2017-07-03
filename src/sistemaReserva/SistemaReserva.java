@@ -31,10 +31,9 @@ public class SistemaReserva
     servicios = new Vector<ServicioAdicional>();
     serviciosInactivos = new Vector<ServicioAdicional>();
     tarifario = new Tarifario();
-    //Prueba Login
-    Trabajador nuevo = new Trabajador("Pepe", "Argento", "DNI", "13333666", 
-        "Casona 123", "401133", "pepeargento@mail.com", "pepe", "argento");
-    trabajadores.add(nuevo);
+    //Datos prueba
+    CargaDatosPrueba prueba = new CargaDatosPrueba(this);
+    prueba.CargarDatos();
   }
   
   private Cliente buscarCliente(int codigo)
