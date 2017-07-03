@@ -3,13 +3,11 @@ package sistemaReserva;
 public class ItemTarifaView {
 	  private String tipoHabitacion;
 	  private double precio;
-	  private boolean activo;
 	
-	  public ItemTarifaView(String tipoHabitacion, double precio, boolean activo) {
+	  public ItemTarifaView(String tipoHabitacion, double precio) {
 		super();
 		this.tipoHabitacion = tipoHabitacion;
 		this.precio = precio;
-		this.activo = activo;
 	}
 
 	public String getTipoHabitacion() {
@@ -26,13 +24,5 @@ public class ItemTarifaView {
 
 	public void setPrecio(double precio) {
 		this.precio = precio;
-	}
-
-	public boolean isActivo() {
-		return activo;
-	}
-
-	public void setActivo(boolean activo) {
-		this.activo = activo;
 	}
 }
