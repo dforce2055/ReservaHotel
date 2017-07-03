@@ -94,7 +94,7 @@ public class VentanaMenuPrincipal extends JFrame
     btnAltaDeTrabajador.setBounds(420, 145, 180, 25);
     menuPrincipal.add(btnAltaDeTrabajador);
     
-    JButton btnAltaDeHabitacion = new JButton("Alta de Habitacion");
+    JButton btnAltaDeHabitacion = new JButton("Alta de Habitaci\u00F3n");
     btnAltaDeHabitacion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e){
@@ -105,7 +105,7 @@ public class VentanaMenuPrincipal extends JFrame
     btnAltaDeHabitacion.setBounds(420, 182, 180, 25);
     menuPrincipal.add(btnAltaDeHabitacion);
     
-    JButton btnAltaDeEstadia = new JButton("Alta de Estadia");
+    JButton btnAltaDeEstadia = new JButton("Alta de Estad\u00EDa");
     btnAltaDeEstadia.setEnabled(false);
     btnAltaDeEstadia.addMouseListener(new MouseAdapter() {
       @Override
@@ -155,7 +155,7 @@ public class VentanaMenuPrincipal extends JFrame
     btnEditarTrabajador.setBounds(612, 145, 180, 25);
     menuPrincipal.add(btnEditarTrabajador);
     
-    JButton btnEditarHabitacion = new JButton("Editar Habitacion");
+    JButton btnEditarHabitacion = new JButton("Editar Habitaci\u00F3n");
     btnEditarHabitacion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
@@ -167,7 +167,7 @@ public class VentanaMenuPrincipal extends JFrame
     btnEditarHabitacion.setBounds(612, 182, 180, 25);
     menuPrincipal.add(btnEditarHabitacion);
     
-    JButton btnEditarEstadia = new JButton("Editar Estadia");
+    JButton btnEditarEstadia = new JButton("Editar Estad\u00EDa");
     btnEditarEstadia.setEnabled(false);
     btnEditarEstadia.addMouseListener(new MouseAdapter() {
       @Override

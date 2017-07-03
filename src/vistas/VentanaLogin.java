@@ -93,7 +93,7 @@ public class VentanaLogin extends JFrame
     txtUsuario = new JTextField();
     txtUsuario.setBounds(500, 175, 140, 19);
     txtUsuario.setFont(new Font("Ubuntu", Font.PLAIN, 12));
-    txtUsuario.setText("usuario");
+    txtUsuario.setText("Usuario");
     menuLogin.add(txtUsuario);
     txtUsuario.setColumns(10);
     txtUsuario.selectAll();
@@ -111,7 +111,7 @@ public class VentanaLogin extends JFrame
     passwordField.setText("password");
     menuLogin.add(passwordField);
     
-    JButton btnIniciarSesion = new JButton("iniciar sesion");
+    JButton btnIniciarSesion = new JButton("Iniciar Sesi\u00F3n");
     btnIniciarSesion.setBounds(500, 237, 140, 25);
     btnIniciarSesion.addMouseListener(new MouseAdapter() {
       @Override
@@ -138,7 +138,7 @@ public class VentanaLogin extends JFrame
     menuLogin.add(btnIniciarSesion);
     
     JLabel lblNewLabel = new JLabel("fondo");
-    lblNewLabel.setBounds(0, 0, 800, 480);
+    lblNewLabel.setBounds(0, 0, 800, 451);
     lblNewLabel.setIcon(new ImageIcon(VentanaLogin.class.getResource("/imagenes/background.jpg")));
     menuLogin.add(lblNewLabel);
 

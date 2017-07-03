@@ -70,8 +70,8 @@ public class VentanaEditarCliente extends JFrame {
     setContentPane(contentPane);
     contentPane.setLayout(null);
     
-    JLabel lblNroCliente = new JLabel("Ingrese Nro de Cliente:");
-    lblNroCliente.setBounds(171, 11, 118, 44);
+    JLabel lblNroCliente = new JLabel("Ingrese N\u00FAmero de Cliente:");
+    lblNroCliente.setBounds(171, 11, 156, 44);
     contentPane.add(lblNroCliente);
     
     tfNroCliente = new JTextField();
@@ -129,7 +129,7 @@ public class VentanaEditarCliente extends JFrame {
     boxTipoDoc.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoDoc);
     
-    JLabel lblNumeroDocumento = new JLabel("Numero de Documento");
+    JLabel lblNumeroDocumento = new JLabel("N\u00FAmero de Documento");
     lblNumeroDocumento.setBounds(200, 168, 130, 14);
     contentPane.add(lblNumeroDocumento);
     
@@ -139,7 +139,7 @@ public class VentanaEditarCliente extends JFrame {
     contentPane.add(tfNumeroDocumento);
     tfNumeroDocumento.setColumns(10);
     
-    JLabel lblDireccion = new JLabel("Direccion:");
+    JLabel lblDireccion = new JLabel("Direcci\u00F3n:");
     lblDireccion.setBounds(200, 193, 130, 14);
     contentPane.add(lblDireccion);
     
@@ -149,7 +149,7 @@ public class VentanaEditarCliente extends JFrame {
     contentPane.add(tfDireccion);
     tfDireccion.setColumns(10);
     
-    JLabel lblTelefono = new JLabel("Telefono:");
+    JLabel lblTelefono = new JLabel("T\u00E9lefono:");
     lblTelefono.setBounds(200, 218, 130, 14);
     contentPane.add(lblTelefono);
     

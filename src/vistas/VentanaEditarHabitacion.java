@@ -66,8 +66,8 @@ public class VentanaEditarHabitacion extends JFrame {
     setContentPane(contentPane);
     contentPane.setLayout(null);
     
-    lblNroHabitacion = new JLabel("Ingrese Nro Habitacion:");
-    lblNroHabitacion.setBounds(200, 34, 130, 14);
+    lblNroHabitacion = new JLabel("Ingrese N\u00FAmeroro Habitaci\u00F3n:");
+    lblNroHabitacion.setBounds(176, 34, 151, 14);
     contentPane.add(lblNroHabitacion);
     
     tfNroHabitacion = new JTextField();
@@ -79,7 +79,7 @@ public class VentanaEditarHabitacion extends JFrame {
     btnBuscar.setBounds(416, 30, 89, 23);
     contentPane.add(btnBuscar);
     
-    JLabel lblNumero = new JLabel("Numero:");
+    JLabel lblNumero = new JLabel("N\u00FAmero:");
     lblNumero.setBounds(200, 93, 130, 14);
     contentPane.add(lblNumero);
     
@@ -99,7 +99,7 @@ public class VentanaEditarHabitacion extends JFrame {
     boxPiso.setBounds(337, 115, 60, 20);
     contentPane.add(boxPiso);
     
-    JLabel lblTipoHab = new JLabel("Tipo de Habitacion:");
+    JLabel lblTipoHab = new JLabel("Tipo de Habitaci\u00F3n:");
     lblTipoHab.setBounds(200, 143, 130, 14);
     contentPane.add(lblTipoHab);
     
@@ -108,7 +108,7 @@ public class VentanaEditarHabitacion extends JFrame {
     boxTipoHab.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoHab);
     
-    JLabel lblDescripcion = new JLabel("Descripcion:");
+    JLabel lblDescripcion = new JLabel("Descripci\u00F3n:");
     lblDescripcion.setBounds(200, 168, 130, 14);
     contentPane.add(lblDescripcion);
     
