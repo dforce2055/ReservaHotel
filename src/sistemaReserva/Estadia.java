@@ -202,21 +202,21 @@ public class Estadia
   
   public EstadiaView getView()
   {
-	  ReservaView rv = null;
-	  if (reserva != null)
-		  rv = reserva.getView();
-	  HabitacionView hv = habitacion.getView();
-	  ClienteView cv = cliente.getView();
-	  Vector<ServicioAdicionalView> adicionalesv = new Vector<ServicioAdicionalView>();
-	  for (ServicioAdicional sa: adicionales)
-	  {
-		  ServicioAdicionalView sav = sa.getView();
-		  adicionalesv.add(sav);
-	  }
-	  TrabajadorView tv = trabajador.getView();
-	  
-	  EstadiaView ev = new EstadiaView(rv, hv, fechaIngreso, fechaSalida, precio, 
-			  cv, observaciones, adicionalesv, numero, tv);
-	  return ev;
+    ReservaView rv = null;
+    if (reserva != null)
+      rv = reserva.getView();
+    HabitacionView hv = habitacion.getView();
+    ClienteView cv = cliente.getView();
+    Vector<ServicioAdicionalView> adicionalesv = new Vector<ServicioAdicionalView>();
+    for (ServicioAdicional sa: adicionales)
+    {
+      ServicioAdicionalView sav = sa.getView();
+      adicionalesv.add(sav);
+    }
+    TrabajadorView tv = trabajador.getView();
+    
+    EstadiaView ev = new EstadiaView(rv, hv, fechaIngreso, fechaSalida, precio, 
+        cv, observaciones, adicionalesv, numero, tv);
+    return ev;
   }
 }

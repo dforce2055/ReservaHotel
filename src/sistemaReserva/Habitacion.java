@@ -108,8 +108,8 @@ public class Habitacion
   
   public HabitacionView getView()
   {
-	  HabitacionView hv = new HabitacionView(numero, piso, descripcion, caracteristicas,
-			  tipoHabitacion);
-	  return hv;
+    HabitacionView hv = new HabitacionView(numero, piso, descripcion, caracteristicas,
+        tipoHabitacion);
+    return hv;
   }
 }

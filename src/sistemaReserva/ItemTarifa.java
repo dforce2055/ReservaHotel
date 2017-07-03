@@ -50,7 +50,7 @@ public class ItemTarifa
   
   public ItemTarifaView getView()
   {
-	  ItemTarifaView itv = new ItemTarifaView(tipoHabitacion, precio);
-	  return itv;
+    ItemTarifaView itv = new ItemTarifaView(tipoHabitacion, precio);
+    return itv;
   }
 }

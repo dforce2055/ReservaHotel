@@ -90,8 +90,8 @@ public class Trabajador extends Persona
   
   public TrabajadorView getView()
   {
-	  TrabajadorView tv = new TrabajadorView(legajo, nombre, apellido, tipoDocumento, 
-			  numeroDocumento, direccion, telefono, email);
-	  return tv;
+    TrabajadorView tv = new TrabajadorView(legajo, nombre, apellido, tipoDocumento, 
+        numeroDocumento, direccion, telefono, email);
+    return tv;
   }
 }

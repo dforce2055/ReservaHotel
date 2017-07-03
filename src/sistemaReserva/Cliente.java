@@ -46,8 +46,8 @@ public class Cliente extends Persona
   
   public ClienteView getView()
   {
-	  ClienteView cv = new ClienteView(codigoCliente, nombre, apellido, tipoDocumento,
-			  numeroDocumento, direccion, telefono, email);
-	  return cv;
+    ClienteView cv = new ClienteView(codigoCliente, nombre, apellido, tipoDocumento,
+        numeroDocumento, direccion, telefono, email);
+    return cv;
   }
 }
