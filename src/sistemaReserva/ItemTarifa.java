@@ -47,4 +47,10 @@ public class ItemTarifa
   {
     return activo;
   }
+  
+  public ItemTarifaView getView()
+  {
+	  ItemTarifaView itv = new ItemTarifaView(tipoHabitacion, precio);
+	  return itv;
+  }
 }
