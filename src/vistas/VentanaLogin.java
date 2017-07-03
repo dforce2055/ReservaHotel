@@ -84,7 +84,7 @@ public class VentanaLogin extends JFrame
     lblBienvenido.setFont(new Font("Ubuntu", Font.PLAIN, 20));
     menuLogin.add(lblBienvenido);
     
-    JLabel lblPorFavorInicie = new JLabel("Por favor inicie sesión");
+    JLabel lblPorFavorInicie = new JLabel("Por favor inicie sesion");
     lblPorFavorInicie.setBounds(500, 140, 180, 15);
     lblPorFavorInicie.setForeground(Color.WHITE);
     menuLogin.add(lblPorFavorInicie);
@@ -111,9 +111,9 @@ public class VentanaLogin extends JFrame
     passwordField.setText("password");
     menuLogin.add(passwordField);
     
-    JButton btnIniciarSesin = new JButton("iniciar sesión");
-    btnIniciarSesin.setBounds(500, 237, 140, 25);
-    btnIniciarSesin.addMouseListener(new MouseAdapter() {
+    JButton btnIniciarSesion = new JButton("iniciar sesion");
+    btnIniciarSesion.setBounds(500, 237, 140, 25);
+    btnIniciarSesion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent arg0)
       {
@@ -123,18 +123,19 @@ public class VentanaLogin extends JFrame
         if(sistema.loginTrabajador(nombreUsuario, password) == true)
         {
           Trabajador trabajador = sistema.buscarTrabajadorPorUsuario(nombreUsuario);
-          JOptionPane.showMessageDialog(null, "Bienvenido " + nombreUsuario + ".");
+          JOptionPane.showMessageDialog(menuLogin, "Bienvenido " + nombreUsuario + ".");
           VentanaMenuPrincipal menuPrincipal = new VentanaMenuPrincipal(sistema, trabajador);
           menuPrincipal.setVisible(true);
           dispose();
         }
-        else
-          JOptionPane.showMessageDialog(null, "Combinación de usuario "
-                + nombreUsuario.toUpperCase() + " y contraseña INCORRECTOS");
+        else{
+          JOptionPane.showMessageDialog(menuLogin, "Combinacion de usuario "
+                + nombreUsuario.toUpperCase() + " y contrase�a INCORRECTOS");
+        }
       }
     });
-    btnIniciarSesin.setFont(new Font("Ubuntu", Font.BOLD, 12));
-    menuLogin.add(btnIniciarSesin);
+    btnIniciarSesion.setFont(new Font("Ubuntu", Font.BOLD, 12));
+    menuLogin.add(btnIniciarSesion);
     
     JLabel lblNewLabel = new JLabel("fondo");
     lblNewLabel.setBounds(0, 0, 800, 480);
