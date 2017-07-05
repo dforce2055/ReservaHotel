@@ -8,8 +8,9 @@ public class test
   public static void main(String[] args)
   {
     SistemaReserva sis = new SistemaReserva();
-    System.out.println(sis.buscarTrabajadorPorUsuario("pepe").getNombreUsuario());;
-    System.out.println(sis.loginTrabajador("pepe", "argento"));;
+    Trabajador trabajador = sis.buscarTrabajadorPorUsuario("pepe");
+    System.out.println(trabajador.esTuPassword("chevy"));
+    
     /*
     sis.altaTarifa("Doble", 1000f);
     sis.altaTarifa("Triple", 1250f);
