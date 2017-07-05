@@ -84,7 +84,7 @@ public class VentanaLogin extends JFrame
     lblBienvenido.setFont(new Font("Ubuntu", Font.PLAIN, 20));
     menuLogin.add(lblBienvenido);
     
-    JLabel lblPorFavorInicie = new JLabel("Por favor inicie sesion");
+    JLabel lblPorFavorInicie = new JLabel("Por favor inicie sesi\u00f3n");
     lblPorFavorInicie.setBounds(500, 140, 180, 15);
     lblPorFavorInicie.setForeground(Color.WHITE);
     menuLogin.add(lblPorFavorInicie);
@@ -129,8 +129,8 @@ public class VentanaLogin extends JFrame
           dispose();
         }
         else{
-          JOptionPane.showMessageDialog(menuLogin, "Combinacion de usuario "
-                + nombreUsuario.toUpperCase() + " y contraseña INCORRECTOS");
+          JOptionPane.showMessageDialog(menuLogin, "Combinaci\u00f3n de usuario "
+                + nombreUsuario.toUpperCase() + " y contrase\u00f1a INCORRECTOS");
         }
       }
     });
