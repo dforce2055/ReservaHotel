@@ -1,40 +1,45 @@
 package sistemaReserva;
 
-public class ServicioAdicionalView {
-	  private int codigo;
-	  private String descripcion;
-	  private double precio;
-	
-	  public ServicioAdicionalView(int codigo, String descripcion, double precio) {
-		super();
-		this.codigo = codigo;
-		this.descripcion = descripcion;
-		this.precio = precio;
-	}
+public class ServicioAdicionalView
+{
+  private int codigo;
+  private String descripcion;
+  private double precio;
 
-	public int getCodigo() {
-		return codigo;
-	}
+  public ServicioAdicionalView(int codigo, String descripcion, double precio) {
+  super();
+  this.codigo = codigo;
+  this.descripcion = descripcion;
+  this.precio = precio;
+  }
 
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
+  public int getCodigo()
+  {
+    return codigo;
+  }
 
-	public String getDescripcion() {
-		return descripcion;
-	}
+  public void setCodigo(int codigo)
+  {
+    this.codigo = codigo;
+  }
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
-	}
+  public String getDescripcion()
+  {
+    return descripcion;
+  }
 
-	public double getPrecio() {
-		return precio;
-	}
+  public void setDescripcion(String descripcion)
+  {
+    this.descripcion = descripcion;
+  }
 
-	public void setPrecio(double precio) {
-		this.precio = precio;
-	}
-	  
-	  
+  public double getPrecio()
+  {
+    return precio;
+  }
+
+  public void setPrecio(double precio)
+  {
+    this.precio = precio;
+  }
 }

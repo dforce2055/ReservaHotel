@@ -3,20 +3,23 @@ package sistemaReserva;
 import java.time.LocalDate;
 import java.util.Vector;
 
-public class EstadiaView {
-    private ReservaView reserva;
-    private HabitacionView habitacion;
-    private LocalDate fechaIngreso;
-    private LocalDate fechaSalida;
-    private double precio;
-    private ClienteView cliente;
-    private String observaciones;
-    private Vector<ServicioAdicionalView> adicionales;
-    private int numero;
-    private TrabajadorView trabajador;
+public class EstadiaView
+{
+  private ReservaView reserva;
+  private HabitacionView habitacion;
+  private LocalDate fechaIngreso;
+  private LocalDate fechaSalida;
+  private double precio;
+  private ClienteView cliente;
+  private String observaciones;
+  private Vector<ServicioAdicionalView> adicionales;
+  private int numero;
+  private TrabajadorView trabajador;
+  
   public EstadiaView(ReservaView reserva, HabitacionView habitacion, LocalDate fechaIngreso, LocalDate fechaSalida,
-      double precio, ClienteView cliente, String observaciones, Vector<ServicioAdicionalView> adicionales,
-      int numero, TrabajadorView trabajador) {
+    double precio, ClienteView cliente, String observaciones, Vector<ServicioAdicionalView> adicionales,
+    int numero, TrabajadorView trabajador)
+  {
     super();
     this.reserva = reserva;
     this.habitacion = habitacion;
@@ -29,64 +32,84 @@ public class EstadiaView {
     this.numero = numero;
     this.trabajador = trabajador;
   }
-  public ReservaView getReserva() {
+  public ReservaView getReserva()
+  {
     return reserva;
   }
-  public void setReserva(ReservaView reserva) {
+  public void setReserva(ReservaView reserva)
+  {
     this.reserva = reserva;
   }
-  public HabitacionView getHabitacion() {
+  public HabitacionView getHabitacion()
+  {
     return habitacion;
   }
-  public void setHabitacion(HabitacionView habitacion) {
+  public void setHabitacion(HabitacionView habitacion)
+  {
     this.habitacion = habitacion;
   }
-  public LocalDate getFechaIngreso() {
+  public LocalDate getFechaIngreso()
+  {
     return fechaIngreso;
   }
-  public void setFechaIngreso(LocalDate fechaIngreso) {
+  public void setFechaIngreso(LocalDate fechaIngreso)
+  {
     this.fechaIngreso = fechaIngreso;
   }
-  public LocalDate getFechaSalida() {
+  public LocalDate getFechaSalida()
+  {
     return fechaSalida;
   }
-  public void setFechaSalida(LocalDate fechaSalida) {
+  public void setFechaSalida(LocalDate fechaSalida)
+  {
     this.fechaSalida = fechaSalida;
   }
-  public double getPrecio() {
+  public double getPrecio()
+  {
     return precio;
   }
-  public void setPrecio(double precio) {
+  public void setPrecio(double precio)
+  {
     this.precio = precio;
   }
-  public ClienteView getCliente() {
+  public ClienteView getCliente()
+  {
     return cliente;
   }
-  public void setCliente(ClienteView cliente) {
+  public void setCliente(ClienteView cliente)
+  {
     this.cliente = cliente;
   }
-  public String getObservaciones() {
+  public String getObservaciones()
+  {
     return observaciones;
   }
-  public void setObservaciones(String observaciones) {
+  public void setObservaciones(String observaciones)
+  {
     this.observaciones = observaciones;
   }
-  public Vector<ServicioAdicionalView> getAdicionales() {
+  public Vector<ServicioAdicionalView> getAdicionales()
+  {
     return adicionales;
   }
-  public void setAdicionales(Vector<ServicioAdicionalView> adicionales) {
+  public void setAdicionales(Vector<ServicioAdicionalView> adicionales)
+  {
     this.adicionales = adicionales;
   }
-  public int getNumero() {
+  public int getNumero()
+  {
     return numero;
   }
-  public void setNumero(int numero) {
+  public void setNumero(int numero)
+  {
     this.numero = numero;
   }
-  public TrabajadorView getTrabajador() {
+  public TrabajadorView getTrabajador()
+  {
     return trabajador;
   }
-  public void setTrabajador(TrabajadorView trabajador) {
+  public void setTrabajador(TrabajadorView trabajador)
+  {
     this.trabajador = trabajador;
   }
 }

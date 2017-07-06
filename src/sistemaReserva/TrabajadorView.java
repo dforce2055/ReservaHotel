@@ -1,6 +1,7 @@
 package sistemaReserva;
 
-public class TrabajadorView {
+public class TrabajadorView
+{
   private int legajo; 
   private String nombre; 
   private String apellido; 
@@ -11,7 +12,8 @@ public class TrabajadorView {
   private String email;
   
   public TrabajadorView(int legajo, String nombre, String apellido, String tipoDoc, String numDoc, String direccion,
-      String telefono, String email) {
+      String telefono, String email)
+  {
     super();
     this.legajo = legajo;
     this.nombre = nombre;
@@ -22,54 +24,68 @@ public class TrabajadorView {
     this.telefono = telefono;
     this.email = email;
   }
-  public int getLegajo() {
+  public int getLegajo()
+  {
     return legajo;
   }
-  public void setLegajo(int legajo) {
+  public void setLegajo(int legajo)
+  {
     this.legajo = legajo;
   }
-  public String getNombre() {
+  public String getNombre()
+  {
     return nombre;
   }
-  public void setNombre(String nombre) {
+  public void setNombre(String nombre)
+  {
     this.nombre = nombre;
   }
-  public String getApellido() {
+  public String getApellido()
+  {
     return apellido;
   }
-  public void setApellido(String apellido) {
+  public void setApellido(String apellido)
+  {
     this.apellido = apellido;
   }
-  public String getTipoDoc() {
+  public String getTipoDoc()
+  {
     return tipoDoc;
   }
-  public void setTipoDoc(String tipoDoc) {
+  public void setTipoDoc(String tipoDoc)
+  {
     this.tipoDoc = tipoDoc;
   }
-  public String getNumDoc() {
+  public String getNumDoc()
+  {
     return numDoc;
   }
-  public void setNumDoc(String numDoc) {
+  public void setNumDoc(String numDoc)
+  {
     this.numDoc = numDoc;
   }
-  public String getDireccion() {
+  public String getDireccion()
+  {
     return direccion;
   }
-  public void setDireccion(String direccion) {
+  public void setDireccion(String direccion)
+  {
     this.direccion = direccion;
   }
-  public String getTelefono() {
+  public String getTelefono()
+  {
     return telefono;
   }
-  public void setTelefono(String telefono) {
+  public void setTelefono(String telefono)
+  {
     this.telefono = telefono;
   }
-  public String getEmail() {
+  public String getEmail()
+  {
     return email;
   }
-  public void setEmail(String email) {
+  public void setEmail(String email)
+  {
     this.email = email;
   }
-  
-  
 }
