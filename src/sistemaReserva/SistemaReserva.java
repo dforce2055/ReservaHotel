@@ -1,4 +1,4 @@
-package sistemaReserva;
+﻿package sistemaReserva;
 import java.time.LocalDate;
 import java.util.Vector;
 
@@ -482,7 +482,7 @@ public class SistemaReserva
     }
     return false;
   }
-  //Testear método
+  //Testear mÃ©todo
   public boolean modificarReserva(int numero, int numeroCliente, 
       String tipoHabitacion, LocalDate fechaIngreso, LocalDate fechaSalida, 
       String observaciones)
@@ -899,5 +899,40 @@ public class SistemaReserva
       }
     }   
     return disponibilidades;
+  }
+  //GetView
+  ClienteView getClienteView(Cliente cliente)
+  {
+    return cliente.getView();
+  }
+  
+  EstadiaView getEstadiaView(Estadia estadia)
+  {
+    return estadia.getView();
+  }
+  
+  HabitacionView getHabitacionView(Habitacion habitacion)
+  {
+    return habitacion.getView();
+  }
+  
+  ItemTarifaView getItemTarivaView(ItemTarifa item)
+  {
+    return item.getView();
+  }
+  
+  ReservaView getReserva(Reserva reserva)
+  {
+    return reserva.getView();
+  }
+  
+  ServicioAdicionalView getServicioAdicional(ServicioAdicional servicio)
+  {
+    return servicio.getView();
+  }
+  
+  TrabajadorView getTrabajadorView(Trabajador trabajador)
+  {
+    return trabajador.getView();
   }
 } 
