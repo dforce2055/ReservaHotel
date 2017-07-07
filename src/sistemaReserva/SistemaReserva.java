@@ -140,7 +140,7 @@ public class SistemaReserva
     return null;
   }
   
-  public void altaCliente(String nombre, String apellido, String tipoDoc, 
+  public int altaCliente(String nombre, String apellido, String tipoDoc, 
       String numDoc, String direccion, String telefono, String email)
   {
     Cliente cliente = buscarClientePorDocumento(tipoDoc, numDoc);
@@ -148,7 +148,9 @@ public class SistemaReserva
     {
       cliente = new Cliente(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email);
       clientes.add(cliente);
+      return cliente.getCodigoCliente();
     }
+    return 0;
   }
   
   public void altaTrabajador(String nombre, String apellido, String tipoDoc, 
