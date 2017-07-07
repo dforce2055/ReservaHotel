@@ -73,7 +73,7 @@ public class SistemaReserva
   {
     Cliente cliente = buscarClientePorDocumento(tipoDoc, numDoc);
     
-    return cliente == null;
+    return cliente != null;
   }
   
   private Trabajador buscarTrabajador(int legajo)
@@ -383,42 +383,39 @@ public class SistemaReserva
     
     if (cliente != null)
     {
-      String nombreCliente = cliente.getNombre(),
-      apellidoCliente = cliente.getApellido(),
-      tipoDocCliente = cliente.getTipoDocumento(),
-      numDocCliente = cliente.getNumeroDocumento(),
-      direccionCliente = cliente.getDireccion(),
-      telefonoCliente = cliente.getTelefono(),
-      emailCliente = cliente.getEmail();
+      String nombreCliente = cliente.getNombre();
+      String apellidoCliente = cliente.getApellido();
+      String tipoDocCliente = cliente.getTipoDocumento();
+      String numDocCliente = cliente.getNumeroDocumento();
+      String direccionCliente = cliente.getDireccion();
+      String telefonoCliente = cliente.getTelefono();
+      String emailCliente = cliente.getEmail();
       
-      if (!nombre.equals(nombreCliente))
-        cliente.setNombre(nombre);
-      
-      if (!apellido.equals(apellidoCliente))
-        cliente.setApellido(apellido);
-      
-      if (!tipoDoc.equals(tipoDocCliente) || !numDoc.equals(numDocCliente))
+      if(!existeClienteConEseDocumento(tipoDoc, numDoc))//Si NO existe un cliente con ese Tipo y numero de documento
       {
-        boolean existeClienteConEseDocumento = existeClienteConEseDocumento(tipoDoc, numDoc);
+        if (!nombre.equals(nombreCliente))
+          cliente.setNombre(nombre);
         
-        if (existeClienteConEseDocumento == false)//Sino existe un cliente con ese DNI
-        {
+        if (!apellido.equals(apellidoCliente))
+          cliente.setApellido(apellido);
+        
+        if(!tipoDoc.equals(tipoDocCliente))
           cliente.setTipoDocumento(tipoDoc);
+        
+        if(!numDoc.equals(numDocCliente))
           cliente.setNumeroDocumento(numDoc);
-        }
-        else
-          return false;
+        
+        if (!direccion.equals(direccionCliente))
+          cliente.setDireccion(direccion);
+        
+        if (!telefono.equals(telefonoCliente))
+          cliente.setTelefono(telefono);
+        
+        if (!email.equals(emailCliente))
+          cliente.setEmail(email);
+        
+        return true;
       }
-      if (!direccion.equals(direccionCliente))
-        cliente.setDireccion(direccion);
-      
-      if (!telefono.equals(telefonoCliente))
-        cliente.setTelefono(telefono);
-      
-      if (!email.equals(emailCliente))
-        cliente.setEmail(email);
-      
-      return true;
     }
     return false;
   }
