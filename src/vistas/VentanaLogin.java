@@ -26,6 +26,8 @@ import java.awt.Window.Type;
 
 import sistemaReserva.SistemaReserva;
 import sistemaReserva.Trabajador;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 public class VentanaLogin extends JFrame
@@ -56,6 +58,24 @@ public class VentanaLogin extends JFrame
     });
   }
 
+  public void login()
+  {
+    String nombreUsuario = txtUsuario.getText();
+    String password = new String(passwordField.getPassword());
+   
+    if(sistema.loginTrabajador(nombreUsuario, password) == true)
+    {
+      Trabajador trabajador = sistema.buscarTrabajadorPorUsuario(nombreUsuario);
+      //JOptionPane.showMessageDialog(menuLogin, "Bienvenido " + nombreUsuario + ".");
+      VentanaMenuPrincipal menuPrincipal = new VentanaMenuPrincipal(sistema, trabajador);
+      menuPrincipal.setVisible(true);
+      dispose();
+    }
+    else{
+      JOptionPane.showMessageDialog(menuLogin, "Combinaci\u00f3n de usuario "
+            + nombreUsuario.toUpperCase() + " y contrase\u00f1a INCORRECTOS");
+    }
+  }
   /**
    * Create the frame.
    */
@@ -112,26 +132,20 @@ public class VentanaLogin extends JFrame
     menuLogin.add(passwordField);
     
     JButton btnIniciarSesion = new JButton("Iniciar Sesi\u00F3n");
+    btnIniciarSesion.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          login();
+      }
+    });
     btnIniciarSesion.setBounds(500, 237, 140, 25);
     btnIniciarSesion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent arg0)
       {
-        String nombreUsuario = txtUsuario.getText();
-        String password = new String(passwordField.getPassword());
-       
-        if(sistema.loginTrabajador(nombreUsuario, password) == true)
-        {
-          Trabajador trabajador = sistema.buscarTrabajadorPorUsuario(nombreUsuario);
-          //JOptionPane.showMessageDialog(menuLogin, "Bienvenido " + nombreUsuario + ".");
-          VentanaMenuPrincipal menuPrincipal = new VentanaMenuPrincipal(sistema, trabajador);
-          menuPrincipal.setVisible(true);
-          dispose();
-        }
-        else{
-          JOptionPane.showMessageDialog(menuLogin, "Combinaci\u00f3n de usuario "
-                + nombreUsuario.toUpperCase() + " y contrase\u00f1a INCORRECTOS");
-        }
+        login();
       }
     });
     btnIniciarSesion.setFont(new Font("Ubuntu", Font.BOLD, 12));
