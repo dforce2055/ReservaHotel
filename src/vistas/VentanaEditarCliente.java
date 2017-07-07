@@ -23,6 +23,7 @@ import java.awt.event.ContainerEvent;
 import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 import sistemaReserva.SistemaReserva;
+import sistemaReserva.ClienteView;;
 public class VentanaEditarCliente extends JFrame {
 
   private JPanel contentPane;
@@ -79,25 +80,7 @@ public class VentanaEditarCliente extends JFrame {
     contentPane.add(tfNroCliente);
     tfNroCliente.setColumns(10);
     
-    btnBuscar = new JButton("Buscar");
-    btnBuscar.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        //TODO: Buscar Cliente por c�digo.
-        
-        /*
-          tfNombre.setEnabled(true);
-          tfApellido.setEnabled(true);
-          boxTipoDoc.setEnabled(true);
-          tfNumeroDocumento.setEnabled(true);
-          tfDireccion.setEnabled(true);
-          tfTelefono.setEnabled(true);
-          tfEmail.setEnabled(true);
-          btnAceptar.setEnabled(true);
-        */
-      }
-    });
-    btnBuscar.setBounds(497, 22, 89, 23);
-    contentPane.add(btnBuscar);
+    
     
     JLabel lblNombre = new JLabel("Nombre:");
     lblNombre.setBounds(200, 93, 130, 14);
@@ -125,7 +108,7 @@ public class VentanaEditarCliente extends JFrame {
     
     boxTipoDoc = new JComboBox();
     boxTipoDoc.setEnabled(false);
-    boxTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"TipoDoc"}));
+    boxTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"TipoDoc", "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
     boxTipoDoc.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoDoc);
     
@@ -168,6 +151,43 @@ public class VentanaEditarCliente extends JFrame {
     tfEmail.setBounds(337, 240, 150, 20);
     contentPane.add(tfEmail);
     tfEmail.setColumns(10);
+    
+    
+    
+    btnBuscar = new JButton("Buscar");
+    btnBuscar.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        //TODO: Buscar Cliente por c\u00F3digo.
+        String codigoCliente = tfNroCliente.getText();
+        ClienteView cliente = sistema.buscarClienteViewPorCodigo(codigoCliente);
+        if(cliente != null)
+        {
+          tfNombre.setEnabled(true);
+          tfNombre.setText(String.valueOf(cliente.getNumero()));
+          
+          tfApellido.setEnabled(true);
+          tfApellido.setText(cliente.getApellido());
+          
+          boxTipoDoc.setEnabled(true);
+          
+          tfNumeroDocumento.setEnabled(true);
+          tfNumeroDocumento.setText(cliente.getNumDoc());
+          
+          tfDireccion.setEnabled(true);
+          tfDireccion.setText(cliente.getDireccion());
+          
+          tfTelefono.setEnabled(true);
+          tfTelefono.setText(cliente.getTelefono());
+          
+          tfEmail.setEnabled(true);
+          tfEmail.setText(cliente.getTelefono());
+          
+          btnAceptar.setEnabled(true);
+        }
+      }
+    });
+    btnBuscar.setBounds(497, 22, 89, 23);
+    contentPane.add(btnBuscar);
     
     btnAceptar = new JButton("Aceptar");
     btnAceptar.setEnabled(false);

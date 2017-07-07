@@ -18,6 +18,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.Component;
 import sistemaReserva.SistemaReserva;
+import sistemaReserva.Cliente;
+import sistemaReserva.ClienteView;
 public class VentanaAltaCliente extends JFrame {
 
   private JPanel contentPane;
@@ -84,7 +86,7 @@ public class VentanaAltaCliente extends JFrame {
     contentPane.add(lblTipoDoc);
     
     boxTipoDoc = new JComboBox();
-    boxTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"TipoDoc"}));
+    boxTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"TipoDoc", "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
     boxTipoDoc.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoDoc);
     
@@ -131,20 +133,27 @@ public class VentanaAltaCliente extends JFrame {
         
         String nombre = tfNombre.getText();
         String apellido = tfApellido.getText();
-        String tipodoc = (String)boxTipoDoc.getSelectedItem();
-        String documento = tfNumeroDocumento.getText();
+        String tipoDoc = (String)boxTipoDoc.getSelectedItem();
+        String numDoc = tfNumeroDocumento.getText();
         String direccion = tfDireccion.getText();
         String telefono = tfTelefono.getText();
         String email = tfEmail.getText();
         
         
-        if (nombre.equals("") || apellido.equals("") || documento.equals("") || direccion.equals("") || telefono.equals("") || email.equals(""))
+        if (nombre.equals("") || apellido.equals("") || numDoc.equals("") || direccion.equals("") || telefono.equals("") || email.equals(""))
         {
           JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
         }
         
-        
-        
+        ClienteView nuevoCliente = sistema.buscarClienteViewPorDocumento(tipoDoc, numDoc);
+        if(nuevoCliente == null)
+        {
+          sistema.altaCliente(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email);
+          JOptionPane.showMessageDialog(contentPane, "Cliente agregado Correctamente");
+        }else
+        {
+          JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE INGRESAR, YA EXISTE EL CLIENTE");
+        }
       }
     });
     btnAceptar.setBounds(200, 296, 89, 23);
