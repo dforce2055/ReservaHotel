@@ -959,4 +959,9 @@ public class SistemaReserva
   {
     return numeroDocumento != null && numeroDocumento.matches("[-+]?\\d*\\.?\\d+");
   }
+  
+  public boolean validarNumeroCliente(String numeroCliente)
+  {
+    return numeroCliente != null && numeroCliente.matches("[-+]?\\d*\\.?\\d+");
+  }
 } 
