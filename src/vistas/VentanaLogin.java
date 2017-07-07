@@ -123,7 +123,7 @@ public class VentanaLogin extends JFrame
         if(sistema.loginTrabajador(nombreUsuario, password) == true)
         {
           Trabajador trabajador = sistema.buscarTrabajadorPorUsuario(nombreUsuario);
-          JOptionPane.showMessageDialog(menuLogin, "Bienvenido " + nombreUsuario + ".");
+          //JOptionPane.showMessageDialog(menuLogin, "Bienvenido " + nombreUsuario + ".");
           VentanaMenuPrincipal menuPrincipal = new VentanaMenuPrincipal(sistema, trabajador);
           menuPrincipal.setVisible(true);
           dispose();
