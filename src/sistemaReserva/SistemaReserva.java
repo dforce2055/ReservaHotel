@@ -44,6 +44,14 @@ public class SistemaReserva
     return null;
   }
   
+  public ClienteView buscarClienteViewPorCodigo(String codigoCliente)
+  {
+    for (Cliente c: clientes)
+      if (c.sosCliente(Integer.parseInt(codigoCliente)))
+        return c.getView();
+    return null;
+  }
+  
   private Cliente buscarClientePorDocumento(String tipoDoc, String numDoc)
   {
     for (Cliente c: clientes)
@@ -51,6 +59,15 @@ public class SistemaReserva
         return c;
     return null;
   }
+  
+  public ClienteView buscarClienteViewPorDocumento(String tipoDoc, String numDoc)
+  {
+    for (Cliente c: clientes)
+      if (c.esTuDocumento(tipoDoc, numDoc))
+        return c.getView();
+    return null;
+  }
+  
   
   private boolean existeClienteConEseDocumento(String tipoDoc, String numDoc)
   {
