@@ -35,7 +35,7 @@ public class VentanaEditarCliente extends JFrame {
   private JTextField tfEmail;
   private JButton btnAceptar;
   private JButton btnCancelar;
-  private JComboBox boxTipoDoc;
+  private JComboBox<Object> boxtipoDoc;
   private JTextField tfNroCliente;
   private JButton btnBuscar;
 
@@ -102,15 +102,15 @@ public class VentanaEditarCliente extends JFrame {
     contentPane.add(tfApellido);
     tfApellido.setColumns(10);
     
-    JLabel lblTipoDoc = new JLabel("Tipo de Documento:");
-    lblTipoDoc.setBounds(200, 143, 130, 14);
-    contentPane.add(lblTipoDoc);
+    JLabel lbltipoDoc = new JLabel("Tipo de Documento:");
+    lbltipoDoc.setBounds(200, 143, 130, 14);
+    contentPane.add(lbltipoDoc);
     
-    boxTipoDoc = new JComboBox();
-    boxTipoDoc.setEnabled(false);
-    boxTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"TipoDoc", "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
-    boxTipoDoc.setBounds(337, 140, 150, 20);
-    contentPane.add(boxTipoDoc);
+    boxtipoDoc = new JComboBox<Object>();
+    boxtipoDoc.setEnabled(false);
+    boxtipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {"tipoDoc", "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
+    boxtipoDoc.setBounds(337, 140, 150, 20);
+    contentPane.add(boxtipoDoc);
     
     JLabel lblNumeroDocumento = new JLabel("N\u00FAmero de Documento");
     lblNumeroDocumento.setBounds(200, 168, 130, 14);
@@ -159,31 +159,46 @@ public class VentanaEditarCliente extends JFrame {
       public void actionPerformed(ActionEvent e) {
         //TODO: Buscar Cliente por c\u00F3digo.
         String codigoCliente = tfNroCliente.getText();
-        ClienteView cliente = sistema.buscarClienteViewPorCodigo(codigoCliente);
-        if(cliente != null)
+        if(sistema.validarNumeroCliente(codigoCliente))
         {
-          tfNombre.setEnabled(true);
-          tfNombre.setText(String.valueOf(cliente.getNumero()));
+          ClienteView cliente = sistema.buscarClienteViewPorCodigo(codigoCliente);
           
-          tfApellido.setEnabled(true);
-          tfApellido.setText(cliente.getApellido());
-          
-          boxTipoDoc.setEnabled(true);
-          
-          tfNumeroDocumento.setEnabled(true);
-          tfNumeroDocumento.setText(cliente.getNumDoc());
-          
-          tfDireccion.setEnabled(true);
-          tfDireccion.setText(cliente.getDireccion());
-          
-          tfTelefono.setEnabled(true);
-          tfTelefono.setText(cliente.getTelefono());
-          
-          tfEmail.setEnabled(true);
-          tfEmail.setText(cliente.getTelefono());
-          
-          btnAceptar.setEnabled(true);
+          if(cliente != null)
+          {
+            tfNombre.setEnabled(true);
+            tfNombre.setText(String.valueOf(cliente.getNombre()));
+            
+            tfApellido.setEnabled(true);
+            tfApellido.setText(cliente.getApellido());
+            
+            boxtipoDoc.setEnabled(true);
+            boxtipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {cliente.getTipoDoc()}));
+            
+            
+            tfNumeroDocumento.setEnabled(true);
+            tfNumeroDocumento.setText(cliente.getNumDoc());
+            
+            tfDireccion.setEnabled(true);
+            tfDireccion.setText(cliente.getDireccion());
+            
+            tfTelefono.setEnabled(true);
+            tfTelefono.setText(cliente.getTelefono());
+            
+            tfEmail.setEnabled(true);
+            tfEmail.setText(cliente.getTelefono());
+            
+            btnAceptar.setEnabled(true);
+          }else
+          {
+            JOptionPane.showInternalMessageDialog(contentPane, "NO EXISTE EL "
+                + "CLIENTE N\u00daMERO " + codigoCliente);
+          }
+        }else
+        {
+          JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00daMEROS");
         }
+          
+        
       }
     });
     btnBuscar.setBounds(497, 22, 89, 23);
@@ -191,27 +206,48 @@ public class VentanaEditarCliente extends JFrame {
     
     btnAceptar = new JButton("Aceptar");
     btnAceptar.setEnabled(false);
-    btnAceptar.addActionListener(new ActionListener() {
-      
-      public void actionPerformed(ActionEvent e) {
+    btnAceptar.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
         
-        String codigocliente = tfNroCliente.getText();
+        String codigoCliente = tfNroCliente.getText();
         String nombre = tfNombre.getText();
         String apellido = tfApellido.getText();
-        String tipodoc = (String)boxTipoDoc.getSelectedItem();
-        String documento = tfNumeroDocumento.getText();
+        String tipoDoc = (String)boxtipoDoc.getSelectedItem();
+        String numeroDocumento = tfNumeroDocumento.getText();
         String direccion = tfDireccion.getText();
         String telefono = tfTelefono.getText();
         String email = tfEmail.getText();
         
-        
-        if (nombre.equals("") || apellido.equals("") || documento.equals("") || direccion.equals("") || telefono.equals("") || email.equals(""))
+        if(sistema.validarNumeroCliente(codigoCliente))
         {
-          JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
+          ClienteView cliente = sistema.buscarClienteViewPorCodigo(codigoCliente);
+          
+          if(cliente != null)
+          {
+            if (nombre.equals("") || apellido.equals("") || numeroDocumento.equals("") || 
+                direccion.equals("") || telefono.equals("") || email.equals(""))
+            {
+              JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
+            }else
+            {
+              sistema.modificarCliente(Integer.parseInt(codigoCliente), nombre, 
+                  apellido, tipoDoc, numeroDocumento, direccion, telefono, email);
+              
+              JOptionPane.showMessageDialog(contentPane, "Cliente modificado Correctamente.");
+              dispose();
+            }
+          }
+          else
+          {
+            JOptionPane.showInternalMessageDialog(contentPane, "NO EXISTE EL "
+                + "Cliente N\u00FAmero " + codigoCliente);
+          }
+        }else
+        {
+          JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00FAMEROS");
         }
-        
-        
-        
       }
     });
     btnAceptar.setBounds(200, 296, 89, 23);
