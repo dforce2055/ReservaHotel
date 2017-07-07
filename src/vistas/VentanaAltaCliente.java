@@ -1,27 +1,25 @@
 package vistas;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Rectangle;
-import java.awt.Button;
+import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.Component;
 import sistemaReserva.SistemaReserva;
-import sistemaReserva.Cliente;
 import sistemaReserva.ClienteView;
 public class VentanaAltaCliente extends JFrame {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel contentPane;
   private JTextField tfNombre;
   private JTextField tfApellido;
@@ -31,7 +29,7 @@ public class VentanaAltaCliente extends JFrame {
   private JTextField tfEmail;
   private JButton btnAceptar;
   private JButton btnNewButton;
-  private JComboBox boxTipoDoc;
+  private JComboBox<Object> boxTipoDoc;
 
   /**
    * Launch the application.
@@ -85,8 +83,8 @@ public class VentanaAltaCliente extends JFrame {
     lblTipoDoc.setBounds(200, 143, 130, 14);
     contentPane.add(lblTipoDoc);
     
-    boxTipoDoc = new JComboBox();
-    boxTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"TipoDoc", "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
+    boxTipoDoc = new JComboBox<Object>();
+    boxTipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {"TipoDoc", "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
     boxTipoDoc.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoDoc);
     
@@ -139,20 +137,36 @@ public class VentanaAltaCliente extends JFrame {
         String telefono = tfTelefono.getText();
         String email = tfEmail.getText();
         
-        
         if (nombre.equals("") || apellido.equals("") || numDoc.equals("") || direccion.equals("") || telefono.equals("") || email.equals(""))
         {
           JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
-        }
-        
-        ClienteView nuevoCliente = sistema.buscarClienteViewPorDocumento(tipoDoc, numDoc);
-        if(nuevoCliente == null)
-        {
-          sistema.altaCliente(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email);
-          JOptionPane.showMessageDialog(contentPane, "Cliente agregado Correctamente");
         }else
         {
-          JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE INGRESAR, YA EXISTE EL CLIENTE");
+          if(sistema.validarNumeroDocumento(numDoc))//Validar el campo NumeroDocumento, solo numeros
+          {
+            ClienteView nuevoCliente = sistema.buscarClienteViewPorDocumento(tipoDoc, numDoc);
+            if(nuevoCliente == null)
+            {
+              int nroCliente = sistema.altaCliente(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email);
+              JOptionPane.showMessageDialog(contentPane, "Cliente agregado Correctamente. "
+                  +"Numero de Cliente: " +nroCliente);
+              dispose();
+            }else
+            {
+              JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE INGRESAR, "
+                  + "YA EXISTE EL CLIENTE");
+              tfNumeroDocumento.setForeground(Color.RED);
+              tfNumeroDocumento.selectAll();
+              tfNumeroDocumento.requestFocus();
+            }
+          }else
+          {
+            JOptionPane.showMessageDialog(contentPane, "El N\u00FAmero de "
+                + "Documento no puede contener letras");
+            tfNumeroDocumento.setForeground(Color.RED);
+            tfNumeroDocumento.selectAll();
+            tfNumeroDocumento.requestFocus();
+          }
         }
       }
     });
