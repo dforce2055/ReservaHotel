@@ -952,4 +952,9 @@ public class SistemaReserva
   {
     return trabajador.getView();
   }
+  
+  public boolean validarNumeroDocumento(String numeroDocumento)
+  {
+    return numeroDocumento != null && numeroDocumento.matches("[-+]?\\d*\\.?\\d+");
+  }
 } 
