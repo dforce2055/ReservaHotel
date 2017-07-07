@@ -34,6 +34,8 @@ public class CargaDatosPrueba
       s.altaCliente("Cliente " + i, "Apellido " + i, "DNI", i * 1000 + "",
           "Libertador " + i*i, i*i*i + "", "email" + i + "@asd.com");
     
+    s.altaCliente("Diego", "Pérez", "DNI", "12261201", "Lenguado", "4010-666", "diego@mail.com");
+    
     s.altaTrabajador("Pepe", "Argento", "DNI", "666", "Desconocida", "Sin pagar",
         "La internet era cara", "pepe", "chevy");
     s.altaTrabajador("Maria Elena", "Fuseneko", "DNI", "667", "Y candela?",
