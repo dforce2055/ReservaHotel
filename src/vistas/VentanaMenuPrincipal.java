@@ -24,6 +24,8 @@ import java.awt.event.FocusEvent;
 
 import sistemaReserva.SistemaReserva;
 import sistemaReserva.Trabajador;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaMenuPrincipal extends JFrame
 {
@@ -72,6 +74,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(lblBienvenido);
     
     JButton btnAltaDeCliente = new JButton("Alta de Cliente");
+    btnAltaDeCliente.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaAltaCliente altaCliente = new VentanaAltaCliente(sistema);
+          altaCliente.setVisible(true);
+        }
+      }
+    });
     btnAltaDeCliente.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent arg0)
@@ -84,6 +97,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnAltaDeCliente);
     
     JButton btnAltaDeTrabajador = new JButton("Alta de Trabajador");
+    btnAltaDeTrabajador.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaAltaTrabajador altaTrabajador = new VentanaAltaTrabajador(sistema);
+          altaTrabajador.setVisible(true);
+        }
+      }
+    });
     btnAltaDeTrabajador.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent arg0){
@@ -95,6 +119,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnAltaDeTrabajador);
     
     JButton btnAltaDeHabitacion = new JButton("Alta de Habitaci\u00F3n");
+    btnAltaDeHabitacion.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaAltaHabitacion altaHabitacion = new VentanaAltaHabitacion(sistema);
+          altaHabitacion.setVisible(true);
+        }
+      }
+    });
     btnAltaDeHabitacion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e){
@@ -106,6 +141,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnAltaDeHabitacion);
     
     JButton btnAltaDeEstadia = new JButton("Alta de Estad\u00EDa");
+    btnAltaDeEstadia.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          //VentanaAltaEstadia altaEstadia = new VentanaAltaEstadia(sistema);
+          //altaEstadia.setVisible;
+        }
+      }
+    });
     btnAltaDeEstadia.setEnabled(false);
     btnAltaDeEstadia.addMouseListener(new MouseAdapter() {
       @Override
@@ -119,6 +165,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnAltaDeEstadia);
     
     JButton btnAltaDeReserva = new JButton("Alta de Reserva");
+    btnAltaDeReserva.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaAltaReserva altaReserva = new VentanaAltaReserva(sistema);
+          altaReserva.setVisible(true);
+        }
+      }
+    });
     btnAltaDeReserva.setEnabled(true);
     btnAltaDeReserva.addMouseListener(new MouseAdapter() {
       @Override
@@ -132,6 +189,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnAltaDeReserva);
     
     JButton btnEditarCliente = new JButton("Editar Cliente");
+    btnEditarCliente.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaEditarCliente editarCliente = new VentanaEditarCliente(sistema);
+          editarCliente.setVisible(true);
+        }
+      }
+    });
     btnEditarCliente.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
@@ -144,6 +212,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnEditarCliente);
     
     JButton btnEditarTrabajador = new JButton("Editar Trabajador");
+    btnEditarTrabajador.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaEditarTrabajador editarTrabajador = new VentanaEditarTrabajador(sistema);
+          editarTrabajador.setVisible(true);
+        }
+      }
+    });
     btnEditarTrabajador.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
@@ -156,6 +235,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnEditarTrabajador);
     
     JButton btnEditarHabitacion = new JButton("Editar Habitaci\u00F3n");
+    btnEditarHabitacion.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaEditarHabitacion editarHabitacion = new VentanaEditarHabitacion(sistema);
+          editarHabitacion.setVisible(true);
+        }
+      }
+    });
     btnEditarHabitacion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
@@ -168,6 +258,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnEditarHabitacion);
     
     JButton btnEditarEstadia = new JButton("Editar Estad\u00EDa");
+    btnEditarEstadia.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          //VentanaEditarEstadia editarEstadia = new VentanaEditarEstadia(sistema);
+          //editarEstadia.setVisible(true);
+        }
+      }
+    });
     btnEditarEstadia.setEnabled(false);
     btnEditarEstadia.addMouseListener(new MouseAdapter() {
       @Override
@@ -181,6 +282,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnEditarEstadia);
     
     JButton btnEditarReserva = new JButton("Editar Reserva");
+    btnEditarReserva.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaEditarReserva editarReserva = new VentanaEditarReserva(sistema);
+          editarReserva.setVisible(true);
+        }
+      }
+    });
     btnEditarReserva.setEnabled(true);
     btnEditarReserva.addMouseListener(new MouseAdapter() {
       @Override
