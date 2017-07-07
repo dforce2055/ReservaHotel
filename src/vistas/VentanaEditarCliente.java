@@ -232,11 +232,13 @@ public class VentanaEditarCliente extends JFrame {
               JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
             }else
             {
-              sistema.modificarCliente(Integer.parseInt(codigoCliente), nombre, 
-                  apellido, tipoDoc, numeroDocumento, direccion, telefono, email);
-              
-              JOptionPane.showMessageDialog(contentPane, "Cliente modificado Correctamente.");
-              dispose();
+              if(sistema.modificarCliente(Integer.parseInt(codigoCliente), nombre, 
+                  apellido, tipoDoc, numeroDocumento, direccion, telefono, email))
+              {
+                JOptionPane.showMessageDialog(contentPane, "Cliente modificado Correctamente.");
+                dispose();
+              }else
+                JOptionPane.showMessageDialog(contentPane, "EXISTE OTRO CLIENTE CON ESE DOCUMENTO");
             }
           }
           else
