@@ -85,7 +85,7 @@ public class VentanaEditarCliente extends JFrame {
         tfTelefono.setText(cliente.getTelefono());
         
         tfEmail.setEnabled(true);
-        tfEmail.setText(cliente.getTelefono());
+        tfEmail.setText(cliente.getEmail());
         
         btnAceptar.setEnabled(true);
       }else
