@@ -1,12 +1,9 @@
 package vistas;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Rectangle;
-import java.awt.Button;
+import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -17,9 +14,16 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import sistemaReserva.SistemaReserva;
+import sistemaReserva.TrabajadorView;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaAltaTrabajador extends JFrame {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel contentPane;
   private JTextField tfNombre;
   private JTextField tfApellido;
@@ -31,7 +35,7 @@ public class VentanaAltaTrabajador extends JFrame {
   private JButton btnAceptar;
   private JButton btnNewButton;
   private JPasswordField tfPassword;
-  private JComboBox boxTipoDoc;
+  private JComboBox<Object> boxTipoDoc;
 
   /**
    * Launch the application.
@@ -54,6 +58,63 @@ public class VentanaAltaTrabajador extends JFrame {
   /**
    * Create the frame.
    */
+  public void altaTrabajador(SistemaReserva sistema)
+  {
+    String nombre = tfNombre.getText();
+    String apellido = tfApellido.getText();
+    String tipoDoc = (String)boxTipoDoc.getSelectedItem();
+    String numDoc = tfNumeroDocumento.getText();
+    String direccion = tfDireccion.getText();
+    String telefono = tfTelefono.getText();
+    String email = tfEmail.getText();
+    String usuario = tfUsuario.getText();
+    String password = new String(tfPassword.getPassword()); //con getPassword usar String.valueOf(pass)
+    
+    
+    if (nombre.equals("") || apellido.equals("") || tipoDoc.equals("") || numDoc.equals("")|| direccion.equals("") || telefono.equals("") || email.equals("") || String.valueOf(password).equals(""))
+    {
+      JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
+    }else
+    {
+      if(sistema.validarNumeroDocumento(numDoc))//Validar el campo NumeroDocumento, solo numeros
+      {
+        TrabajadorView nuevoTrabajador = sistema.buscarTrabajadorViewPorDocumento(tipoDoc, numDoc);
+        if(nuevoTrabajador == null)
+        {
+          if(sistema.validarEmail(email))
+          {
+            usuario = sistema.getUsuarioSinDominio(email);
+            tfUsuario.setText(usuario);
+            
+            int nroLegajo = sistema.altaTrabajador(nombre, apellido, tipoDoc, 
+                numDoc, direccion, telefono, email, usuario, password);
+            JOptionPane.showMessageDialog(contentPane, "Trabajador agregado Correctamente."
+                +"\nNumero de Legajo: " +nroLegajo 
+                +"\nNombre de Usuario: " +usuario
+                +"\nPassword: " +password);
+            dispose();
+          }else
+          {
+            JOptionPane.showMessageDialog(contentPane, "EMAIL INVALIDO");
+          }
+        }else
+        {
+          JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE AGREGAR, "
+              + "YA EXISTE EL TRABAJADOR");
+          tfNumeroDocumento.setForeground(Color.RED);
+          tfNumeroDocumento.selectAll();
+          tfNumeroDocumento.requestFocus();
+        }
+      }else
+      {
+        JOptionPane.showMessageDialog(contentPane, "El N\u00FAmero de "
+            + "Documento no puede contener letras");
+        tfNumeroDocumento.setForeground(Color.RED);
+        tfNumeroDocumento.selectAll();
+        tfNumeroDocumento.requestFocus();
+      }
+    }
+  }
   public VentanaAltaTrabajador(SistemaReserva sistema)
   {
     setResizable(false);//Que no lo puedan maximizar
@@ -87,8 +148,9 @@ public class VentanaAltaTrabajador extends JFrame {
     lblTipoDoc.setBounds(200, 143, 130, 14);
     contentPane.add(lblTipoDoc);
     
-    boxTipoDoc = new JComboBox();
-    boxTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"TipoDoc"}));
+    boxTipoDoc = new JComboBox<Object>();
+    boxTipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {"DNI", 
+        "LE", "LC", "CEDULA", "PASAPORTE"}));
     boxTipoDoc.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoDoc);
     
@@ -133,7 +195,9 @@ public class VentanaAltaTrabajador extends JFrame {
     contentPane.add(lblUsuario);
     
     tfUsuario = new JTextField();
+    tfUsuario.setEditable(false);
     tfUsuario.setBounds(337, 265, 150, 20);
+    tfUsuario.setText("IDEM Email");
     contentPane.add(tfUsuario);
     tfUsuario.setColumns(10);
     
@@ -146,32 +210,33 @@ public class VentanaAltaTrabajador extends JFrame {
     contentPane.add(tfPassword);
     
     btnAceptar = new JButton("Aceptar");
+    btnAceptar.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          altaTrabajador(sistema);
+      }
+    });
     btnAceptar.addActionListener(new ActionListener() {
       
-      public void actionPerformed(ActionEvent arg0) {
-        
-        String nombre = tfNombre.getText();
-        String apellido = tfApellido.getText();
-        String tipodoc = (String)boxTipoDoc.getSelectedItem();
-        String numerodocumento = tfNumeroDocumento.getText();
-        String direccion = tfDireccion.getText();
-        String telefono = tfTelefono.getText();
-        String email = tfEmail.getText();
-        String usuario = tfUsuario.getText();
-        char[] password = tfPassword.getPassword(); //con getPassword usar String.valueOf(pass)
-        
-        
-        if (nombre.equals("") || apellido.equals("") || tipodoc.equals("") || numerodocumento.equals("")|| direccion.equals("") || telefono.equals("") || email.equals("") || usuario.equals("") || String.valueOf(password).equals(""))
-        {
-          JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
-        }
-        
+      public void actionPerformed(ActionEvent arg0)
+      {
+        altaTrabajador(sistema);
       }
     });
     btnAceptar.setBounds(200, 350, 89, 23);
     contentPane.add(btnAceptar);
     
     btnNewButton = new JButton("Cancelar");
+    btnNewButton.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          dispose();
+      }
+    });
     btnNewButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         dispose();
