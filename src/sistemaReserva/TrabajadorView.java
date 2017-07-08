@@ -10,9 +10,12 @@ public class TrabajadorView
   private String direccion; 
   private String telefono; 
   private String email;
+  private String nombreUsuario;
+  private String password;
   
-  public TrabajadorView(int legajo, String nombre, String apellido, String tipoDoc, String numDoc, String direccion,
-      String telefono, String email)
+  public TrabajadorView(int legajo, String nombre, String apellido, 
+      String tipoDoc, String numDoc, String direccion,
+      String telefono, String email, String nombreUsuario, String password)
   {
     super();
     this.legajo = legajo;
@@ -23,6 +26,24 @@ public class TrabajadorView
     this.direccion = direccion;
     this.telefono = telefono;
     this.email = email;
+    this.nombreUsuario = nombreUsuario;
+    this.password = password;
+  }
+  public String getNombreUsuario()
+  {
+    return nombreUsuario;
+  }
+  public void setNombreUsuario(String nombreUsuario)
+  {
+    this.nombreUsuario = nombreUsuario;
+  }
+  public String getPassword()
+  {
+    return password;
+  }
+  public void setPassword(String password)
+  {
+    this.password = password;
   }
   public int getLegajo()
   {
