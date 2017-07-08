@@ -62,7 +62,9 @@ public class VentanaEditarCliente extends JFrame {
   /**
    * Create the frame.
    */
-  public VentanaEditarCliente(SistemaReserva sistema) {
+  public VentanaEditarCliente(SistemaReserva sistema)
+  {
+    setResizable(false);//Que no lo puedan maximizar
     setTitle("Modificar Cliente");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBounds(100, 100, 700, 480);

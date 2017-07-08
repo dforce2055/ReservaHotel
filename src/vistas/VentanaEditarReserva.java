@@ -63,7 +63,9 @@ public class VentanaEditarReserva extends JFrame {
   /**
    * Create the frame.
    */
-  public VentanaEditarReserva(SistemaReserva sistema) {
+  public VentanaEditarReserva(SistemaReserva sistema)
+  {
+    setResizable(false);//Que no lo puedan maximizar
     setTitle("Modificar Reserva");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBounds(100, 100, 700, 480);

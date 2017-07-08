@@ -54,7 +54,9 @@ public class VentanaAltaTrabajador extends JFrame {
   /**
    * Create the frame.
    */
-  public VentanaAltaTrabajador(SistemaReserva sistema) {
+  public VentanaAltaTrabajador(SistemaReserva sistema)
+  {
+    setResizable(false);//Que no lo puedan maximizar
     setTitle("Alta Trabajador");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBounds(100, 100, 700, 480);

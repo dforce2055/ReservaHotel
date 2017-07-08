@@ -52,7 +52,9 @@ public class VentanaAltaCliente extends JFrame {
   /**
    * Create the frame.
    */
-  public VentanaAltaCliente(SistemaReserva sistema) {
+  public VentanaAltaCliente(SistemaReserva sistema)
+  {
+    setResizable(false);//Que no lo puedan maximizar
     setTitle("Alta Cliente");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBounds(100, 100, 700, 480);

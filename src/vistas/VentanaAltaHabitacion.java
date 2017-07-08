@@ -56,8 +56,9 @@ public class VentanaAltaHabitacion extends JFrame {
   /**
    * Create the frame.
    */
-  public VentanaAltaHabitacion(SistemaReserva sistema) {
-    
+  public VentanaAltaHabitacion(SistemaReserva sistema)
+  {
+    setResizable(false);//Que no lo puedan maximizar
     setTitle("Alta Habitacion");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBounds(100, 100, 700, 480);
