@@ -7,6 +7,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -132,7 +133,13 @@ public class VentanaEditarCliente extends JFrame {
             JOptionPane.showMessageDialog(contentPane, "Cliente modificado Correctamente.");
             dispose();
           }else
+          {
             JOptionPane.showMessageDialog(contentPane, "EXISTE OTRO CLIENTE CON ESE DOCUMENTO");
+            tfNumeroDocumento.setForeground(Color.RED);
+            tfNumeroDocumento.selectAll();
+            tfNumeroDocumento.requestFocus();
+          }
+            
         }
       }
       else
@@ -265,7 +272,7 @@ public class VentanaEditarCliente extends JFrame {
       public void keyPressed(KeyEvent e)
       {
         if (e.getKeyCode()==KeyEvent.VK_ENTER)
-          buscar(sistema);
+          guardar(sistema);
       }
     });
     btnAceptar.setEnabled(false);
