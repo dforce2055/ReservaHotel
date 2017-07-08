@@ -1,17 +1,12 @@
 package vistas;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Rectangle;
-import java.awt.Button;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
@@ -24,6 +19,10 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 public class VentanaEditarTrabajador extends JFrame {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel contentPane;
   private JTextField tfNombre;
   private JTextField tfApellido;
