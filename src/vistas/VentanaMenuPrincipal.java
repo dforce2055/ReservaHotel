@@ -1,26 +1,16 @@
 package vistas;
 
-import java.awt.BorderLayout;
-
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
-import java.awt.Toolkit;
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 import sistemaReserva.SistemaReserva;
 import sistemaReserva.Trabajador;
@@ -30,6 +20,10 @@ import java.awt.event.KeyEvent;
 public class VentanaMenuPrincipal extends JFrame
 {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel menuPrincipal;
   
 
