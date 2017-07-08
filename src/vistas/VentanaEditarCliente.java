@@ -1,31 +1,23 @@
 package vistas;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Rectangle;
-import java.awt.Button;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.Component;
-import java.awt.Toolkit;
-import java.awt.event.ContainerAdapter;
-import java.awt.event.ContainerEvent;
-import java.awt.event.InputMethodListener;
-import java.awt.event.InputMethodEvent;
 import sistemaReserva.SistemaReserva;
 import sistemaReserva.ClienteView;;
 public class VentanaEditarCliente extends JFrame {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel contentPane;
   private JTextField tfNombre;
   private JTextField tfApellido;
@@ -62,6 +54,95 @@ public class VentanaEditarCliente extends JFrame {
   /**
    * Create the frame.
    */
+  public void buscar(SistemaReserva sistema)
+  {
+  //TODO: Buscar Cliente por c\u00F3digo.
+    String codigoCliente = tfNroCliente.getText();
+    if(sistema.validarNumeroCliente(codigoCliente))
+    {
+      ClienteView cliente = sistema.buscarClienteViewPorCodigo(codigoCliente);
+      
+      if(cliente != null)
+      {
+        tfNombre.setEnabled(true);
+        tfNombre.setText(String.valueOf(cliente.getNombre()));
+        
+        tfApellido.setEnabled(true);
+        tfApellido.setText(cliente.getApellido());
+        
+        boxtipoDoc.setEnabled(true);
+        boxtipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {
+            cliente.getTipoDoc(), "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
+        
+        
+        tfNumeroDocumento.setEnabled(true);
+        tfNumeroDocumento.setText(cliente.getNumDoc());
+        
+        tfDireccion.setEnabled(true);
+        tfDireccion.setText(cliente.getDireccion());
+        
+        tfTelefono.setEnabled(true);
+        tfTelefono.setText(cliente.getTelefono());
+        
+        tfEmail.setEnabled(true);
+        tfEmail.setText(cliente.getTelefono());
+        
+        btnAceptar.setEnabled(true);
+      }else
+      {
+        JOptionPane.showInternalMessageDialog(contentPane, "NO EXISTE EL "
+            + "CLIENTE N\u00daMERO " + codigoCliente);
+      }
+    }else
+    {
+      JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00daMEROS");
+    }
+      
+  }
+  
+  
+  public void guardar(SistemaReserva sistema)
+  {
+    String codigoCliente = tfNroCliente.getText();
+    String nombre = tfNombre.getText();
+    String apellido = tfApellido.getText();
+    String tipoDoc = (String)boxtipoDoc.getSelectedItem();
+    String numeroDocumento = tfNumeroDocumento.getText();
+    String direccion = tfDireccion.getText();
+    String telefono = tfTelefono.getText();
+    String email = tfEmail.getText();
+    
+    if(sistema.validarNumeroCliente(codigoCliente))
+    {
+      ClienteView cliente = sistema.buscarClienteViewPorCodigo(codigoCliente);
+      
+      if(cliente != null)
+      {
+        if (nombre.equals("") || apellido.equals("") || numeroDocumento.equals("") || 
+            direccion.equals("") || telefono.equals("") || email.equals(""))
+        {
+          JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
+        }else
+        {
+          if(sistema.modificarCliente(Integer.parseInt(codigoCliente), nombre, 
+              apellido, tipoDoc, numeroDocumento, direccion, telefono, email))
+          {
+            JOptionPane.showMessageDialog(contentPane, "Cliente modificado Correctamente.");
+            dispose();
+          }else
+            JOptionPane.showMessageDialog(contentPane, "EXISTE OTRO CLIENTE CON ESE DOCUMENTO");
+        }
+      }
+      else
+      {
+        JOptionPane.showInternalMessageDialog(contentPane, "NO EXISTE EL "
+            + "Cliente N\u00FAmero " + codigoCliente);
+      }
+    }else
+    {
+      JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00FAMEROS");
+    }
+  }
   public VentanaEditarCliente(SistemaReserva sistema)
   {
     setResizable(false);//Que no lo puedan maximizar
@@ -160,49 +241,7 @@ public class VentanaEditarCliente extends JFrame {
     btnBuscar.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e)
       {
-        //TODO: Buscar Cliente por c\u00F3digo.
-        String codigoCliente = tfNroCliente.getText();
-        if(sistema.validarNumeroCliente(codigoCliente))
-        {
-          ClienteView cliente = sistema.buscarClienteViewPorCodigo(codigoCliente);
-          
-          if(cliente != null)
-          {
-            tfNombre.setEnabled(true);
-            tfNombre.setText(String.valueOf(cliente.getNombre()));
-            
-            tfApellido.setEnabled(true);
-            tfApellido.setText(cliente.getApellido());
-            
-            boxtipoDoc.setEnabled(true);
-            boxtipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {
-                cliente.getTipoDoc(), "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
-            
-            
-            tfNumeroDocumento.setEnabled(true);
-            tfNumeroDocumento.setText(cliente.getNumDoc());
-            
-            tfDireccion.setEnabled(true);
-            tfDireccion.setText(cliente.getDireccion());
-            
-            tfTelefono.setEnabled(true);
-            tfTelefono.setText(cliente.getTelefono());
-            
-            tfEmail.setEnabled(true);
-            tfEmail.setText(cliente.getTelefono());
-            
-            btnAceptar.setEnabled(true);
-          }else
-          {
-            JOptionPane.showInternalMessageDialog(contentPane, "NO EXISTE EL "
-                + "CLIENTE N\u00daMERO " + codigoCliente);
-          }
-        }else
-        {
-          JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00daMEROS");
-        }
-          
-        
+        buscar(sistema);
       }
     });
     btnBuscar.setBounds(497, 22, 89, 23);
@@ -214,46 +253,7 @@ public class VentanaEditarCliente extends JFrame {
     {
       public void actionPerformed(ActionEvent e)
       {
-        
-        String codigoCliente = tfNroCliente.getText();
-        String nombre = tfNombre.getText();
-        String apellido = tfApellido.getText();
-        String tipoDoc = (String)boxtipoDoc.getSelectedItem();
-        String numeroDocumento = tfNumeroDocumento.getText();
-        String direccion = tfDireccion.getText();
-        String telefono = tfTelefono.getText();
-        String email = tfEmail.getText();
-        
-        if(sistema.validarNumeroCliente(codigoCliente))
-        {
-          ClienteView cliente = sistema.buscarClienteViewPorCodigo(codigoCliente);
-          
-          if(cliente != null)
-          {
-            if (nombre.equals("") || apellido.equals("") || numeroDocumento.equals("") || 
-                direccion.equals("") || telefono.equals("") || email.equals(""))
-            {
-              JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
-            }else
-            {
-              if(sistema.modificarCliente(Integer.parseInt(codigoCliente), nombre, 
-                  apellido, tipoDoc, numeroDocumento, direccion, telefono, email))
-              {
-                JOptionPane.showMessageDialog(contentPane, "Cliente modificado Correctamente.");
-                dispose();
-              }else
-                JOptionPane.showMessageDialog(contentPane, "EXISTE OTRO CLIENTE CON ESE DOCUMENTO");
-            }
-          }
-          else
-          {
-            JOptionPane.showInternalMessageDialog(contentPane, "NO EXISTE EL "
-                + "Cliente N\u00FAmero " + codigoCliente);
-          }
-        }else
-        {
-          JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00FAMEROS");
-        }
+        guardar(sistema);
       }
     });
     btnAceptar.setBounds(200, 296, 89, 23);
