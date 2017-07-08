@@ -84,6 +84,14 @@ public class SistemaReserva
     return null;
   }
   
+  public TrabajadorView buscarTrabajadorView(int legajo)
+  {
+    for (Trabajador t: trabajadores)
+      if (t.sosTrabajador(legajo))
+        return t.getView();
+    return null;
+  }
+  
   private Trabajador buscarTrabajadorPorDocumento(String tipoDoc, String numDoc)
   {
     for (Trabajador t: trabajadores)
@@ -92,11 +100,19 @@ public class SistemaReserva
     return null;
   }
   
+  public TrabajadorView buscarTrabajadorViewPorDocumento(String tipoDoc, String numDoc)
+  {
+    for (Trabajador t: trabajadores)
+      if (t.esTuDocumento(tipoDoc, numDoc)) 
+        return t.getView();
+    return null;
+  }
+  
   private boolean existeTrabajadorConEseDocumento(String tipoDoc, String numDoc)
   {
     Trabajador trabajador = buscarTrabajadorPorDocumento(tipoDoc, numDoc);
     
-    return trabajador == null;
+    return trabajador != null;
   }
   
   //usado para el login
@@ -153,7 +169,7 @@ public class SistemaReserva
     return 0;
   }
   
-  public void altaTrabajador(String nombre, String apellido, String tipoDoc, 
+  public int altaTrabajador(String nombre, String apellido, String tipoDoc, 
       String numDoc, String direccion, String telefono, String email, 
       String usuario, String password)
   {
@@ -162,7 +178,9 @@ public class SistemaReserva
     {
       trabajador = new Trabajador(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email, usuario, password);
       trabajadores.add(trabajador);
+      return trabajador.getLegajo();
     }
+    return 0;
   }
   
   public void altaHabitacion(String numero, String piso, String descripcion, 
@@ -954,11 +972,34 @@ public class SistemaReserva
   
   public boolean validarNumeroDocumento(String numeroDocumento)
   {
-    return numeroDocumento != null && numeroDocumento.matches("[-+]?\\d*\\.?\\d+");
+    String patron = "[-+]?\\d*\\.?\\d+";
+    return numeroDocumento != null && numeroDocumento.matches(patron);
   }
   
   public boolean validarNumeroCliente(String numeroCliente)
   {
-    return numeroCliente != null && numeroCliente.matches("[-+]?\\d*\\.?\\d+");
+    String patron = "[-+]?\\d*\\.?\\d+";
+    return numeroCliente != null && numeroCliente.matches(patron);
+  }
+  
+  public boolean validarNumeroLegajoTrabajador(String legajo)
+  {
+    String patron = "[-+]?\\d*\\.?\\d+";
+    return legajo != null && legajo.matches(patron);
+  }
+  
+  public boolean validarEmail(String email)
+  {
+    String patron = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    
+    return email != null && email.matches(patron);
+  }
+  
+  public String getUsuarioSinDominio(String email)
+  {
+    String regEx = "@[A-Za-z0-9]";
+    String usuario[] = email.split(regEx);
+    return usuario[0];
   }
 } 
