@@ -11,7 +11,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import sistemaReserva.SistemaReserva;
-import sistemaReserva.ClienteView;;
+import sistemaReserva.ClienteView;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;;
 public class VentanaEditarCliente extends JFrame {
 
   /**
@@ -238,6 +240,15 @@ public class VentanaEditarCliente extends JFrame {
     
     
     btnBuscar = new JButton("Buscar");
+    btnBuscar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          buscar(sistema);
+      }
+    });
     btnBuscar.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e)
       {
@@ -248,6 +259,15 @@ public class VentanaEditarCliente extends JFrame {
     contentPane.add(btnBuscar);
     
     btnAceptar = new JButton("Aceptar");
+    btnAceptar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          buscar(sistema);
+      }
+    });
     btnAceptar.setEnabled(false);
     btnAceptar.addActionListener(new ActionListener()
     {
@@ -260,6 +280,15 @@ public class VentanaEditarCliente extends JFrame {
     contentPane.add(btnAceptar);
     
     btnCancelar = new JButton("Cancelar");
+    btnCancelar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          dispose();
+      }
+    });
     btnCancelar.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         dispose();
