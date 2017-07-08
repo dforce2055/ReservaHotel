@@ -52,6 +52,55 @@ public class VentanaAltaCliente extends JFrame {
   /**
    * Create the frame.
    */
+  public void altaCliente(SistemaReserva sistema)
+  {
+    String nombre = tfNombre.getText();
+    String apellido = tfApellido.getText();
+    String tipoDoc = (String)boxTipoDoc.getSelectedItem();
+    String numDoc = tfNumeroDocumento.getText();
+    String direccion = tfDireccion.getText();
+    String telefono = tfTelefono.getText();
+    String email = tfEmail.getText();
+    
+    if (nombre.equals("") || apellido.equals("") || numDoc.equals("") || direccion.equals("") || telefono.equals("") || email.equals(""))
+    {
+      JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
+    }else
+    {
+      if(sistema.validarNumeroDocumento(numDoc))//Validar el campo NumeroDocumento, solo numeros
+      {
+        ClienteView nuevoCliente = sistema.buscarClienteViewPorDocumento(tipoDoc, numDoc);
+        if(nuevoCliente == null)
+        {
+          if(sistema.validarEmail(email))
+          {
+            int nroCliente = sistema.altaCliente(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email);
+            JOptionPane.showMessageDialog(contentPane, "Cliente agregado Correctamente. "
+                +"Numero de Cliente: " +nroCliente);
+            dispose();
+          }else
+          {
+            JOptionPane.showMessageDialog(contentPane, "EMAIL INVALIDO");
+          }
+        }else
+        {
+          JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE INGRESAR, "
+              + "YA EXISTE EL CLIENTE");
+          tfNumeroDocumento.setForeground(Color.RED);
+          tfNumeroDocumento.selectAll();
+          tfNumeroDocumento.requestFocus();
+        }
+      }else
+      {
+        JOptionPane.showMessageDialog(contentPane, "El N\u00FAmero de "
+            + "Documento no puede contener letras");
+        tfNumeroDocumento.setForeground(Color.RED);
+        tfNumeroDocumento.selectAll();
+        tfNumeroDocumento.requestFocus();
+      }
+    }
+  }
+  
   public VentanaAltaCliente(SistemaReserva sistema)
   {
     setResizable(false);//Que no lo puedan maximizar
@@ -127,49 +176,11 @@ public class VentanaAltaCliente extends JFrame {
     tfEmail.setColumns(10);
     
     btnAceptar = new JButton("Aceptar");
-    btnAceptar.addActionListener(new ActionListener() {
-      
-      public void actionPerformed(ActionEvent e) {
-        
-        String nombre = tfNombre.getText();
-        String apellido = tfApellido.getText();
-        String tipoDoc = (String)boxTipoDoc.getSelectedItem();
-        String numDoc = tfNumeroDocumento.getText();
-        String direccion = tfDireccion.getText();
-        String telefono = tfTelefono.getText();
-        String email = tfEmail.getText();
-        
-        if (nombre.equals("") || apellido.equals("") || numDoc.equals("") || direccion.equals("") || telefono.equals("") || email.equals(""))
-        {
-          JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
-        }else
-        {
-          if(sistema.validarNumeroDocumento(numDoc))//Validar el campo NumeroDocumento, solo numeros
-          {
-            ClienteView nuevoCliente = sistema.buscarClienteViewPorDocumento(tipoDoc, numDoc);
-            if(nuevoCliente == null)
-            {
-              int nroCliente = sistema.altaCliente(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email);
-              JOptionPane.showMessageDialog(contentPane, "Cliente agregado Correctamente. "
-                  +"Numero de Cliente: " +nroCliente);
-              dispose();
-            }else
-            {
-              JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE INGRESAR, "
-                  + "YA EXISTE EL CLIENTE");
-              tfNumeroDocumento.setForeground(Color.RED);
-              tfNumeroDocumento.selectAll();
-              tfNumeroDocumento.requestFocus();
-            }
-          }else
-          {
-            JOptionPane.showMessageDialog(contentPane, "El N\u00FAmero de "
-                + "Documento no puede contener letras");
-            tfNumeroDocumento.setForeground(Color.RED);
-            tfNumeroDocumento.selectAll();
-            tfNumeroDocumento.requestFocus();
-          }
-        }
+    btnAceptar.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        altaCliente(sistema);
       }
     });
     btnAceptar.setBounds(200, 296, 89, 23);
