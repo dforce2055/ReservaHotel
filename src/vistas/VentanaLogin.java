@@ -1,9 +1,6 @@
 package vistas;
 
-import java.awt.BorderLayout;
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -22,7 +19,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.Window.Type;
 
 import sistemaReserva.SistemaReserva;
 import sistemaReserva.Trabajador;
@@ -33,6 +29,10 @@ import java.awt.event.KeyEvent;
 public class VentanaLogin extends JFrame
 {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel menuLogin;
   private JTextField txtUsuario;
   private JPasswordField passwordField;
