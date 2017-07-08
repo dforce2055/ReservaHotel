@@ -86,7 +86,7 @@ public class VentanaAltaCliente extends JFrame {
     contentPane.add(lblTipoDoc);
     
     boxTipoDoc = new JComboBox<Object>();
-    boxTipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {"TipoDoc", "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
+    boxTipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {"DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
     boxTipoDoc.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoDoc);
     
