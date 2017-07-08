@@ -158,7 +158,8 @@ public class VentanaEditarCliente extends JFrame {
     
     btnBuscar = new JButton("Buscar");
     btnBuscar.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
+      public void actionPerformed(ActionEvent e)
+      {
         //TODO: Buscar Cliente por c\u00F3digo.
         String codigoCliente = tfNroCliente.getText();
         if(sistema.validarNumeroCliente(codigoCliente))
@@ -174,7 +175,8 @@ public class VentanaEditarCliente extends JFrame {
             tfApellido.setText(cliente.getApellido());
             
             boxtipoDoc.setEnabled(true);
-            boxtipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {cliente.getTipoDoc()}));
+            boxtipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {
+                cliente.getTipoDoc(), "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
             
             
             tfNumeroDocumento.setEnabled(true);
