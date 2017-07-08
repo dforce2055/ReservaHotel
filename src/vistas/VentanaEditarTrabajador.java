@@ -17,6 +17,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import sistemaReserva.SistemaReserva;
+import sistemaReserva.TrabajadorView;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 public class VentanaEditarTrabajador extends JFrame {
 
   private JPanel contentPane;
@@ -27,8 +32,8 @@ public class VentanaEditarTrabajador extends JFrame {
   private JTextField tfTelefono;
   private JTextField tfEmail;
   private JButton btnAceptar;
-  private JButton btnNewButton;
-  private JComboBox boxTipoDoc;
+  private JButton btnCancelar;
+  private JComboBox<Object> boxTipoDoc;
   private JLabel lblLegajo;
   private JTextField tfLegajo;
   private JButton btnBuscar;
@@ -54,6 +59,94 @@ public class VentanaEditarTrabajador extends JFrame {
   /**
    * Create the frame.
    */
+  public void buscar(SistemaReserva sistema)
+  {
+    String legajo = tfLegajo.getText();
+    
+    //Buscar trabajador por numero de legajo
+    if(sistema.validarNumeroLegajoTrabajador(legajo))
+    {
+      TrabajadorView trabajador = sistema.buscarTrabajadorView(Integer.parseInt(legajo));
+      if(trabajador != null)
+      {
+        tfLegajo.setEnabled(true);
+        tfLegajo.setText(String.valueOf(trabajador.getLegajo()));
+        
+        tfNombre.setEnabled(true);
+        tfNombre.setText(trabajador.getNombre());
+        
+        tfApellido.setEnabled(true);
+        tfApellido.setText(trabajador.getApellido());
+        
+        boxTipoDoc.setEnabled(true);
+        boxTipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {
+            trabajador.getTipoDoc(), "DNI", "LE", "LC", "CEDULA", 
+            "PASAPORTE"}));
+        
+        tfNumeroDocumento.setEnabled(true);
+        tfNumeroDocumento.setText(trabajador.getNumDoc());
+        
+        tfDireccion.setEnabled(true);
+        tfDireccion.setText(trabajador.getDireccion());
+        
+        tfTelefono.setEnabled(true);
+        tfTelefono.setText(trabajador.getTelefono());
+        
+        tfEmail.setEnabled(true);
+        tfEmail.setText(trabajador.getEmail());
+        btnAceptar.setEnabled(true);
+      }else
+      {
+        JOptionPane.showInternalMessageDialog(contentPane, "NO EXISTE EL "
+            + "TRABAJADOR CON LEGAJO N\u00daMERO " +legajo);
+      }
+    }else
+    {
+      JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00daMEROS");
+    }
+  }
+  
+  public void guardar(SistemaReserva sistema)
+  {
+    String legajo = tfLegajo.getText();
+    String nombre = tfNombre.getText();
+    String apellido = tfApellido.getText();
+    String tipoDoc = (String)boxTipoDoc.getSelectedItem();
+    String numDoc = tfNumeroDocumento.getText();
+    String direccion = tfDireccion.getText();
+    String telefono = tfTelefono.getText();
+    String email = tfEmail.getText();
+    
+    if(sistema.validarNumeroLegajoTrabajador(legajo))
+    {
+      TrabajadorView nuevoTrabajador = sistema.buscarTrabajadorView(Integer.parseInt(legajo));
+     
+      if(nuevoTrabajador != null)
+      {
+        if (nombre.equals("") || apellido.equals("") || tipoDoc.equals("") || numDoc.equals("")|| direccion.equals("") || telefono.equals("") || email.equals(""))
+        {
+          JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
+        }else
+        {
+          if(sistema.modificarTrabajador(Integer.parseInt(legajo), nombre, apellido, tipoDoc, numDoc, direccion, telefono, email))
+          {
+            JOptionPane.showMessageDialog(contentPane, "Trabajador modificado Correctamente.");
+            dispose();
+          }
+        }
+      }else
+      {
+        JOptionPane.showInternalMessageDialog(contentPane, "NO EXISTE EL "
+            + "TRABAJADOR CON LEGAJO N\u00daMERO " + legajo);
+      }
+    }else
+    {
+      JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00daMEROS");
+    }
+    
+  }
+  
+  
   public VentanaEditarTrabajador(SistemaReserva sistema)
   {
     setResizable(false);//Que no lo puedan maximizar
@@ -89,9 +182,10 @@ public class VentanaEditarTrabajador extends JFrame {
     lblTipoDoc.setBounds(200, 143, 130, 14);
     contentPane.add(lblTipoDoc);
     
-    boxTipoDoc = new JComboBox();
+    boxTipoDoc = new JComboBox<Object>();
     boxTipoDoc.setEnabled(false);
-    boxTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"TipoDoc"}));
+    boxTipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {"DNI", 
+        "LE", "LC", "CEDULA", "PASAPORTE"}));
     boxTipoDoc.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoDoc);
     
@@ -136,38 +230,39 @@ public class VentanaEditarTrabajador extends JFrame {
     tfEmail.setColumns(10);
     
     btnAceptar = new JButton("Aceptar");
+    btnAceptar.addKeyListener(new KeyAdapter() {
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          guardar(sistema);
+      }
+    });
     btnAceptar.setEnabled(false);
     btnAceptar.addActionListener(new ActionListener() {
       
-      public void actionPerformed(ActionEvent arg0) {
-        
-        String nombre = tfNombre.getText();
-        String apellido = tfApellido.getText();
-        String tipodoc = (String)boxTipoDoc.getSelectedItem();
-        String numerodocumento = tfNumeroDocumento.getText();
-        String direccion = tfDireccion.getText();
-        String telefono = tfTelefono.getText();
-        String email = tfEmail.getText();
-        
-        
-        if (nombre.equals("") || apellido.equals("") || tipodoc.equals("") || numerodocumento.equals("")|| direccion.equals("") || telefono.equals("") || email.equals(""))
-        {
-          JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
-        }
-        
+      public void actionPerformed(ActionEvent arg0)
+      {
+        guardar(sistema);
       }
     });
     btnAceptar.setBounds(200, 306, 89, 23);
     contentPane.add(btnAceptar);
     
-    btnNewButton = new JButton("Cancelar");
-    btnNewButton.addActionListener(new ActionListener() {
+    btnCancelar = new JButton("Cancelar");
+    btnCancelar.addKeyListener(new KeyAdapter() {
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          dispose();
+      }
+    });
+    btnCancelar.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         dispose();
       }
     });
-    btnNewButton.setBounds(398, 306, 89, 23);
-    contentPane.add(btnNewButton);
+    btnCancelar.setBounds(398, 306, 89, 23);
+    contentPane.add(btnCancelar);
     
     lblLegajo = new JLabel("Ingresar Legajo:");
     lblLegajo.setBounds(200, 37, 117, 14);
@@ -179,6 +274,21 @@ public class VentanaEditarTrabajador extends JFrame {
     tfLegajo.setColumns(10);
     
     btnBuscar = new JButton("Buscar");
+    btnBuscar.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          buscar(sistema);
+      }
+    });
+    btnBuscar.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent arg0)
+      {
+        buscar(sistema);
+      }
+    });
     btnBuscar.setBounds(497, 33, 89, 23);
     contentPane.add(btnBuscar);
   }
