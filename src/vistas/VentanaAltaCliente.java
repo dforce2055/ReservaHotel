@@ -83,6 +83,9 @@ public class VentanaAltaCliente extends JFrame {
           }else
           {
             JOptionPane.showMessageDialog(contentPane, "EMAIL INVALIDO");
+            tfEmail.setForeground(Color.RED);
+            tfEmail.selectAll();
+            tfEmail.requestFocus();
           }
         }else
         {
