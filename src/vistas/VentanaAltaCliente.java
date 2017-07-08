@@ -14,6 +14,8 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import sistemaReserva.SistemaReserva;
 import sistemaReserva.ClienteView;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 public class VentanaAltaCliente extends JFrame {
 
   /**
@@ -176,6 +178,15 @@ public class VentanaAltaCliente extends JFrame {
     tfEmail.setColumns(10);
     
     btnAceptar = new JButton("Aceptar");
+    btnAceptar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          altaCliente(sistema);
+      }
+    });
     btnAceptar.addActionListener(new ActionListener()
     {
       public void actionPerformed(ActionEvent e)
@@ -187,6 +198,15 @@ public class VentanaAltaCliente extends JFrame {
     contentPane.add(btnAceptar);
     
     btnNewButton = new JButton("Cancelar");
+    btnNewButton.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          dispose();
+      }
+    });
     btnNewButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         dispose();
