@@ -72,7 +72,7 @@ public class Habitacion
   //negocio
   public boolean sosHabitacion(String numero)
   {
-    return this.numero == numero;
+    return this.numero.equals(numero);
   }
   
   public void darBaja()
