@@ -976,9 +976,14 @@ public class SistemaReserva
     return habitacion.getView();
   }
   
-  ItemTarifaView getItemTarivaView(ItemTarifa item)
+  ItemTarifaView getItemTarifaView(ItemTarifa item)
   {
     return item.getView();
+  }
+  
+  Vector<String> getTiposHabitacionesActivas()
+  {
+    return this.tarifario.getTiposActivos();
   }
   
   ReservaView getReserva(Reserva reserva)
