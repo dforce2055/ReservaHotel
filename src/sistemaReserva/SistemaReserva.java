@@ -1004,6 +1004,12 @@ public class SistemaReserva
     return legajo != null && legajo.matches(patron);
   }
   
+  public boolean validarNumeroHabitacion(String numero)
+  {
+    String patron = "[-+]?\\d*\\.?\\d+";
+    return numero != null && numero.matches(patron);
+  }
+  
   public boolean validarEmail(String email)
   {
     String patron = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
