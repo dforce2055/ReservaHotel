@@ -32,7 +32,7 @@ public class VentanaAltaHabitacion extends JFrame {
   private JComboBox<String> boxPiso;
   private JComboBox<String> boxTipoHab;
   private JTextArea tfDescripcion;
-  private JLabel lblCaracteristicas;
+  private JTextArea textAreaCaracteristicas;
   
 
   /**
@@ -60,7 +60,7 @@ public class VentanaAltaHabitacion extends JFrame {
     String piso = (String)boxPiso.getSelectedItem();
     String tipoHab = (String)boxTipoHab.getSelectedItem();
     String descripcion = tfDescripcion.getText();
-    String caracteristicas = lblCaracteristicas.getText();
+    String caracteristicas = textAreaCaracteristicas.getText();
     
     if (numero.equals("") || piso.equals("") || tipoHab.equals(""))
     {
@@ -121,7 +121,7 @@ public class VentanaAltaHabitacion extends JFrame {
     boxPiso.setBounds(337, 49, 60, 20);
     contentPane.add(boxPiso);
     
-    JLabel lblTipoHab = new JLabel("Tipo de Habitaci\u00F3n:");
+    JLabel lblTipoHab = new JLabel("Tipo:");
     lblTipoHab.setBounds(200, 77, 130, 14);
     contentPane.add(lblTipoHab);
     
@@ -181,11 +181,11 @@ public class VentanaAltaHabitacion extends JFrame {
     btnCancelar.setBounds(387, 296, 100, 23);
     contentPane.add(btnCancelar);
     
-    lblCaracteristicas = new JLabel("Caracteristicas");
+    JLabel lblCaracteristicas = new JLabel("Caracteristicas:");
     lblCaracteristicas.setBounds(200, 218, 130, 15);
     contentPane.add(lblCaracteristicas);
     
-    JTextArea textAreaCaracteristicas = new JTextArea();
+    textAreaCaracteristicas = new JTextArea();
     textAreaCaracteristicas.setBounds(337, 218, 150, 60);
     textAreaCaracteristicas.setBorder(UIManager.getBorder("TextField.border"));
     contentPane.add(textAreaCaracteristicas);
