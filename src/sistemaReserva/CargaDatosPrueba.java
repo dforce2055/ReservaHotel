@@ -29,6 +29,9 @@ public class CargaDatosPrueba
             tipos[i]);
     }
     
+    s.altaHabitacion("100", "1", "descripcion", "caracteristicas", "Individual");
+    s.altaHabitacion("200", "2", "descripcion", "caracteristicas", "Doble");
+    
     int clientes = 4;
     for (int i = 0; i < clientes; i++)
       s.altaCliente("Cliente " + i, "Apellido " + i, "DNI", i * 1000 + "",
