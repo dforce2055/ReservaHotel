@@ -482,7 +482,7 @@ public class SistemaReserva
     return false;
   }
   
-  public boolean modificarTrabajadorPassword(int legajo, String passwordAnterior, String PasswordNuevo)
+  public boolean modificarTrabajadorPassword(int legajo, String passwordAnterior, String passwordNuevo)
   {
     Trabajador trabajador = buscarTrabajador(legajo);
     
@@ -491,7 +491,7 @@ public class SistemaReserva
       String passwordActual = trabajador.getPassword();
       if(passwordAnterior.equals(passwordActual))
       {
-        trabajador.setPassword(PasswordNuevo);
+        trabajador.setPassword(passwordNuevo);
         return true;
       }
     }
