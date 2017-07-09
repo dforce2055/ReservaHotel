@@ -30,7 +30,7 @@ public class VentanaEditarCliente extends JFrame {
   private JTextField tfEmail;
   private JButton btnAceptar;
   private JButton btnCancelar;
-  private JComboBox<Object> boxtipoDoc;
+  private JComboBox<String> boxtipoDoc;
   private JTextField tfNroCliente;
   private JButton btnBuscar;
 
@@ -74,8 +74,7 @@ public class VentanaEditarCliente extends JFrame {
         tfApellido.setText(cliente.getApellido());
         
         boxtipoDoc.setEnabled(true);
-        boxtipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {
-            cliente.getTipoDoc(), "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
+        boxtipoDoc.setSelectedItem(cliente.getTipoDoc());
         
         
         tfNumeroDocumento.setEnabled(true);
@@ -198,9 +197,10 @@ public class VentanaEditarCliente extends JFrame {
     lbltipoDoc.setBounds(200, 143, 130, 14);
     contentPane.add(lbltipoDoc);
     
-    boxtipoDoc = new JComboBox<Object>();
+    boxtipoDoc = new JComboBox<String>();
     boxtipoDoc.setEnabled(false);
-    boxtipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {"tipoDoc", "DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
+    boxtipoDoc.setModel(new DefaultComboBoxModel<String>(new String[] {"DNI", 
+        "LE", "LC", "CEDULA", "PASAPORTE"}));
     boxtipoDoc.setBounds(337, 140, 150, 20);
     contentPane.add(boxtipoDoc);
     

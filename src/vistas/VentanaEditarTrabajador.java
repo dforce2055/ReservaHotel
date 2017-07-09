@@ -34,7 +34,7 @@ public class VentanaEditarTrabajador extends JFrame {
   private JTextField tfEmail;
   private JButton btnAceptar;
   private JButton btnCancelar;
-  private JComboBox<Object> boxTipoDoc;
+  private JComboBox<String> boxTipoDoc;
   private JLabel lblLegajo;
   private JTextField tfLegajo;
   private JButton btnBuscar;
@@ -85,9 +85,7 @@ public class VentanaEditarTrabajador extends JFrame {
         tfApellido.setText(trabajador.getApellido());
         
         boxTipoDoc.setEnabled(true);
-        boxTipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {
-            trabajador.getTipoDoc(), "DNI", "LE", "LC", "CEDULA", 
-            "PASAPORTE"}));
+        boxTipoDoc.setSelectedItem(trabajador.getTipoDoc());
         
         tfNumeroDocumento.setEnabled(true);
         tfNumeroDocumento.setText(trabajador.getNumDoc());
@@ -207,9 +205,9 @@ public class VentanaEditarTrabajador extends JFrame {
     lblTipoDoc.setBounds(171, 140, 160, 14);
     contentPane.add(lblTipoDoc);
     
-    boxTipoDoc = new JComboBox<Object>();
+    boxTipoDoc = new JComboBox<String>();
     boxTipoDoc.setEnabled(false);
-    boxTipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {"DNI", 
+    boxTipoDoc.setModel(new DefaultComboBoxModel<String>(new String[] {"DNI", 
         "LE", "LC", "CEDULA", "PASAPORTE"}));
     boxTipoDoc.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoDoc);
