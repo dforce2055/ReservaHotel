@@ -132,6 +132,14 @@ public class SistemaReserva
     return null;
   }
   
+  public HabitacionView buscarHabitacionView(String numero)
+  {
+    for (Habitacion h: habitaciones)
+      if (h.sosHabitacion(numero))
+        return h.getView();
+    return null;
+  }
+  
   private Reserva buscarReserva(int numero)
   { 
     for (Reserva r: reservas)
@@ -156,6 +164,30 @@ public class SistemaReserva
     return null;
   }
   
+  private Vector<Estadia> buscarEstadiasPorTipo(String tipoHabitacion)
+  {
+    Vector<Estadia> v = new Vector<Estadia>();
+    if (existeTipoHabitacion(tipoHabitacion))
+    {
+      for (Estadia e: estadias)
+        if (e.tuTipoEs(tipoHabitacion))
+          v.add(e);
+    }
+    return v;
+  }
+
+  public Vector<Reserva> buscarReservasPorTipo(String tipoHabitacion)
+  {
+    Vector<Reserva> v = new Vector<Reserva>();
+    if (existeTipoHabitacion(tipoHabitacion))  
+    {
+      for (Reserva r: reservas)
+        if (r.tuTipoEs(tipoHabitacion))
+          v.add(r);
+    }
+    return v;
+  }
+
   public int altaCliente(String nombre, String apellido, String tipoDoc, 
       String numDoc, String direccion, String telefono, String email)
   {
@@ -855,30 +887,6 @@ public class SistemaReserva
     return tarifario.existeTipo(tipo);
   }
 
-  private Vector<Estadia> buscarEstadiasPorTipo(String tipoHabitacion)
-  {
-    Vector<Estadia> v = new Vector<Estadia>();
-    if (existeTipoHabitacion(tipoHabitacion))
-    {
-      for (Estadia e: estadias)
-        if (e.tuTipoEs(tipoHabitacion))
-          v.add(e);
-    }
-    return v;
-  }
-  
-  public Vector<Reserva> buscarReservasPorTipo(String tipoHabitacion)
-  {
-    Vector<Reserva> v = new Vector<Reserva>();
-    if (existeTipoHabitacion(tipoHabitacion))  
-    {
-      for (Reserva r: reservas)
-        if (r.tuTipoEs(tipoHabitacion))
-          v.add(r);
-    }
-    return v;
-  }
-  
   /**
    * imprime la cantidad de habitaciones disponibles por cada tipo;
    * cuando haya interfaz va a tener que devolver un vector de nodos con tipoHab (string) y cantidad
