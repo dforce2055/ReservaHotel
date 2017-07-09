@@ -86,7 +86,7 @@ public class VentanaLogin extends JFrame
     setTitle("Sistema de Reserva");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
-    //Posición en pantalla
+    //Posici\u00f3n en pantalla
     Dimension sizePantalla = Toolkit.getDefaultToolkit().getScreenSize();
     int centroALoAncho = (int)(sizePantalla.getWidth() - 800)/2;
     int centroALoAlto = (int)(sizePantalla.getHeight() - 480)/2;
