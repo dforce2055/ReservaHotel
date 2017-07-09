@@ -12,9 +12,9 @@ public class CargaDatosPrueba
   public void CargarDatos()
   {
     //Carga de habitaciones
-    String[] tipos = {"Doble", "Triple"}; 
-    double[] precios = { 750, 1000 };
-    int[] cantidades = { 2, 1 };
+    String[] tipos = {"Individual", "Doble", "Triple"}; 
+    double[] precios = { 50, 750, 1000 };
+    int[] cantidades = { 5, 2, 1 };
     
     //loopear por cada tipo de habitacion
     for (int i = 0; i < tipos.length; i++)
@@ -34,7 +34,7 @@ public class CargaDatosPrueba
       s.altaCliente("Cliente " + i, "Apellido " + i, "DNI", i * 1000 + "",
           "Libertador " + i*i, i*i*i + "", "email" + i + "@asd.com");
     
-    s.altaCliente("Diego", "Pérez", "DNI", "12261201", "Lenguado", "4010-666", "diego@mail.com");
+    s.altaCliente("Diego", "Pï¿½rez", "DNI", "12261201", "Lenguado", "4010-666", "diego@mail.com");
     
     s.altaTrabajador("Pepe", "Argento", "DNI", "666", "Desconocida", "Sin pagar",
         "La internet era cara", "pepe", "chevy");
