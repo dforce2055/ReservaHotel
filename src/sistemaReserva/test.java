@@ -5,11 +5,20 @@ import java.time.LocalDate;
 public class test
 {
 
+
   public static void main(String[] args)
   {
     SistemaReserva sis = new SistemaReserva();
-    Trabajador trabajador = sis.buscarTrabajadorPorUsuario("pepe");
-    System.out.println(trabajador.esTuPassword("chevy"));
+    String numeroHabitacion = "100";
+    
+    for(String habitacion:sis.getTiposHabitacionesActivas())
+      System.out.println(habitacion);
+    
+    HabitacionView habitacion = sis.buscarHabitacionView(numeroHabitacion);
+    System.out.println(sis.validarNumeroHabitacion(numeroHabitacion));
+    System.out.println(habitacion != null);
+    
+    System.out.println(habitacion.getNumero() +" " +habitacion.getTipo());
     
     /*
     sis.altaTarifa("Doble", 1000f);
