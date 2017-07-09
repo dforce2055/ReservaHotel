@@ -56,39 +56,44 @@ public class VentanaAltaHabitacion extends JFrame {
    */
   public void altaHabitacion(SistemaReserva sistema)
   {
-    String numero = tfNumero.getText();
+    String numeroHabitacion = tfNumero.getText();
     String piso = (String)boxPiso.getSelectedItem();
     String tipoHab = (String)boxTipoHab.getSelectedItem();
     String descripcion = tfDescripcion.getText();
     String caracteristicas = textAreaCaracteristicas.getText();
     
-    if (numero.equals("") || piso.equals("") || tipoHab.equals(""))
+    if (numeroHabitacion.equals("") || piso.equals("") || tipoHab.equals(""))
     {
       JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
     }else
     {
-      if(sistema.validarNumeroHabitacion(numero))
+      if(sistema.validarNumeroHabitacion(numeroHabitacion))
       {
-        HabitacionView habitacion = sistema.buscarHabitacionView(numero);
+        HabitacionView habitacion = sistema.buscarHabitacionView(numeroHabitacion);
         if(habitacion == null)
         {
-          if(sistema.altaHabitacion(numero, piso, descripcion, caracteristicas, tipoHab))
+          if(sistema.altaHabitacion(numeroHabitacion, piso, descripcion, caracteristicas, tipoHab))
           {
             JOptionPane.showMessageDialog(contentPane, "Habitaci\u00f3n creada "
                 + "Correctamente."
-                +"\nHabitaci\u00f3n: " +numero 
+                +"\nHabitaci\u00f3n: " +numeroHabitacion 
                 +"\nPiso: " +piso
                 +"\nTipo: " +tipoHab);
             dispose();
           }else
           {
-            JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE AGREGAR");
+            JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE AGREGAR "
+                +"HABITACI\u00d3N N\u00daMERO: " +numeroHabitacion);
           }
         }else
         {
-          JOptionPane.showMessageDialog(contentPane, "NO ES POSIBLE AGREGAR "
-              + "HABITACI\u00d3N N\u00daMERO " +numero);
+          JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE AGREGAR "
+              +"YA EXISTE UNA HABITACI\u00d3N CON EL N\u00daMERO: " 
+              +numeroHabitacion);
         }
+      }else
+      {
+        JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00FAMEROS");
       }
     }
   }
