@@ -1,41 +1,39 @@
 package vistas;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Rectangle;
-import java.awt.Button;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import sistemaReserva.SistemaReserva;
+import sistemaReserva.HabitacionView;
+import java.util.Vector;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaAltaHabitacion extends JFrame {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel contentPane;
   private JTextField tfNumero;
   private JButton btnAceptar;
-  private JButton btnNewButton;
-  private JComboBox boxPiso;
-  private JComboBox boxTipoHab;
+  private JButton btnCancelar;
+  private JComboBox<String> boxPiso;
+  private JComboBox<String> boxTipoHab;
+  private JTextArea tfDescripcion;
+  private JLabel lblCaracteristicas;
+  
 
   /**
    * Launch the application.
@@ -56,10 +54,49 @@ public class VentanaAltaHabitacion extends JFrame {
   /**
    * Create the frame.
    */
+  public void altaHabitacion(SistemaReserva sistema)
+  {
+    String numero = tfNumero.getText();
+    String piso = (String)boxPiso.getSelectedItem();
+    String tipoHab = (String)boxTipoHab.getSelectedItem();
+    String descripcion = tfDescripcion.getText();
+    String caracteristicas = lblCaracteristicas.getText();
+    
+    if (numero.equals("") || piso.equals("") || tipoHab.equals(""))
+    {
+      JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
+    }else
+    {
+      if(sistema.validarNumeroHabitacion(numero))
+      {
+        HabitacionView habitacion = sistema.buscarHabitacionView(numero);
+        if(habitacion == null)
+        {
+          if(sistema.altaHabitacion(numero, piso, descripcion, caracteristicas, tipoHab))
+          {
+            JOptionPane.showMessageDialog(contentPane, "Habitaci\u00f3n creada "
+                + "Correctamente."
+                +"\nHabitaci\u00f3n: " +numero 
+                +"\nPiso: " +piso
+                +"\nTipo: " +tipoHab);
+            dispose();
+          }else
+          {
+            JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE AGREGAR");
+          }
+        }else
+        {
+          JOptionPane.showMessageDialog(contentPane, "NO ES POSIBLE AGREGAR "
+              + "HABITACI\u00d3N N\u00daMERO " +numero);
+        }
+      }
+    }
+  }
+  
   public VentanaAltaHabitacion(SistemaReserva sistema)
   {
     setResizable(false);//Que no lo puedan maximizar
-    setTitle("Alta Habitacion");
+    setTitle("Alta Habitaci\u00f3n");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBounds(100, 100, 700, 480);
     contentPane = new JPanel();
@@ -67,70 +104,90 @@ public class VentanaAltaHabitacion extends JFrame {
     contentPane.setLayout(null);
     
     JLabel lblNumero = new JLabel("N\u00FAmero:");
-    lblNumero.setBounds(200, 93, 130, 14);
+    lblNumero.setBounds(200, 27, 130, 14);
     contentPane.add(lblNumero);
     
     tfNumero = new JTextField();
-    tfNumero.setBounds(337, 90, 60, 20);
+    tfNumero.setBounds(337, 24, 60, 20);
     contentPane.add(tfNumero);
     tfNumero.setColumns(10);
     
     JLabel lblPiso = new JLabel("Piso:");
-    lblPiso.setBounds(200, 118, 130, 14);
+    lblPiso.setBounds(200, 52, 130, 14);
     contentPane.add(lblPiso);
     
-    boxPiso = new JComboBox();
-    boxPiso.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
-    boxPiso.setBounds(337, 115, 60, 20);
+    boxPiso = new JComboBox<String>();
+    boxPiso.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5"}));
+    boxPiso.setBounds(337, 49, 60, 20);
     contentPane.add(boxPiso);
     
     JLabel lblTipoHab = new JLabel("Tipo de Habitaci\u00F3n:");
-    lblTipoHab.setBounds(200, 143, 130, 14);
+    lblTipoHab.setBounds(200, 77, 130, 14);
     contentPane.add(lblTipoHab);
     
-    boxTipoHab = new JComboBox();
-    boxTipoHab.setBounds(337, 140, 150, 20);
+    boxTipoHab = new JComboBox<String>();
+    //Aggrego las habitaciones activas que se pueden elegir
+    Vector<String>tipos = sistema.getTiposHabitacionesActivas();
+    for(String tipo:tipos)
+      boxTipoHab.addItem(tipo);
+    
+    boxTipoHab.setBounds(337, 74, 150, 20);
     contentPane.add(boxTipoHab);
     
     JLabel lblDescripcion = new JLabel("Descripci\u00F3n:");
-    lblDescripcion.setBounds(200, 168, 130, 14);
+    lblDescripcion.setBounds(200, 102, 130, 14);
     contentPane.add(lblDescripcion);
     
-    JTextArea tfDescripcion = new JTextArea();
+    tfDescripcion = new JTextArea();
     tfDescripcion.setLineWrap(true);
     tfDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 11));
     tfDescripcion.setBorder(UIManager.getBorder("TextField.border"));
-    tfDescripcion.setBounds(337, 163, 150, 100);
+    tfDescripcion.setBounds(337, 97, 150, 100);
     contentPane.add(tfDescripcion);
     
     btnAceptar = new JButton("Aceptar");
+    btnAceptar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          altaHabitacion(sistema);
+      }
+    });
     btnAceptar.addActionListener(new ActionListener() {
       
       public void actionPerformed(ActionEvent arg0) {
-        
-        String numero = tfNumero.getText();
-        String piso = (String)boxPiso.getSelectedItem();
-        String tipohab = (String)boxTipoHab.getSelectedItem();
-        String descripcion = tfDescripcion.getText();
-        
-        if (numero.equals("") || piso.equals("") || tipohab.equals("") || descripcion.equals(""))
-        {
-          JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
-        }
-
-        
+        altaHabitacion(sistema);
       }
     });
-    btnAceptar.setBounds(200, 296, 89, 23);
+    btnAceptar.setBounds(200, 296, 100, 23);
     contentPane.add(btnAceptar);
     
-    btnNewButton = new JButton("Cancelar");
-    btnNewButton.addActionListener(new ActionListener() {
+    btnCancelar = new JButton("Cancelar");
+    btnCancelar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        dispose();
+      }
+    });
+    btnCancelar.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         dispose();
       }
     });
-    btnNewButton.setBounds(398, 296, 89, 23);
-    contentPane.add(btnNewButton);
+    btnCancelar.setBounds(387, 296, 100, 23);
+    contentPane.add(btnCancelar);
+    
+    lblCaracteristicas = new JLabel("Caracteristicas");
+    lblCaracteristicas.setBounds(200, 218, 130, 15);
+    contentPane.add(lblCaracteristicas);
+    
+    JTextArea textAreaCaracteristicas = new JTextArea();
+    textAreaCaracteristicas.setBounds(337, 218, 150, 60);
+    textAreaCaracteristicas.setBorder(UIManager.getBorder("TextField.border"));
+    contentPane.add(textAreaCaracteristicas);
   }
 }
