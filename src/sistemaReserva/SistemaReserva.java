@@ -981,7 +981,7 @@ public class SistemaReserva
     return item.getView();
   }
   
-  Vector<String> getTiposHabitacionesActivas()
+  public Vector<String> getTiposHabitacionesActivas()
   {
     return this.tarifario.getTiposActivos();
   }
