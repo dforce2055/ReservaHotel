@@ -215,7 +215,7 @@ public class SistemaReserva
     return 0;
   }
   
-  public void altaHabitacion(String numero, String piso, String descripcion, 
+  public boolean altaHabitacion(String numero, String piso, String descripcion, 
       String caracteristicas, String tipo)
   {
     boolean resultado = existeTipoHabitacion(tipo); 
@@ -226,8 +226,10 @@ public class SistemaReserva
       {
         habitacion = new Habitacion(numero, piso, descripcion, caracteristicas, tipo);
         habitaciones.add(habitacion);
+        return true;
       }
     }
+    return false;
   }
   
   public void altaReserva(int codigoCliente, int legajoTrabajador, 
