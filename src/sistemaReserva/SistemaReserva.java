@@ -482,6 +482,22 @@ public class SistemaReserva
     return false;
   }
   
+  public boolean modificarTrabajadorPassword(int legajo, String passwordAnterior, String PasswordNuevo)
+  {
+    Trabajador trabajador = buscarTrabajador(legajo);
+    
+    if (trabajador != null)
+    {
+      String passwordActual = trabajador.getPassword();
+      if(passwordAnterior.equals(passwordActual))
+      {
+        trabajador.setPassword(PasswordNuevo);
+        return true;
+      }
+    }
+    return false;
+  }
+  
   public boolean modificarHabitacion(String numero, String piso, 
       String descripcion, String caracteristicas, String tipo)
   {
