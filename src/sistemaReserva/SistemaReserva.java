@@ -1,4 +1,4 @@
-package sistemaReserva;
+﻿package sistemaReserva;
 import java.time.LocalDate;
 import java.util.Vector;
 
@@ -31,10 +31,9 @@ public class SistemaReserva
     servicios = new Vector<ServicioAdicional>();
     serviciosInactivos = new Vector<ServicioAdicional>();
     tarifario = new Tarifario();
-    //Prueba Login
-    Trabajador nuevo = new Trabajador("Pepe", "Argento", "DNI", "13333666", 
-        "Casona 123", "401133", "pepeargento@mail.com", "pepe", "argento");
-    trabajadores.add(nuevo);
+    //Datos prueba
+    CargaDatosPrueba prueba = new CargaDatosPrueba(this);
+    prueba.CargarDatos();
   }
   
   private Cliente buscarCliente(int codigo)
@@ -42,6 +41,14 @@ public class SistemaReserva
     for (Cliente c: clientes)
       if (c.sosCliente(codigo))
         return c;
+    return null;
+  }
+  
+  public ClienteView buscarClienteViewPorCodigo(String codigoCliente)
+  {
+    for (Cliente c: clientes)
+      if (c.sosCliente(Integer.parseInt(codigoCliente)))
+        return c.getView();
     return null;
   }
   
@@ -53,11 +60,20 @@ public class SistemaReserva
     return null;
   }
   
+  public ClienteView buscarClienteViewPorDocumento(String tipoDoc, String numDoc)
+  {
+    for (Cliente c: clientes)
+      if (c.esTuDocumento(tipoDoc, numDoc))
+        return c.getView();
+    return null;
+  }
+  
+  
   private boolean existeClienteConEseDocumento(String tipoDoc, String numDoc)
   {
     Cliente cliente = buscarClientePorDocumento(tipoDoc, numDoc);
     
-    return cliente == null;
+    return cliente != null;
   }
   
   private Trabajador buscarTrabajador(int legajo)
@@ -65,6 +81,14 @@ public class SistemaReserva
     for (Trabajador t: trabajadores)
       if (t.sosTrabajador(legajo))
         return t;
+    return null;
+  }
+  
+  public TrabajadorView buscarTrabajadorView(int legajo)
+  {
+    for (Trabajador t: trabajadores)
+      if (t.sosTrabajador(legajo))
+        return t.getView();
     return null;
   }
   
@@ -76,11 +100,19 @@ public class SistemaReserva
     return null;
   }
   
+  public TrabajadorView buscarTrabajadorViewPorDocumento(String tipoDoc, String numDoc)
+  {
+    for (Trabajador t: trabajadores)
+      if (t.esTuDocumento(tipoDoc, numDoc)) 
+        return t.getView();
+    return null;
+  }
+  
   private boolean existeTrabajadorConEseDocumento(String tipoDoc, String numDoc)
   {
     Trabajador trabajador = buscarTrabajadorPorDocumento(tipoDoc, numDoc);
     
-    return trabajador == null;
+    return trabajador != null;
   }
   
   //usado para el login
@@ -97,6 +129,14 @@ public class SistemaReserva
     for (Habitacion h: habitaciones)
       if (h.sosHabitacion(numero))
         return h;
+    return null;
+  }
+  
+  public HabitacionView buscarHabitacionView(String numero)
+  {
+    for (Habitacion h: habitaciones)
+      if (h.sosHabitacion(numero))
+        return h.getView();
     return null;
   }
   
@@ -124,7 +164,31 @@ public class SistemaReserva
     return null;
   }
   
-  public void altaCliente(String nombre, String apellido, String tipoDoc, 
+  private Vector<Estadia> buscarEstadiasPorTipo(String tipoHabitacion)
+  {
+    Vector<Estadia> v = new Vector<Estadia>();
+    if (existeTipoHabitacion(tipoHabitacion))
+    {
+      for (Estadia e: estadias)
+        if (e.tuTipoEs(tipoHabitacion))
+          v.add(e);
+    }
+    return v;
+  }
+
+  public Vector<Reserva> buscarReservasPorTipo(String tipoHabitacion)
+  {
+    Vector<Reserva> v = new Vector<Reserva>();
+    if (existeTipoHabitacion(tipoHabitacion))  
+    {
+      for (Reserva r: reservas)
+        if (r.tuTipoEs(tipoHabitacion))
+          v.add(r);
+    }
+    return v;
+  }
+
+  public int altaCliente(String nombre, String apellido, String tipoDoc, 
       String numDoc, String direccion, String telefono, String email)
   {
     Cliente cliente = buscarClientePorDocumento(tipoDoc, numDoc);
@@ -132,10 +196,12 @@ public class SistemaReserva
     {
       cliente = new Cliente(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email);
       clientes.add(cliente);
+      return cliente.getCodigoCliente();
     }
+    return 0;
   }
   
-  public void altaTrabajador(String nombre, String apellido, String tipoDoc, 
+  public int altaTrabajador(String nombre, String apellido, String tipoDoc, 
       String numDoc, String direccion, String telefono, String email, 
       String usuario, String password)
   {
@@ -144,10 +210,12 @@ public class SistemaReserva
     {
       trabajador = new Trabajador(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email, usuario, password);
       trabajadores.add(trabajador);
+      return trabajador.getLegajo();
     }
+    return 0;
   }
   
-  public void altaHabitacion(String numero, String piso, String descripcion, 
+  public boolean altaHabitacion(String numero, String piso, String descripcion, 
       String caracteristicas, String tipo)
   {
     boolean resultado = existeTipoHabitacion(tipo); 
@@ -158,8 +226,10 @@ public class SistemaReserva
       {
         habitacion = new Habitacion(numero, piso, descripcion, caracteristicas, tipo);
         habitaciones.add(habitacion);
+        return true;
       }
     }
+    return false;
   }
   
   public void altaReserva(int codigoCliente, int legajoTrabajador, 
@@ -365,42 +435,39 @@ public class SistemaReserva
     
     if (cliente != null)
     {
-      String nombreCliente = cliente.getNombre(),
-      apellidoCliente = cliente.getApellido(),
-      tipoDocCliente = cliente.getTipoDocumento(),
-      numDocCliente = cliente.getNumeroDocumento(),
-      direccionCliente = cliente.getDireccion(),
-      telefonoCliente = cliente.getTelefono(),
-      emailCliente = cliente.getEmail();
+      String nombreCliente = cliente.getNombre();
+      String apellidoCliente = cliente.getApellido();
+      String tipoDocCliente = cliente.getTipoDocumento();
+      String numDocCliente = cliente.getNumeroDocumento();
+      String direccionCliente = cliente.getDireccion();
+      String telefonoCliente = cliente.getTelefono();
+      String emailCliente = cliente.getEmail();
       
-      if (!nombre.equals(nombreCliente))
-        cliente.setNombre(nombre);
-      
-      if (!apellido.equals(apellidoCliente))
-        cliente.setApellido(apellido);
-      
-      if (!tipoDoc.equals(tipoDocCliente) || !numDoc.equals(numDocCliente))
+      if(!existeClienteConEseDocumento(tipoDoc, numDoc))//Si NO existe un cliente con ese Tipo y numero de documento
       {
-        boolean existeClienteConEseDocumento = existeClienteConEseDocumento(tipoDoc, numDoc);
+        if (!nombre.equals(nombreCliente))
+          cliente.setNombre(nombre);
         
-        if (existeClienteConEseDocumento == false)//Sino existe un cliente con ese DNI
-        {
+        if (!apellido.equals(apellidoCliente))
+          cliente.setApellido(apellido);
+        
+        if(!tipoDoc.equals(tipoDocCliente))
           cliente.setTipoDocumento(tipoDoc);
+        
+        if(!numDoc.equals(numDocCliente))
           cliente.setNumeroDocumento(numDoc);
-        }
-        else
-          return false;
+        
+        if (!direccion.equals(direccionCliente))
+          cliente.setDireccion(direccion);
+        
+        if (!telefono.equals(telefonoCliente))
+          cliente.setTelefono(telefono);
+        
+        if (!email.equals(emailCliente))
+          cliente.setEmail(email);
+        
+        return true;
       }
-      if (!direccion.equals(direccionCliente))
-        cliente.setDireccion(direccion);
-      
-      if (!telefono.equals(telefonoCliente))
-        cliente.setTelefono(telefono);
-      
-      if (!email.equals(emailCliente))
-        cliente.setEmail(email);
-      
-      return true;
     }
     return false;
   }
@@ -449,6 +516,22 @@ public class SistemaReserva
     return false;
   }
   
+  public boolean modificarTrabajadorPassword(int legajo, String passwordAnterior, String passwordNuevo)
+  {
+    Trabajador trabajador = buscarTrabajador(legajo);
+    
+    if (trabajador != null)
+    {
+      String passwordActual = trabajador.getPassword();
+      if(passwordAnterior.equals(passwordActual))
+      {
+        trabajador.setPassword(passwordNuevo);
+        return true;
+      }
+    }
+    return false;
+  }
+  
   public boolean modificarHabitacion(String numero, String piso, 
       String descripcion, String caracteristicas, String tipo)
   {
@@ -483,7 +566,7 @@ public class SistemaReserva
     }
     return false;
   }
-  //Testear método
+  //Testear mÃ©todo
   public boolean modificarReserva(int numero, int numeroCliente, 
       String tipoHabitacion, LocalDate fechaIngreso, LocalDate fechaSalida, 
       String observaciones)
@@ -806,30 +889,6 @@ public class SistemaReserva
     return tarifario.existeTipo(tipo);
   }
 
-  private Vector<Estadia> buscarEstadiasPorTipo(String tipoHabitacion)
-  {
-    Vector<Estadia> v = new Vector<Estadia>();
-    if (existeTipoHabitacion(tipoHabitacion))
-    {
-      for (Estadia e: estadias)
-        if (e.tuTipoEs(tipoHabitacion))
-          v.add(e);
-    }
-    return v;
-  }
-  
-  public Vector<Reserva> buscarReservasPorTipo(String tipoHabitacion)
-  {
-    Vector<Reserva> v = new Vector<Reserva>();
-    if (existeTipoHabitacion(tipoHabitacion))  
-    {
-      for (Reserva r: reservas)
-        if (r.tuTipoEs(tipoHabitacion))
-          v.add(r);
-    }
-    return v;
-  }
-  
   /**
    * imprime la cantidad de habitaciones disponibles por cada tipo;
    * cuando haya interfaz va a tener que devolver un vector de nodos con tipoHab (string) y cantidad
@@ -900,5 +959,84 @@ public class SistemaReserva
       }
     }   
     return disponibilidades;
+  }
+  //GetView
+  ClienteView getClienteView(Cliente cliente)
+  {
+    return cliente.getView();
+  }
+  
+  EstadiaView getEstadiaView(Estadia estadia)
+  {
+    return estadia.getView();
+  }
+  
+  HabitacionView getHabitacionView(Habitacion habitacion)
+  {
+    return habitacion.getView();
+  }
+  
+  ItemTarifaView getItemTarifaView(ItemTarifa item)
+  {
+    return item.getView();
+  }
+  
+  public Vector<String> getTiposHabitacionesActivas()
+  {
+    return this.tarifario.getTiposActivos();
+  }
+  
+  ReservaView getReserva(Reserva reserva)
+  {
+    return reserva.getView();
+  }
+  
+  ServicioAdicionalView getServicioAdicional(ServicioAdicional servicio)
+  {
+    return servicio.getView();
+  }
+  
+  TrabajadorView getTrabajadorView(Trabajador trabajador)
+  {
+    return trabajador.getView();
+  }
+  
+  public boolean validarNumeroDocumento(String numeroDocumento)
+  {
+    String patron = "[-+]?\\d*\\.?\\d+";
+    return numeroDocumento != null && numeroDocumento.matches(patron);
+  }
+  
+  public boolean validarNumeroCliente(String numeroCliente)
+  {
+    String patron = "[-+]?\\d*\\.?\\d+";
+    return numeroCliente != null && numeroCliente.matches(patron);
+  }
+  
+  public boolean validarNumeroLegajoTrabajador(String legajo)
+  {
+    String patron = "[-+]?\\d*\\.?\\d+";
+    return legajo != null && legajo.matches(patron);
+  }
+  
+  public boolean validarNumeroHabitacion(String numero)
+  {
+    String patron = "[-+]?\\d*\\.?\\d+";
+    return numero != null && numero.matches(patron);
+  }
+  
+  public boolean validarEmail(String email)
+  {
+    String patron = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+        + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+    
+    return email != null && email.matches(patron);
+  }
+  
+  public String getUsuarioSinDominio(String email)
+  {
+    String regEx = "@[A-Za-z0-9]";
+    String usuario[] = email.split(regEx);
+    return usuario[0];
   }
 } 

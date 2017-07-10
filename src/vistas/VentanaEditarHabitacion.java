@@ -1,42 +1,42 @@
 package vistas;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Rectangle;
-import java.awt.Button;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
+import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
 import java.awt.Color;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.TitledBorder;
 import javax.swing.UIManager;
 import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import sistemaReserva.SistemaReserva;
+import sistemaReserva.HabitacionView;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 public class VentanaEditarHabitacion extends JFrame {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel contentPane;
   private JTextField tfNumero;
   private JButton btnAceptar;
   private JButton btnNewButton;
-  private JComboBox boxPiso;
-  private JComboBox boxTipoHab;
+  private JComboBox<String> boxPiso;
+  private JComboBox<String> boxTipoHab;
   private JLabel lblNroHabitacion;
   private JTextField tfNroHabitacion;
+  private JTextArea tfDescripcion;
+  private JTextArea textAreaCaracte;
 
   /**
    * Launch the application.
@@ -57,8 +57,82 @@ public class VentanaEditarHabitacion extends JFrame {
   /**
    * Create the frame.
    */
-  public VentanaEditarHabitacion(SistemaReserva sistema) {
+  public void buscar(SistemaReserva sistema)
+  {
+    String numeroHabitacion = tfNroHabitacion.getText();
+
+    if(sistema.validarNumeroHabitacion(numeroHabitacion))
+    {
+      HabitacionView habitacion = sistema.buscarHabitacionView(numeroHabitacion);
+      
+      if(habitacion != null)
+      {
+        tfNumero.setEnabled(true);
+        tfNumero.setText(habitacion.getNumero());
+        
+        boxPiso.setEnabled(true);
+        boxPiso.setSelectedItem(habitacion.getPiso());
+        
+        boxTipoHab.setEnabled(true);
+        boxTipoHab.setSelectedItem(habitacion.getTipo());
+        
+        tfDescripcion.setEnabled(true);
+        tfDescripcion.setText(habitacion.getDescripcion());
+        
+        textAreaCaracte.setEnabled(true);
+        textAreaCaracte.setText(habitacion.getCaracteristicas());
+        
+        btnAceptar.setEnabled(true);
+      }else
+      {
+        JOptionPane.showInternalMessageDialog(contentPane, "NO EXISTE LA "
+            + "HABITACI\u00d3N N\u00daMERO " + numeroHabitacion);
+      }
+    }else
+    {
+      JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00daMEROS");
+    }
+  }
+  
+  public void guardar(SistemaReserva sistema)
+  {
+    String numeroHabitacion = tfNumero.getText();
+    String piso = (String)boxPiso.getSelectedItem();
+    String descripcion = tfDescripcion.getText();
+    String caracteristicas = textAreaCaracte.getText();
+    String tipo = (String)boxTipoHab.getSelectedItem();
     
+    if(sistema.validarNumeroHabitacion(numeroHabitacion))
+    {
+      HabitacionView habitacion = sistema.buscarHabitacionView(numeroHabitacion);
+      if(habitacion != null)
+      {
+        if(sistema.modificarHabitacion(numeroHabitacion, piso, descripcion, caracteristicas, tipo))
+        {
+          JOptionPane.showMessageDialog(contentPane, "Habitaci\u00f3n modificada "
+              + "Correctamente."
+              +"\nN\u00famero de Habitaci\u00f3n: " +numeroHabitacion 
+              +"\nPiso: " +piso
+              +"\nTipo: " +tipo);
+          dispose();
+        }
+      }else
+      {
+        JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE MODIFICAR, "
+            + "NO EXISTE HABITACI\u00d3N N\u00daMERO: " +numeroHabitacion);
+        tfNumero.setForeground(Color.RED);
+        tfNumero.selectAll();
+        tfNumero.requestFocus();
+      }
+    }else
+    {
+      JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00FAMEROS");
+    }
+  }
+  
+  public VentanaEditarHabitacion(SistemaReserva sistema)
+  {
+    setResizable(false);//Que no lo puedan maximizar
     setTitle("Modificar Habitacion");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBounds(100, 100, 700, 480);
@@ -66,8 +140,8 @@ public class VentanaEditarHabitacion extends JFrame {
     setContentPane(contentPane);
     contentPane.setLayout(null);
     
-    lblNroHabitacion = new JLabel("Ingrese Nro Habitacion:");
-    lblNroHabitacion.setBounds(200, 34, 130, 14);
+    lblNroHabitacion = new JLabel("<html>Ingrese N\u00famero<br>Habitación:</html>", SwingConstants.LEFT);
+    lblNroHabitacion.setBounds(205, 30, 130, 30);
     contentPane.add(lblNroHabitacion);
     
     tfNroHabitacion = new JTextField();
@@ -76,11 +150,28 @@ public class VentanaEditarHabitacion extends JFrame {
     tfNroHabitacion.setColumns(10);
     
     JButton btnBuscar = new JButton("Buscar");
+    btnBuscar.addMouseListener(new MouseAdapter()
+    {
+      @Override
+      public void mouseClicked(MouseEvent arg0)
+      {
+        buscar(sistema);
+      }
+    });
+    btnBuscar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          buscar(sistema);
+      }
+    });
     btnBuscar.setBounds(416, 30, 89, 23);
     contentPane.add(btnBuscar);
     
-    JLabel lblNumero = new JLabel("Numero:");
-    lblNumero.setBounds(200, 93, 130, 14);
+    JLabel lblNumero = new JLabel("N\u00FAmero:");
+    lblNumero.setBounds(205, 92, 130, 14);
     contentPane.add(lblNumero);
     
     tfNumero = new JTextField();
@@ -90,29 +181,33 @@ public class VentanaEditarHabitacion extends JFrame {
     tfNumero.setColumns(10);
     
     JLabel lblPiso = new JLabel("Piso:");
-    lblPiso.setBounds(200, 118, 130, 14);
+    lblPiso.setBounds(205, 118, 130, 14);
     contentPane.add(lblPiso);
     
-    boxPiso = new JComboBox();
+    boxPiso = new JComboBox<String>();
     boxPiso.setEnabled(false);
-    boxPiso.setModel(new DefaultComboBoxModel(new String[] {"1", "2", "3", "4", "5"}));
+    boxPiso.setModel(new DefaultComboBoxModel<String>(new String[] {"1", "2", "3", "4", "5"}));
     boxPiso.setBounds(337, 115, 60, 20);
     contentPane.add(boxPiso);
     
-    JLabel lblTipoHab = new JLabel("Tipo de Habitacion:");
-    lblTipoHab.setBounds(200, 143, 130, 14);
+    JLabel lblTipoHab = new JLabel("Tipo:");
+    lblTipoHab.setBounds(205, 143, 130, 14);
     contentPane.add(lblTipoHab);
     
-    boxTipoHab = new JComboBox();
+    boxTipoHab = new JComboBox<String>();
+    //Aggrego las habitaciones activas que se pueden elegir
+    for(String tipo:sistema.getTiposHabitacionesActivas())
+      boxTipoHab.addItem(tipo);
+    
     boxTipoHab.setEnabled(false);
     boxTipoHab.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoHab);
     
-    JLabel lblDescripcion = new JLabel("Descripcion:");
-    lblDescripcion.setBounds(200, 168, 130, 14);
+    JLabel lblDescripcion = new JLabel("Descripci\u00F3n:");
+    lblDescripcion.setBounds(205, 164, 130, 14);
     contentPane.add(lblDescripcion);
     
-    JTextArea tfDescripcion = new JTextArea();
+    tfDescripcion = new JTextArea();
     tfDescripcion.setEnabled(false);
     tfDescripcion.setLineWrap(true);
     tfDescripcion.setFont(new Font("Tahoma", Font.PLAIN, 11));
@@ -121,6 +216,22 @@ public class VentanaEditarHabitacion extends JFrame {
     contentPane.add(tfDescripcion);
     
     btnAceptar = new JButton("Aceptar");
+    btnAceptar.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e)
+      {
+        guardar(sistema);
+      }
+    });
+    btnAceptar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          guardar(sistema);
+      }
+    });
     btnAceptar.setEnabled(false);
     btnAceptar.addActionListener(new ActionListener() {
       
@@ -139,16 +250,32 @@ public class VentanaEditarHabitacion extends JFrame {
         
       }
     });
-    btnAceptar.setBounds(200, 296, 89, 23);
+    btnAceptar.setBounds(200, 389, 100, 23);
     contentPane.add(btnAceptar);
     
     btnNewButton = new JButton("Cancelar");
+    btnNewButton.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        dispose();
+      }
+    });
     btnNewButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         dispose();
       }
     });
-    btnNewButton.setBounds(398, 296, 89, 23);
+    btnNewButton.setBounds(398, 389, 100, 23);
     contentPane.add(btnNewButton);
+    
+    textAreaCaracte = new JTextArea();
+    textAreaCaracte.setBounds(337, 277, 150, 60);
+    textAreaCaracte.setBorder(UIManager.getBorder("TextField.border"));
+    contentPane.add(textAreaCaracte);
+    
+    JLabel lblCaracter = new JLabel("Características:");
+    lblCaracter.setBounds(205, 277, 130, 15);
+    contentPane.add(lblCaracter);
   }
 }

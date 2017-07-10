@@ -1,25 +1,27 @@
 package vistas;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.Rectangle;
-import java.awt.Button;
+import java.awt.Color;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
-import java.awt.Component;
 import sistemaReserva.SistemaReserva;
+import sistemaReserva.ClienteView;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 public class VentanaAltaCliente extends JFrame {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel contentPane;
   private JTextField tfNombre;
   private JTextField tfApellido;
@@ -29,7 +31,7 @@ public class VentanaAltaCliente extends JFrame {
   private JTextField tfEmail;
   private JButton btnAceptar;
   private JButton btnNewButton;
-  private JComboBox boxTipoDoc;
+  private JComboBox<Object> boxTipoDoc;
 
   /**
    * Launch the application.
@@ -52,7 +54,61 @@ public class VentanaAltaCliente extends JFrame {
   /**
    * Create the frame.
    */
-  public VentanaAltaCliente(SistemaReserva sistema) {
+  public void altaCliente(SistemaReserva sistema)
+  {
+    String nombre = tfNombre.getText();
+    String apellido = tfApellido.getText();
+    String tipoDoc = (String)boxTipoDoc.getSelectedItem();
+    String numDoc = tfNumeroDocumento.getText();
+    String direccion = tfDireccion.getText();
+    String telefono = tfTelefono.getText();
+    String email = tfEmail.getText();
+    
+    if (nombre.equals("") || apellido.equals("") || numDoc.equals("") || direccion.equals("") || telefono.equals("") || email.equals(""))
+    {
+      JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
+    }else
+    {
+      if(sistema.validarNumeroDocumento(numDoc))//Validar el campo NumeroDocumento, solo numeros
+      {
+        ClienteView nuevoCliente = sistema.buscarClienteViewPorDocumento(tipoDoc, numDoc);
+        if(nuevoCliente == null)
+        {
+          if(sistema.validarEmail(email))
+          {
+            int nroCliente = sistema.altaCliente(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email);
+            JOptionPane.showMessageDialog(contentPane, "Cliente agregado Correctamente. "
+                +"Numero de Cliente: " +nroCliente);
+            dispose();
+          }else
+          {
+            JOptionPane.showMessageDialog(contentPane, "EMAIL INVALIDO");
+            tfEmail.setForeground(Color.RED);
+            tfEmail.selectAll();
+            tfEmail.requestFocus();
+          }
+        }else
+        {
+          JOptionPane.showMessageDialog(contentPane, "NO SE PUEDE INGRESAR, "
+              + "YA EXISTE EL CLIENTE");
+          tfNumeroDocumento.setForeground(Color.RED);
+          tfNumeroDocumento.selectAll();
+          tfNumeroDocumento.requestFocus();
+        }
+      }else
+      {
+        JOptionPane.showMessageDialog(contentPane, "El N\u00FAmero de "
+            + "Documento no puede contener letras");
+        tfNumeroDocumento.setForeground(Color.RED);
+        tfNumeroDocumento.selectAll();
+        tfNumeroDocumento.requestFocus();
+      }
+    }
+  }
+  
+  public VentanaAltaCliente(SistemaReserva sistema)
+  {
+    setResizable(false);//Que no lo puedan maximizar
     setTitle("Alta Cliente");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBounds(100, 100, 700, 480);
@@ -83,12 +139,12 @@ public class VentanaAltaCliente extends JFrame {
     lblTipoDoc.setBounds(200, 143, 130, 14);
     contentPane.add(lblTipoDoc);
     
-    boxTipoDoc = new JComboBox();
-    boxTipoDoc.setModel(new DefaultComboBoxModel(new String[] {"TipoDoc"}));
+    boxTipoDoc = new JComboBox<Object>();
+    boxTipoDoc.setModel(new DefaultComboBoxModel<Object>(new String[] {"DNI", "LE", "LC", "CEDULA", "PASAPORTE"}));
     boxTipoDoc.setBounds(337, 140, 150, 20);
     contentPane.add(boxTipoDoc);
     
-    JLabel lblNumeroDocumento = new JLabel("Numero de Documento");
+    JLabel lblNumeroDocumento = new JLabel("N\u00FAmero de Documento");
     lblNumeroDocumento.setBounds(200, 168, 130, 14);
     contentPane.add(lblNumeroDocumento);
     
@@ -97,7 +153,7 @@ public class VentanaAltaCliente extends JFrame {
     contentPane.add(tfNumeroDocumento);
     tfNumeroDocumento.setColumns(10);
     
-    JLabel lblDireccion = new JLabel("Direccion:");
+    JLabel lblDireccion = new JLabel("Direcci\u00F3n:");
     lblDireccion.setBounds(200, 193, 130, 14);
     contentPane.add(lblDireccion);
     
@@ -106,7 +162,7 @@ public class VentanaAltaCliente extends JFrame {
     contentPane.add(tfDireccion);
     tfDireccion.setColumns(10);
     
-    JLabel lblTelefono = new JLabel("Telefono:");
+    JLabel lblTelefono = new JLabel("T\u00E9lefono:");
     lblTelefono.setBounds(200, 218, 130, 14);
     contentPane.add(lblTelefono);
     
@@ -125,32 +181,35 @@ public class VentanaAltaCliente extends JFrame {
     tfEmail.setColumns(10);
     
     btnAceptar = new JButton("Aceptar");
-    btnAceptar.addActionListener(new ActionListener() {
-      
-      public void actionPerformed(ActionEvent e) {
-        
-        String nombre = tfNombre.getText();
-        String apellido = tfApellido.getText();
-        String tipodoc = (String)boxTipoDoc.getSelectedItem();
-        String documento = tfNumeroDocumento.getText();
-        String direccion = tfDireccion.getText();
-        String telefono = tfTelefono.getText();
-        String email = tfEmail.getText();
-        
-        
-        if (nombre.equals("") || apellido.equals("") || documento.equals("") || direccion.equals("") || telefono.equals("") || email.equals(""))
-        {
-          JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
-        }
-        
-        
-        
+    btnAceptar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          altaCliente(sistema);
+      }
+    });
+    btnAceptar.addActionListener(new ActionListener()
+    {
+      public void actionPerformed(ActionEvent e)
+      {
+        altaCliente(sistema);
       }
     });
     btnAceptar.setBounds(200, 296, 89, 23);
     contentPane.add(btnAceptar);
     
     btnNewButton = new JButton("Cancelar");
+    btnNewButton.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          dispose();
+      }
+    });
     btnNewButton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0) {
         dispose();

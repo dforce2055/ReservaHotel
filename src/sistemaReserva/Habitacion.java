@@ -72,7 +72,7 @@ public class Habitacion
   //negocio
   public boolean sosHabitacion(String numero)
   {
-    return this.numero == numero;
+    return this.numero.equals(numero);
   }
   
   public void darBaja()
@@ -104,5 +104,12 @@ public class Habitacion
   public boolean estasDisponible()
   {
     return estado.equalsIgnoreCase("DISPONIBLE");
+  }
+  
+  public HabitacionView getView()
+  {
+    HabitacionView hv = new HabitacionView(numero, piso, descripcion, caracteristicas,
+        tipoHabitacion);
+    return hv;
   }
 }

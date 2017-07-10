@@ -1,33 +1,29 @@
 package vistas;
 
-import java.awt.BorderLayout;
-
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.ImageIcon;
-import java.awt.Toolkit;
 import java.awt.Font;
 import java.awt.Color;
-import javax.swing.JTextField;
 import javax.swing.JButton;
-import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 
 import sistemaReserva.SistemaReserva;
 import sistemaReserva.Trabajador;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaMenuPrincipal extends JFrame
 {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel menuPrincipal;
   
 
@@ -72,6 +68,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(lblBienvenido);
     
     JButton btnAltaDeCliente = new JButton("Alta de Cliente");
+    btnAltaDeCliente.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaAltaCliente altaCliente = new VentanaAltaCliente(sistema);
+          altaCliente.setVisible(true);
+        }
+      }
+    });
     btnAltaDeCliente.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent arg0)
@@ -84,6 +91,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnAltaDeCliente);
     
     JButton btnAltaDeTrabajador = new JButton("Alta de Trabajador");
+    btnAltaDeTrabajador.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaAltaTrabajador altaTrabajador = new VentanaAltaTrabajador(sistema);
+          altaTrabajador.setVisible(true);
+        }
+      }
+    });
     btnAltaDeTrabajador.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent arg0){
@@ -94,18 +112,40 @@ public class VentanaMenuPrincipal extends JFrame
     btnAltaDeTrabajador.setBounds(420, 145, 180, 25);
     menuPrincipal.add(btnAltaDeTrabajador);
     
-    JButton btnAltaDeHabitacin = new JButton("Alta de Habitación");
-    btnAltaDeHabitacin.addMouseListener(new MouseAdapter() {
+    JButton btnAltaDeHabitacion = new JButton("Alta de Habitaci\u00F3n");
+    btnAltaDeHabitacion.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaAltaHabitacion altaHabitacion = new VentanaAltaHabitacion(sistema);
+          altaHabitacion.setVisible(true);
+        }
+      }
+    });
+    btnAltaDeHabitacion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e){
         VentanaAltaHabitacion altaHabitacion = new VentanaAltaHabitacion(sistema);
         altaHabitacion.setVisible(true);
       }
     });
-    btnAltaDeHabitacin.setBounds(420, 182, 180, 25);
-    menuPrincipal.add(btnAltaDeHabitacin);
+    btnAltaDeHabitacion.setBounds(420, 182, 180, 25);
+    menuPrincipal.add(btnAltaDeHabitacion);
     
-    JButton btnAltaDeEstadia = new JButton("Alta de Estadia");
+    JButton btnAltaDeEstadia = new JButton("Alta de Estad\u00EDa");
+    btnAltaDeEstadia.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          //VentanaAltaEstadia altaEstadia = new VentanaAltaEstadia(sistema);
+          //altaEstadia.setVisible;
+        }
+      }
+    });
     btnAltaDeEstadia.setEnabled(false);
     btnAltaDeEstadia.addMouseListener(new MouseAdapter() {
       @Override
@@ -119,7 +159,18 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnAltaDeEstadia);
     
     JButton btnAltaDeReserva = new JButton("Alta de Reserva");
-    btnAltaDeReserva.setEnabled(false);
+    btnAltaDeReserva.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaAltaReserva altaReserva = new VentanaAltaReserva(sistema);
+          altaReserva.setVisible(true);
+        }
+      }
+    });
+    btnAltaDeReserva.setEnabled(true);
     btnAltaDeReserva.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
@@ -132,6 +183,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnAltaDeReserva);
     
     JButton btnEditarCliente = new JButton("Editar Cliente");
+    btnEditarCliente.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaEditarCliente editarCliente = new VentanaEditarCliente(sistema);
+          editarCliente.setVisible(true);
+        }
+      }
+    });
     btnEditarCliente.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
@@ -144,6 +206,17 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnEditarCliente);
     
     JButton btnEditarTrabajador = new JButton("Editar Trabajador");
+    btnEditarTrabajador.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaEditarTrabajador editarTrabajador = new VentanaEditarTrabajador(sistema);
+          editarTrabajador.setVisible(true);
+        }
+      }
+    });
     btnEditarTrabajador.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
@@ -155,8 +228,19 @@ public class VentanaMenuPrincipal extends JFrame
     btnEditarTrabajador.setBounds(612, 145, 180, 25);
     menuPrincipal.add(btnEditarTrabajador);
     
-    JButton btnEditarHabitacin = new JButton("Editar Habitación");
-    btnEditarHabitacin.addMouseListener(new MouseAdapter() {
+    JButton btnEditarHabitacion = new JButton("Editar Habitaci\u00F3n");
+    btnEditarHabitacion.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaEditarHabitacion editarHabitacion = new VentanaEditarHabitacion(sistema);
+          editarHabitacion.setVisible(true);
+        }
+      }
+    });
+    btnEditarHabitacion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
       {
@@ -164,10 +248,21 @@ public class VentanaMenuPrincipal extends JFrame
         editarHabitacion.setVisible(true);
       }
     });
-    btnEditarHabitacin.setBounds(612, 182, 180, 25);
-    menuPrincipal.add(btnEditarHabitacin);
+    btnEditarHabitacion.setBounds(612, 182, 180, 25);
+    menuPrincipal.add(btnEditarHabitacion);
     
-    JButton btnEditarEstadia = new JButton("Editar Estadia");
+    JButton btnEditarEstadia = new JButton("Editar Estad\u00EDa");
+    btnEditarEstadia.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          //VentanaEditarEstadia editarEstadia = new VentanaEditarEstadia(sistema);
+          //editarEstadia.setVisible(true);
+        }
+      }
+    });
     btnEditarEstadia.setEnabled(false);
     btnEditarEstadia.addMouseListener(new MouseAdapter() {
       @Override
@@ -181,7 +276,18 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnEditarEstadia);
     
     JButton btnEditarReserva = new JButton("Editar Reserva");
-    btnEditarReserva.setEnabled(false);
+    btnEditarReserva.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          VentanaEditarReserva editarReserva = new VentanaEditarReserva(sistema);
+          editarReserva.setVisible(true);
+        }
+      }
+    });
+    btnEditarReserva.setEnabled(true);
     btnEditarReserva.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)

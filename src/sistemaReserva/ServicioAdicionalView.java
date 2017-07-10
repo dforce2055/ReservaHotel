@@ -1,15 +1,16 @@
 package sistemaReserva;
-public class ServicioAdicional
+
+public class ServicioAdicionalView
 {
   private int codigo;
   private String descripcion;
   private double precio;
-  
-  public ServicioAdicional(int cod, String desc, double prec)
-  {
-    codigo = cod;
-    descripcion = desc;
-    precio = prec;
+
+  public ServicioAdicionalView(int codigo, String descripcion, double precio) {
+  super();
+  this.codigo = codigo;
+  this.descripcion = descripcion;
+  this.precio = precio;
   }
 
   public int getCodigo()
@@ -40,16 +41,5 @@ public class ServicioAdicional
   public void setPrecio(double precio)
   {
     this.precio = precio;
-  }
-  
-  public boolean sosServicio(int codigo)
-  {
-    return this.codigo == codigo;
-  }
-  
-  public ServicioAdicionalView getView()
-  {
-    ServicioAdicionalView sav = new ServicioAdicionalView(codigo, descripcion, precio);
-    return sav;
   }
 }

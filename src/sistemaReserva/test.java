@@ -1,15 +1,25 @@
 package sistemaReserva;
-import java.time.LocalDate;
+//import java.time.LocalDate;
 
 
 public class test
 {
 
+
   public static void main(String[] args)
   {
     SistemaReserva sis = new SistemaReserva();
-    System.out.println(sis.buscarTrabajadorPorUsuario("pepe").getNombreUsuario());;
-    System.out.println(sis.loginTrabajador("pepe", "argento"));;
+    String numeroHabitacion = "100";
+    
+    for(String habitacion:sis.getTiposHabitacionesActivas())
+      System.out.println(habitacion);
+    
+    HabitacionView habitacion = sis.buscarHabitacionView(numeroHabitacion);
+    System.out.println(sis.validarNumeroHabitacion(numeroHabitacion));
+    System.out.println(habitacion != null);
+    
+    System.out.println(habitacion.getNumero() +" " +habitacion.getTipo());
+    
     /*
     sis.altaTarifa("Doble", 1000f);
     sis.altaTarifa("Triple", 1250f);

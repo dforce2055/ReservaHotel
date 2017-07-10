@@ -1,9 +1,6 @@
 package vistas;
 
-import java.awt.BorderLayout;
-
 import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -22,15 +19,20 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.Window.Type;
 
 import sistemaReserva.SistemaReserva;
 import sistemaReserva.Trabajador;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 
 public class VentanaLogin extends JFrame
 {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel menuLogin;
   private JTextField txtUsuario;
   private JPasswordField passwordField;
@@ -56,6 +58,24 @@ public class VentanaLogin extends JFrame
     });
   }
 
+  public void login()
+  {
+    String nombreUsuario = txtUsuario.getText();
+    String password = new String(passwordField.getPassword());
+   
+    if(sistema.loginTrabajador(nombreUsuario, password) == true)
+    {
+      Trabajador trabajador = sistema.buscarTrabajadorPorUsuario(nombreUsuario);
+      //JOptionPane.showMessageDialog(menuLogin, "Bienvenido " + nombreUsuario + ".");
+      VentanaMenuPrincipal menuPrincipal = new VentanaMenuPrincipal(sistema, trabajador);
+      menuPrincipal.setVisible(true);
+      dispose();
+    }
+    else{
+      JOptionPane.showMessageDialog(menuLogin, "Combinaci\u00f3n de usuario "
+            + nombreUsuario.toUpperCase() + " y contrase\u00f1a INCORRECTOS");
+    }
+  }
   /**
    * Create the frame.
    */
@@ -66,7 +86,7 @@ public class VentanaLogin extends JFrame
     setTitle("Sistema de Reserva");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     
-    //Posición en pantalla
+    //Posici\u00f3n en pantalla
     Dimension sizePantalla = Toolkit.getDefaultToolkit().getScreenSize();
     int centroALoAncho = (int)(sizePantalla.getWidth() - 800)/2;
     int centroALoAlto = (int)(sizePantalla.getHeight() - 480)/2;
@@ -84,7 +104,7 @@ public class VentanaLogin extends JFrame
     lblBienvenido.setFont(new Font("Ubuntu", Font.PLAIN, 20));
     menuLogin.add(lblBienvenido);
     
-    JLabel lblPorFavorInicie = new JLabel("Por favor inicie sesión");
+    JLabel lblPorFavorInicie = new JLabel("Por favor inicie sesi\u00f3n");
     lblPorFavorInicie.setBounds(500, 140, 180, 15);
     lblPorFavorInicie.setForeground(Color.WHITE);
     menuLogin.add(lblPorFavorInicie);
@@ -93,7 +113,7 @@ public class VentanaLogin extends JFrame
     txtUsuario = new JTextField();
     txtUsuario.setBounds(500, 175, 140, 19);
     txtUsuario.setFont(new Font("Ubuntu", Font.PLAIN, 12));
-    txtUsuario.setText("usuario");
+    txtUsuario.setText("Usuario");
     menuLogin.add(txtUsuario);
     txtUsuario.setColumns(10);
     txtUsuario.selectAll();
@@ -111,33 +131,28 @@ public class VentanaLogin extends JFrame
     passwordField.setText("password");
     menuLogin.add(passwordField);
     
-    JButton btnIniciarSesin = new JButton("iniciar sesión");
-    btnIniciarSesin.setBounds(500, 237, 140, 25);
-    btnIniciarSesin.addMouseListener(new MouseAdapter() {
+    JButton btnIniciarSesion = new JButton("Iniciar Sesi\u00F3n");
+    btnIniciarSesion.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          login();
+      }
+    });
+    btnIniciarSesion.setBounds(500, 237, 140, 25);
+    btnIniciarSesion.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent arg0)
       {
-        String nombreUsuario = txtUsuario.getText();
-        String password = new String(passwordField.getPassword());
-       
-        if(sistema.loginTrabajador(nombreUsuario, password) == true)
-        {
-          Trabajador trabajador = sistema.buscarTrabajadorPorUsuario(nombreUsuario);
-          JOptionPane.showMessageDialog(null, "Bienvenido " + nombreUsuario + ".");
-          VentanaMenuPrincipal menuPrincipal = new VentanaMenuPrincipal(sistema, trabajador);
-          menuPrincipal.setVisible(true);
-          dispose();
-        }
-        else
-          JOptionPane.showMessageDialog(null, "Combinación de usuario "
-                + nombreUsuario.toUpperCase() + " y contraseña INCORRECTOS");
+        login();
       }
     });
-    btnIniciarSesin.setFont(new Font("Ubuntu", Font.BOLD, 12));
-    menuLogin.add(btnIniciarSesin);
+    btnIniciarSesion.setFont(new Font("Ubuntu", Font.BOLD, 12));
+    menuLogin.add(btnIniciarSesion);
     
     JLabel lblNewLabel = new JLabel("fondo");
-    lblNewLabel.setBounds(0, 0, 800, 480);
+    lblNewLabel.setBounds(0, 0, 800, 451);
     lblNewLabel.setIcon(new ImageIcon(VentanaLogin.class.getResource("/imagenes/background.jpg")));
     menuLogin.add(lblNewLabel);
 

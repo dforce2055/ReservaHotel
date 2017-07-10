@@ -104,7 +104,7 @@ public class Persona
   //negocio
   public boolean esTuDocumento(String tipoDoc, String numDoc)
   {
-    return (tipoDocumento == tipoDoc && numeroDocumento == numDoc);
+    return (tipoDocumento.equals(tipoDoc) && numeroDocumento.equals(numDoc));
   }
 
   public void darBaja()

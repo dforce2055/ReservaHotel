@@ -63,7 +63,9 @@ public class VentanaEditarReserva extends JFrame {
   /**
    * Create the frame.
    */
-  public VentanaEditarReserva(SistemaReserva sistema) {
+  public VentanaEditarReserva(SistemaReserva sistema)
+  {
+    setResizable(false);//Que no lo puedan maximizar
     setTitle("Modificar Reserva");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     setBounds(100, 100, 700, 480);
@@ -71,7 +73,7 @@ public class VentanaEditarReserva extends JFrame {
     setContentPane(contentPane);
     contentPane.setLayout(null);
     
-    JLabel lblCodigoCliente = new JLabel("Codigo de Cliente:");
+    JLabel lblCodigoCliente = new JLabel("C\u00F3digo de Cliente:");
     lblCodigoCliente.setBounds(200, 75, 130, 14);
     contentPane.add(lblCodigoCliente);
     
@@ -89,7 +91,7 @@ public class VentanaEditarReserva extends JFrame {
     contentPane.add(tfLegajo);
     tfLegajo.setColumns(10);
     
-    JLabel lblTipoHab = new JLabel("Tipo de Habitacion:");
+    JLabel lblTipoHab = new JLabel("Tipo de Habitaci\u00F3n:");
     lblTipoHab.setBounds(200, 125, 130, 14);
     contentPane.add(lblTipoHab);
     
