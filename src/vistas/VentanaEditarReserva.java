@@ -31,6 +31,7 @@ import java.awt.Font;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import sistemaReserva.SistemaReserva;
+import javax.swing.JCheckBox;
 
 
 public class VentanaEditarReserva extends JFrame {
@@ -41,6 +42,7 @@ public class VentanaEditarReserva extends JFrame {
   private JButton btnAceptar;
   private JButton btnNewButton;
   private JDateChooser calendario_1;
+  private JTextField tfNroReserva;
 
   /**
    * Launch the application.
@@ -73,11 +75,22 @@ public class VentanaEditarReserva extends JFrame {
     setContentPane(contentPane);
     contentPane.setLayout(null);
     
+    JLabel lblNroReserva = new JLabel("N\u00FAmero de Reserva:");
+    lblNroReserva.setBounds(200, 50, 112, 14);
+    contentPane.add(lblNroReserva);
+    
+    tfNroReserva = new JTextField();
+    tfNroReserva.setEditable(false);
+    tfNroReserva.setBounds(337, 44, 150, 20);
+    contentPane.add(tfNroReserva);
+    tfNroReserva.setColumns(10);
+    
     JLabel lblCodigoCliente = new JLabel("C\u00F3digo de Cliente:");
     lblCodigoCliente.setBounds(200, 75, 130, 14);
     contentPane.add(lblCodigoCliente);
     
     tfCodigoCliente = new JTextField();
+    tfCodigoCliente.setEditable(false);
     tfCodigoCliente.setBounds(337, 72, 150, 20);
     contentPane.add(tfCodigoCliente);
     tfCodigoCliente.setColumns(10);
@@ -87,6 +100,7 @@ public class VentanaEditarReserva extends JFrame {
     contentPane.add(lblLegajo);
     
     tfLegajo = new JTextField();
+    tfLegajo.setEditable(false);
     tfLegajo.setBounds(337, 97, 150, 20);
     contentPane.add(tfLegajo);
     tfLegajo.setColumns(10);
@@ -105,6 +119,8 @@ public class VentanaEditarReserva extends JFrame {
     contentPane.add(lblObservaciones);
     
     JTextArea tfObservaciones = new JTextArea();
+    tfObservaciones.setEnabled(false);
+    tfObservaciones.setEditable(false);
     tfObservaciones.setLineWrap(true);
     tfObservaciones.setFont(new Font("Tahoma", Font.PLAIN, 11));
     tfObservaciones.setBorder(UIManager.getBorder("TextField.border"));
@@ -112,6 +128,7 @@ public class VentanaEditarReserva extends JFrame {
     contentPane.add(tfObservaciones);
     
     btnAceptar = new JButton("Aceptar");
+    btnAceptar.setEnabled(false);
     btnAceptar.addActionListener(new ActionListener() {
       
       String codigocliente = tfCodigoCliente.getText();
@@ -163,5 +180,13 @@ public class VentanaEditarReserva extends JFrame {
     calendario_2 = new JDateChooser();
       calendario_2.setBounds(337, 184, 150, 20);
       contentPane.add(calendario_2);
+      
+      JButton btnBuscar = new JButton("Buscar");
+      btnBuscar.setBounds(497, 43, 91, 23);
+      contentPane.add(btnBuscar);
+      
+      JCheckBox chckbxEliminar = new JCheckBox("Eliminar");
+      chckbxEliminar.setBounds(597, 413, 97, 23);
+      contentPane.add(chckbxEliminar);
   }
 }
