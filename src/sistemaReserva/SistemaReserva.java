@@ -44,11 +44,11 @@ public class SistemaReserva
     return null;
   }
   
-  public ClienteView buscarClienteViewPorCodigo(String codigoCliente)
+  public ClienteView buscarClienteViewPorCodigo(int codigoCliente)
   {
-    for (Cliente c: clientes)
-      if (c.sosCliente(Integer.parseInt(codigoCliente)))
-        return c.getView();
+    Cliente cliente = buscarCliente(codigoCliente);
+    if (cliente != null)
+    	return cliente.getView();
     return null;
   }
   
@@ -62,10 +62,10 @@ public class SistemaReserva
   
   public ClienteView buscarClienteViewPorDocumento(String tipoDoc, String numDoc)
   {
-    for (Cliente c: clientes)
-      if (c.esTuDocumento(tipoDoc, numDoc))
-        return c.getView();
-    return null;
+	    Cliente cliente = buscarClientePorDocumento(tipoDoc, numDoc);
+	    if (cliente != null)
+	    	return cliente.getView();
+	    return null;
   }
   
   
@@ -86,10 +86,10 @@ public class SistemaReserva
   
   public TrabajadorView buscarTrabajadorView(int legajo)
   {
-    for (Trabajador t: trabajadores)
-      if (t.sosTrabajador(legajo))
-        return t.getView();
-    return null;
+	  Trabajador trabajador = buscarTrabajador(legajo);
+	  if (trabajador != null)
+		  return trabajador.getView();
+	  return null;
   }
   
   private Trabajador buscarTrabajadorPorDocumento(String tipoDoc, String numDoc)
@@ -102,10 +102,10 @@ public class SistemaReserva
   
   public TrabajadorView buscarTrabajadorViewPorDocumento(String tipoDoc, String numDoc)
   {
-    for (Trabajador t: trabajadores)
-      if (t.esTuDocumento(tipoDoc, numDoc)) 
-        return t.getView();
-    return null;
+	  Trabajador trabajador = buscarTrabajadorPorDocumento(tipoDoc, numDoc);
+	  if (trabajador != null)
+		  return trabajador.getView();
+	  return null;
   }
   
   private boolean existeTrabajadorConEseDocumento(String tipoDoc, String numDoc)
@@ -134,10 +134,10 @@ public class SistemaReserva
   
   public HabitacionView buscarHabitacionView(String numero)
   {
-    for (Habitacion h: habitaciones)
-      if (h.sosHabitacion(numero))
-        return h.getView();
-    return null;
+	  Habitacion habitacion = buscarHabitacion(numero);
+	  if (habitacion != null)
+		  return habitacion.getView();
+	  return null;
   }
   
   private Reserva buscarReserva(int numero)

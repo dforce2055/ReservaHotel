@@ -63,7 +63,7 @@ public class VentanaEditarCliente extends JFrame {
     String codigoCliente = tfNroCliente.getText();
     if(sistema.validarNumeroCliente(codigoCliente))
     {
-      ClienteView cliente = sistema.buscarClienteViewPorCodigo(codigoCliente);
+      ClienteView cliente = sistema.buscarClienteViewPorCodigo(Integer.parseInt(codigoCliente));
       
       if(cliente != null)
       {
@@ -116,7 +116,7 @@ public class VentanaEditarCliente extends JFrame {
     
     if(sistema.validarNumeroCliente(codigoCliente))
     {
-      ClienteView cliente = sistema.buscarClienteViewPorCodigo(codigoCliente);
+      ClienteView cliente = sistema.buscarClienteViewPorCodigo(Integer.parseInt(codigoCliente));
       
       if(cliente != null)
       {
