@@ -3,48 +3,48 @@ import java.time.LocalDate;
 
 public class Reserva 
 {
-  private int nroReserva;
+  private int numeroReserva;
   private Cliente cliente;
   private Trabajador trabajador;
   private String tipoHabitacion;
   private LocalDate fechaIngreso;
   private LocalDate fechaSalida;
   private LocalDate fechaReserva;
-  private double costoReserva;
+  private double precio;
   private String observaciones;
   private String estado;//ACTIVA | CANCELADA | ARRIBADA
-  private static int proxNumero;
+  private static int proximoNumero;
   
-  private static int getProxNumero()
+  private static int getProximoNumero()
   {
-    return ++proxNumero;
+    return ++proximoNumero;
   }
   
   public Reserva(Cliente cliente, Trabajador trabajador, String tipoHabitacion, 
-      LocalDate fechaIngreso, LocalDate fechaSalida, double costoReserva, 
+      LocalDate fechaIngreso, LocalDate fechaSalida, double precio, 
       String observaciones)
   {
     super();
-    this.nroReserva = getProxNumero();
+    this.numeroReserva = getProximoNumero();
     this.cliente = cliente;
     this.trabajador = trabajador;
     this.tipoHabitacion = tipoHabitacion;
     this.fechaIngreso = fechaIngreso;
     this.fechaSalida = fechaSalida;
-    this.costoReserva = costoReserva;
+    this.precio = precio;
     this.observaciones = observaciones;
     this.estado = "ACTIVA";
     fechaReserva = LocalDate.now();
   }
 
-  public int getNroReserva()
+  public int getNumeroReserva()
   {
-    return nroReserva;
+    return numeroReserva;
   }
 
-  public void setNroReserva(int nroReserva)
+  public void setNumeroReserva(int numeroReserva)
   {
-    this.nroReserva = nroReserva;
+    this.numeroReserva = numeroReserva;
   }
 
   public Cliente getCliente()
@@ -107,14 +107,14 @@ public class Reserva
     this.fechaReserva = fechaReserva;
   }
 
-  public double getCostoReserva()
+  public double getPrecio()
   {
-    return costoReserva;
+    return precio;
   }
 
-  public void setCostoReserva(double costoReserva)
+  public void setPrecio(double precio)
   {
-    this.costoReserva = costoReserva;
+    this.precio = precio;
   }
 
   public String getObservaciones()
@@ -140,7 +140,7 @@ public class Reserva
   //negocio
   public boolean sosReserva(int numero)
   {
-    return nroReserva == numero;
+    return numeroReserva == numero;
   }
   
   public void cancelar()
@@ -148,7 +148,6 @@ public class Reserva
     estado = "CANCELADA";
   }
   
-  //experimental
   public boolean tenesElDia(LocalDate dia)
   {
     if (fechaIngreso.isEqual(dia) || (dia.isAfter(fechaIngreso)) && dia.isBefore(fechaSalida))
@@ -171,8 +170,8 @@ public class Reserva
   {
 	  ClienteView cv = cliente.getView();
 	  TrabajadorView tv = trabajador.getView();
-	  ReservaView rv = new ReservaView(nroReserva, cv, tv, tipoHabitacion,
-				fechaIngreso, fechaSalida, fechaReserva, costoReserva,observaciones, estado);
+	  ReservaView rv = new ReservaView(numeroReserva, cv, tv, tipoHabitacion,
+				fechaIngreso, fechaSalida, fechaReserva, precio,observaciones, estado);
 	  return rv;
   }
 }

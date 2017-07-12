@@ -187,7 +187,7 @@ public class VentanaEditarReserva extends JFrame {
     
     boxTipoHab = new JComboBox<String>();
     //Agrego habitaciones activas que se pueden elegir
-    Vector<String>tipos = sistema.getTiposHabitacionesActivas();
+    Vector<String>tipos = sistema.getTiposHabitacionesActivos();
     for(String tipo:tipos)
       boxTipoHab.addItem(tipo);
     

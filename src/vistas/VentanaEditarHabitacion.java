@@ -196,7 +196,7 @@ public class VentanaEditarHabitacion extends JFrame {
     
     boxTipoHab = new JComboBox<String>();
     //Aggrego las habitaciones activas que se pueden elegir
-    for(String tipo:sistema.getTiposHabitacionesActivas())
+    for(String tipo:sistema.getTiposHabitacionesActivos())
       boxTipoHab.addItem(tipo);
     
     boxTipoHab.setEnabled(false);

@@ -63,7 +63,7 @@ public class VentanaEditarCliente extends JFrame {
     String codigoCliente = tfNroCliente.getText();
     if(sistema.validarNumeroCliente(codigoCliente))
     {
-      ClienteView cliente = sistema.buscarClienteViewPorCodigo(Integer.parseInt(codigoCliente));
+      ClienteView cliente = sistema.buscarClienteViewPorNumero(Integer.parseInt(codigoCliente));
       
       if(cliente != null)
       {
@@ -74,11 +74,11 @@ public class VentanaEditarCliente extends JFrame {
         tfApellido.setText(cliente.getApellido());
         
         boxtipoDoc.setEnabled(true);
-        boxtipoDoc.setSelectedItem(cliente.getTipoDoc());
+        boxtipoDoc.setSelectedItem(cliente.getTipoDocumento());
         
         
         tfNumeroDocumento.setEnabled(true);
-        tfNumeroDocumento.setText(cliente.getNumDoc());
+        tfNumeroDocumento.setText(cliente.getNumeroDocumento());
         
         tfDireccion.setEnabled(true);
         tfDireccion.setText(cliente.getDireccion());
@@ -116,7 +116,7 @@ public class VentanaEditarCliente extends JFrame {
     
     if(sistema.validarNumeroCliente(codigoCliente))
     {
-      ClienteView cliente = sistema.buscarClienteViewPorCodigo(Integer.parseInt(codigoCliente));
+      ClienteView cliente = sistema.buscarClienteViewPorNumero(Integer.parseInt(codigoCliente));
       
       if(cliente != null)
       {

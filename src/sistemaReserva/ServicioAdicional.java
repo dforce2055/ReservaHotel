@@ -42,6 +42,7 @@ public class ServicioAdicional
     this.precio = precio;
   }
   
+  //negocio
   public boolean sosServicio(int codigo)
   {
     return this.codigo == codigo;

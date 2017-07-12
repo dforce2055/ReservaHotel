@@ -132,7 +132,7 @@ public class VentanaAltaHabitacion extends JFrame {
     
     boxTipoHab = new JComboBox<String>();
     //Aggrego las habitaciones activas que se pueden elegir
-    Vector<String>tipos = sistema.getTiposHabitacionesActivas();
+    Vector<String>tipos = sistema.getTiposHabitacionesActivos();
     for(String tipo:tipos)
       boxTipoHab.addItem(tipo);
     

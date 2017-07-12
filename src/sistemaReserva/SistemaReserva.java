@@ -37,17 +37,17 @@ public class SistemaReserva
     prueba.CargarDatos();
   }
   
-  private Cliente buscarCliente(int codigo)
+  private Cliente buscarCliente(int numero)
   {
     for (Cliente c: clientes)
-      if (c.sosCliente(codigo))
+      if (c.sosCliente(numero))
         return c;
     return null;
   }
   
-  public ClienteView buscarClienteViewPorCodigo(int codigoCliente)
+  public ClienteView buscarClienteViewPorNumero(int numeroCliente)
   {
-    Cliente cliente = buscarCliente(codigoCliente);
+    Cliente cliente = buscarCliente(numeroCliente);
     if (cliente != null)
     	return cliente.getView();
     return null;
@@ -75,6 +75,11 @@ public class SistemaReserva
     Cliente cliente = buscarClientePorDocumento(tipoDoc, numDoc);
     
     return cliente != null;
+  }
+  
+  public Vector<ItemTarifaView> buscarTarifasView()
+  {
+	  return tarifario.getView();
   }
   
   private Trabajador buscarTrabajador(int legajo)
@@ -205,7 +210,7 @@ public class SistemaReserva
     {
       cliente = new Cliente(nombre, apellido, tipoDoc, numDoc, direccion, telefono, email);
       clientes.add(cliente);
-      return cliente.getCodigoCliente();
+      return cliente.getNumero();
     }
     return 0;
   }
@@ -241,7 +246,7 @@ public class SistemaReserva
     return false;
   }
   
-  public int altaReserva(int codigoCliente, int legajoTrabajador, 
+  public int altaReserva(int numeroCliente, int legajoTrabajador, 
       String tipoHabitacion, LocalDate fechaIngreso, LocalDate fechaSalida, 
       String observaciones)
   {
@@ -249,7 +254,7 @@ public class SistemaReserva
     
     if (resultado == true)
     {
-      Cliente cliente = buscarCliente(codigoCliente);
+      Cliente cliente = buscarCliente(numeroCliente);
       if (cliente != null)
       {
         Trabajador trabajador = buscarTrabajador(legajoTrabajador);
@@ -258,10 +263,10 @@ public class SistemaReserva
           resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngreso, fechaSalida);
           if (resultado == true)
           {
-            double costoReserva = tarifario.getPrecio(tipoHabitacion);
-            Reserva reserva = new Reserva(cliente, trabajador, tipoHabitacion, fechaIngreso, fechaSalida, costoReserva, observaciones);
+            double precio = tarifario.getPrecio(tipoHabitacion);
+            Reserva reserva = new Reserva(cliente, trabajador, tipoHabitacion, fechaIngreso, fechaSalida, precio, observaciones);
             reservas.add(reserva);
-            return reserva.getNroReserva();
+            return reserva.getNumeroReserva();
           }
         }
       } 
@@ -300,7 +305,7 @@ public class SistemaReserva
         Habitacion habitacion = buscarHabitacion(numeroHabitacion);
         if (habitacion != null && habitacion.estasDisponible())
         {
-          String tipoHabitacion = habitacion.getTipoHabitacion();
+          String tipoHabitacion = habitacion.getTipo();
           boolean resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngreso, fechaSalida);//verificar por las dudas 
           if (resultado == true) 
           {
@@ -333,9 +338,9 @@ public class SistemaReserva
     }
   }
   
-  public void bajaCliente(int codigo)
+  public void bajaCliente(int numero)
   {
-    Cliente cliente = buscarCliente(codigo);
+    Cliente cliente = buscarCliente(numero);
     if (cliente != null)
     {
       cliente.darBaja();
@@ -415,7 +420,7 @@ public class SistemaReserva
     Estadia estadia = buscarEstadia(numero);
     if (estadia != null)
     {
-      total = estadia.cerrarEstadia();
+      total = estadia.calcularTotal();
       bajaEstadia(numero);
     }
     return total;
@@ -432,7 +437,7 @@ public class SistemaReserva
       if (resultado == true)
       {
         estadia.setFechaSalida(fechaSalida);
-        total = estadia.cerrarEstadia();
+        total = estadia.calcularTotal();
         bajaEstadia(numero);
       }
     }
@@ -455,31 +460,31 @@ public class SistemaReserva
       String telefonoCliente = cliente.getTelefono();
       String emailCliente = cliente.getEmail();
       
-      if(!existeClienteConEseDocumento(tipoDoc, numDoc))//Si NO existe un cliente con ese Tipo y numero de documento
-      {
-        if (!nombre.equals(nombreCliente))
-          cliente.setNombre(nombre);
-        
-        if (!apellido.equals(apellidoCliente))
+      if (!nombre.equals(nombreCliente))
+    	  cliente.setNombre(nombre);
+      if (!apellido.equals(apellidoCliente))
           cliente.setApellido(apellido);
-        
-        if(!tipoDoc.equals(tipoDocCliente))
-          cliente.setTipoDocumento(tipoDoc);
-        
-        if(!numDoc.equals(numDocCliente))
-          cliente.setNumeroDocumento(numDoc);
-        
-        if (!direccion.equals(direccionCliente))
-          cliente.setDireccion(direccion);
-        
-        if (!telefono.equals(telefonoCliente))
+   
+      if (!tipoDoc.equalsIgnoreCase(tipoDocCliente) || !numDoc.equalsIgnoreCase(numDocCliente))
+      {
+    	  boolean rta = existeClienteConEseDocumento(tipoDoc, numDoc);
+	      if (rta == false)//Si NO existe un cliente con ese Tipo y numero de documento
+	      {
+	    	  if(!tipoDoc.equals(tipoDocCliente))
+	    		  cliente.setTipoDocumento(tipoDoc);
+	        
+	    	  if(!numDoc.equals(numDocCliente))
+	    		  cliente.setNumeroDocumento(numDoc);
+	      }
+      }
+      if (!direccion.equals(direccionCliente))
+    	  cliente.setDireccion(direccion);
+      if (!telefono.equals(telefonoCliente))
           cliente.setTelefono(telefono);
-        
-        if (!email.equals(emailCliente))
+      if (!email.equals(emailCliente))
           cliente.setEmail(email);
         
         return true;
-      }
     }
     return false;
   }
@@ -554,8 +559,8 @@ public class SistemaReserva
       String pisoHabitacion = habitacion.getPiso(),
       descripcionHabitacion = habitacion.getDescripcion(),
       caracteristicasHabitacion = habitacion.getCaracteristicas(),
-      tipoHabitacion = habitacion.getTipoHabitacion();
-      
+      tipoHabitacion = habitacion.getTipo();
+      	
       if (!piso.equals(pisoHabitacion))
         habitacion.setPiso(piso);
       
@@ -570,7 +575,7 @@ public class SistemaReserva
         boolean resultado = existeTipoHabitacion(tipo);
         
         if (resultado == true)
-          habitacion.setTipoHabitacion(tipo);
+          habitacion.setTipo(tipo);
         else
           return false;
       }
@@ -895,74 +900,20 @@ public class SistemaReserva
     {
       rta = trabajador.esTuPassword(password);
       if(rta == true)
-        trabajadorValidado = trabajador;
+        setTrabajadorValidado(trabajador);
     }
     return rta;
   }
   
   public boolean existeTipoHabitacion(String tipo)
   {
-    return tarifario.existeTipo(tipo);
+    return tarifario.existeTipoHabitacion(tipo);
   }
 
-  /**
-   * imprime la cantidad de habitaciones disponibles por cada tipo;
-   * cuando haya interfaz va a tener que devolver un vector de nodos con tipoHab (string) y cantidad
-   * (o sea un diccionario) 
-   */ 
-  public void consultarDisponiblesPorPeriodo(LocalDate fIng, LocalDate fSal)
-  {
-    if (!validarFecha(fIng, fSal))
-    {
-      System.out.println("Fecha invalida!");
-      return; //fecha invalida
-    }
-    Vector<String> tipos = tarifario.getTiposActivos(); //creo que seria mejor que tengamos un vector con los tipos y su abm, hay que ver como entraria en el diagrama  
-    if (tipos == null)
-    {
-      System.out.println("No existe ningun tipo de habitacion!");
-      return; //no existen tipos de habitaciones
-    }
-    int[] minCantidadesDisponibles = new int[tipos.size()];
-    int[] cantidadesHabitaciones = new int[tipos.size()];
-    for (int i = 0; i < tipos.size(); i++)
-    {
-      cantidadesHabitaciones[i] = cantidadHabitacionesDeTipo(tipos.elementAt(i));
-      minCantidadesDisponibles[i] = cantidadesHabitaciones[i];
-    }
-    //se podria verificar aca si las cantidades son todas 0, o sea que no hay habitaciones
-    LocalDate fAux = fIng; //fecha auxiliar: empieza en la fecha de ingreso, y se aumenta dia a dia hasta el dia de salida
-    while (fAux.isBefore(fSal)) 
-    {
-      int[] disponibles = new int[tipos.size()];
-      for (int i = 0; i < disponibles.length; i++)
-        disponibles[i] = cantidadesHabitaciones[i]; //se parte desde que todas las habitaciones de este tipo estan disponibles, y se van descontando
-      for (Reserva r: reservas)
-        if (r.tenesElDia(fAux))
-          disponibles[tipos.indexOf(r.getTipoHabitacion())]--;
-      for (Estadia e: estadias)
-        if (e.tenesElDia(fAux)) 
-          disponibles[tipos.indexOf(e.getTipoHabitacion())]--;
-      int totalDisponibles = 0; //usado mas adelante para cortar antes si en algun dia ya no hay absolutamente nada disponible
-      for (int i = 0; i < disponibles.length; i++)
-      {
-        if (disponibles[i] < minCantidadesDisponibles[i])
-          minCantidadesDisponibles[i] = disponibles[i];
-        totalDisponibles += minCantidadesDisponibles[i];
-      }
-      if (totalDisponibles == 0)
-        break; //si en algun dia hay 0 disponibles, entonces no hay nada disponible y se sale del loop de comparacion fecha a fecha
-      fAux = fAux.plusDays(1); //se aumenta el auxiliar en 1 dia
-    }
-    System.out.println("--- DISPONIBILIDAD DESDE " + fIng.toString() + " HASTA " + fSal.toString() + " ---");
-    for (int i = 0; i < minCantidadesDisponibles.length; i++)
-      System.out.println(tipos.elementAt(i) + ": " + minCantidadesDisponibles[i]);    
-  } 
-  
-  public DisponibilidadesView consultarDisponiblesPorPeriodoView(
+  public Vector<ItemDisponibilidad> consultarDisponiblesPorPeriodo(
       LocalDate fechaIngreso, LocalDate fechaSalida)
   {
-    DisponibilidadesView disponibilidades = new DisponibilidadesView();
+    Vector<ItemDisponibilidad> disponibilidades = new Vector<ItemDisponibilidad>();
     boolean rta = validarFecha(fechaIngreso, fechaSalida);
     if (rta == true)
     {
@@ -971,51 +922,18 @@ public class SistemaReserva
       for (String tipo: tipos)
       {
         cantidadDisponible = calcularDisponibilidadPorTipo(tipo, fechaIngreso, fechaSalida);
-        disponibilidades.agregarItem(tipo, cantidadDisponible);
+        ItemDisponibilidad item = new ItemDisponibilidad(tipo, cantidadDisponible);
+        disponibilidades.add(item);
       }
     }   
     return disponibilidades;
   }
-  //GetView
-  ClienteView getClienteView(Cliente cliente)
+  
+  public Vector<String> getTiposHabitacionesActivos()
   {
-    return cliente.getView();
+    return tarifario.getTiposActivos();
   }
   
-  EstadiaView getEstadiaView(Estadia estadia)
-  {
-    return estadia.getView();
-  }
-  
-  HabitacionView getHabitacionView(Habitacion habitacion)
-  {
-    return habitacion.getView();
-  }
-  
-  ItemTarifaView getItemTarifaView(ItemTarifa item)
-  {
-    return item.getView();
-  }
-  
-  public Vector<String> getTiposHabitacionesActivas()
-  {
-    return this.tarifario.getTiposActivos();
-  }
-  
-  ReservaView getReserva(Reserva reserva)
-  {
-    return reserva.getView();
-  }
-  
-  ServicioAdicionalView getServicioAdicional(ServicioAdicional servicio)
-  {
-    return servicio.getView();
-  }
-  
-  TrabajadorView getTrabajadorView(Trabajador trabajador)
-  {
-    return trabajador.getView();
-  }
   public TrabajadorView getTrabajadorValidado()
   {
     return trabajadorValidado.getView();
@@ -1065,4 +983,12 @@ public class SistemaReserva
     String usuario[] = email.split(regEx);
     return usuario[0];
   }
+
+  private void setTrabajadorValidado(Trabajador trabajador)
+  {
+	  trabajadorValidado = trabajador;
+  }
 } 
+
+
+		

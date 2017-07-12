@@ -20,6 +20,7 @@ public class Tarifario
     this.items = items;
   }
   
+  //negocio
   public void agregarItem(String tipoHabitacion, double precio)
   {
     ItemTarifa item = buscarItem(tipoHabitacion);
@@ -56,23 +57,40 @@ public class Tarifario
   
   public Vector<String> getTiposActivos()
   {
-    Vector<String> v = new Vector<String>();
+    Vector<String> tipos = new Vector<String>();
     for (ItemTarifa item: items)
-      if (item.estasActivo())
-        v.add(item.getTipoHabitacion());
-    return v;
+    {
+    	boolean rta = item.estasActivo();
+    	if (rta == true)
+    	{
+    		String tipo = item.getTipoHabitacion(); 
+        	tipos.add(tipo);
+    	}
+    }
+    return tipos;
   }
   
-  public boolean existeTipo(String tipo)
+  public boolean existeTipoHabitacion(String tipo)
   {
     ItemTarifa item = buscarItem(tipo);
     return item != null;
   }
   
-  public void modificarValorTarifa(String tipo, double precio)
+  public void modificarValorTarifa(String tipoHabitacion, double precio)
   {
-    ItemTarifa item = buscarItem(tipo);
+    ItemTarifa item = buscarItem(tipoHabitacion);
     if (item != null)
       item.setPrecio(precio);
+  }
+  
+  public Vector<ItemTarifaView> getView()
+  {
+	  Vector<ItemTarifaView> tarifarioView = new Vector<ItemTarifaView>();
+	  for (ItemTarifa item: items)
+	  {
+		  ItemTarifaView itemView = item.getView();
+		  tarifarioView.add(itemView);
+	  }
+	  return tarifarioView;
   }
 }
