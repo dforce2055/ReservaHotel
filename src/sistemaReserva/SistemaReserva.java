@@ -188,6 +188,14 @@ public class SistemaReserva
     }
     return v;
   }
+  
+  public ReservaView buscarReservaView(String nroReserva)
+  {
+    for (Reserva reserva: reservas)
+      if (reserva.sosReserva(Integer.parseInt(nroReserva)))
+        return reserva.getView();
+    return null;
+  }
 
   public int altaCliente(String nombre, String apellido, String tipoDoc, 
       String numDoc, String direccion, String telefono, String email)
@@ -1032,6 +1040,12 @@ public class SistemaReserva
   }
   
   public boolean validarNumeroHabitacion(String numero)
+  {
+    String patron = "[-+]?\\d*\\.?\\d+";
+    return numero != null && numero.matches(patron);
+  }
+  
+  public boolean validarNumeroReserva(String numero)
   {
     String patron = "[-+]?\\d*\\.?\\d+";
     return numero != null && numero.matches(patron);

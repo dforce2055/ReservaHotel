@@ -1,36 +1,22 @@
 package vistas;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Rectangle;
-import java.awt.Button;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.TitledBorder;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
-import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.UIManager;
 import java.awt.Font;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
 
 import sistemaReserva.ClienteView;
 import sistemaReserva.SistemaReserva;
@@ -257,6 +243,7 @@ public class VentanaAltaReserva extends JFrame {
             fechaSalida = LocalDate.of(anio, mes, dia);
             
             altaEstadia(sistema);
+            dispose();
           }
         }catch(Exception e)
         {

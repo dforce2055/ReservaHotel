@@ -47,6 +47,6 @@ public class CargaDatosPrueba
     s.altaTrabajador("Maria Elena", "Fuseneko", "DNI", "667", "Y candela?",
         "???", "?@?.?", "maria", "whiskey");
     
-    
+    s.altaReserva(5, 1, "Individual", LocalDate.of(2017, 7, 18), LocalDate.of(2017, 7, 28), "observaciones");
   }
 }
