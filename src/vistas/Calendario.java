@@ -6,10 +6,13 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JCalendar;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
+
+import sun.util.resources.CalendarData;
 
 @SuppressWarnings("serial")
 public class Calendario extends JFrame
@@ -40,6 +43,7 @@ public class Calendario extends JFrame
   /**
    * Create the frame.
    */
+  @SuppressWarnings("deprecation")
   public Calendario()
   {
     setResizable(false);//Que no lo puedan maximizar
@@ -53,6 +57,8 @@ public class Calendario extends JFrame
     JCalendar calendario = new JCalendar();
     calendario.setBounds(12, 12, 237, 159);
     contentPane.add(calendario);
+   
+    
     
     JButton boton = new JButton("fecha");
     boton.addActionListener(new ActionListener() {
@@ -75,6 +81,7 @@ public class Calendario extends JFrame
     
     dateChooser = new JDateChooser();
     dateChooser.setBounds(22, 182, 89, 20);
+    dateChooser.setMinSelectableDate(new Date(2010,1,1));
     contentPane.add(dateChooser);
   }
 }
