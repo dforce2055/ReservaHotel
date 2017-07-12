@@ -39,6 +39,7 @@ import sistemaReserva.TrabajadorView;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
@@ -112,10 +113,11 @@ public class VentanaAltaReserva extends JFrame {
     String codigocliente = tfCodigoCliente.getText();
     int legajo = trabajadorValidado.getLegajo();
     String observaciones = tfObservaciones.getText();
+    Period periodo = Period.between(fechaIngreso, fechaSalida);
     
     if(cliente != null)
     {
-      if(tfCodigoCliente.equals("") || tfTrabajador.equals("") || boxTipoHab.equals("") || observaciones.equals(""))
+      if(tfCodigoCliente.equals("") || tfTrabajador.equals("") || boxTipoHab.equals(""))
       {
         JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
       }
@@ -129,7 +131,14 @@ public class VentanaAltaReserva extends JFrame {
               +"N\u00famero de Reserva: " +nroReserva
               +"\nCliente: " +cliente.getApellido() +", " +cliente.getNombre()
               +"\nFecha de ingreso: "+fechaIngreso
-              +"\nFecha de salida: "+fechaSalida);
+              +"\nFecha de salida: "+fechaSalida
+              +"\nPeriodo de " +periodo.getDays()
+              +" D\u00eda\\s"
+              );
+        }else
+        {
+          JOptionPane.showMessageDialog(contentPane,"NO PUDO REALIZARSE LA RESERVA\n"
+              +"N° de Reserva: " +nroReserva);
         }
       }
     }else
@@ -153,20 +162,20 @@ public class VentanaAltaReserva extends JFrame {
     contentPane.setLayout(null);
     
     JLabel lblCodigoCliente = new JLabel("C\u00F3digo de Cliente:");
-    lblCodigoCliente.setBounds(200, 39, 130, 14);
+    lblCodigoCliente.setBounds(189, 35, 130, 20);
     contentPane.add(lblCodigoCliente);
     
     tfCodigoCliente = new JTextField();
-    tfCodigoCliente.setBounds(337, 36, 150, 20);
+    tfCodigoCliente.setBounds(337, 35, 150, 20);
     contentPane.add(tfCodigoCliente);
     tfCodigoCliente.setColumns(10);
     
     JLabel lbTrabajador = new JLabel("Trabajador:");
-    lbTrabajador.setBounds(200, 100, 130, 14);
+    lbTrabajador.setBounds(189, 95, 130, 20);
     contentPane.add(lbTrabajador);
     
     tfTrabajador = new JTextField();
-    tfTrabajador.setBounds(337, 97, 150, 20);
+    tfTrabajador.setBounds(337, 95, 150, 20);
     trabajadorValidado = sistema.getTrabajadorValidado();
     tfTrabajador.setText(String.valueOf(trabajadorValidado.getNombre() + ", " +trabajadorValidado.getApellido()));
     contentPane.add(tfTrabajador);
@@ -174,7 +183,7 @@ public class VentanaAltaReserva extends JFrame {
     tfTrabajador.setColumns(10);
     
     JLabel lblTipoHab = new JLabel("Tipo de Habitaci\u00F3n:");
-    lblTipoHab.setBounds(200, 125, 130, 14);
+    lblTipoHab.setBounds(189, 125, 140, 20);
     contentPane.add(lblTipoHab);
     
     boxTipoHab = new JComboBox<String>();
@@ -183,36 +192,36 @@ public class VentanaAltaReserva extends JFrame {
     for(String tipo:tipos)
       boxTipoHab.addItem(tipo);
     
-    boxTipoHab.setBounds(337, 122, 150, 20);
+    boxTipoHab.setBounds(337, 125, 150, 20);
     contentPane.add(boxTipoHab);
     
     JLabel lblObservaciones = new JLabel("Observaciones:");
-    lblObservaciones.setBounds(200, 256, 130, 14);
+    lblObservaciones.setBounds(189, 250, 130, 20);
     contentPane.add(lblObservaciones);
     
     tfObservaciones = new JTextArea();
     tfObservaciones.setLineWrap(true);
     tfObservaciones.setFont(new Font("Tahoma", Font.PLAIN, 11));
     tfObservaciones.setBorder(UIManager.getBorder("TextField.border"));
-    tfObservaciones.setBounds(337, 251, 150, 100);
+    tfObservaciones.setBounds(337, 250, 150, 100);
     contentPane.add(tfObservaciones);
     
     JLabel lblFechaDeIngreso = new JLabel("Fecha de Ingreso:");
-    lblFechaDeIngreso.setBounds(200, 159, 130, 14);
+    lblFechaDeIngreso.setBounds(189, 155, 130, 20);
     contentPane.add(lblFechaDeIngreso);
     
     calendario_1 = new JDateChooser();
-    calendario_1.setBounds(337, 153, 150, 20);
+    calendario_1.setBounds(337, 155, 150, 20);
     calendario_1.setMinSelectableDate(fechaActual);
     contentPane.add(calendario_1);
   
     JLabel lblFechaDeSalida = new JLabel("Fecha de Salida");
-    lblFechaDeSalida.setBounds(200, 190, 130, 14);
+    lblFechaDeSalida.setBounds(189, 185, 130, 20);
     contentPane.add(lblFechaDeSalida);
   
   
     calendario_2 = new JDateChooser();
-    calendario_2.setBounds(337, 184, 150, 20);
+    calendario_2.setBounds(337, 185, 150, 20);
     calendario_2.setMinSelectableDate(fechaActual);
     contentPane.add(calendario_2);
     
@@ -257,7 +266,7 @@ public class VentanaAltaReserva extends JFrame {
         
       }
     });
-    btnAceptar.setBounds(200, 384, 89, 23);
+    btnAceptar.setBounds(200, 384, 100, 23);
     contentPane.add(btnAceptar);
     
     btnNewButton = new JButton("Cancelar");
@@ -266,7 +275,7 @@ public class VentanaAltaReserva extends JFrame {
         dispose();
       }
     });
-    btnNewButton.setBounds(398, 384, 89, 23);
+    btnNewButton.setBounds(398, 384, 100, 23);
     contentPane.add(btnNewButton);
     
   
@@ -287,15 +296,15 @@ public class VentanaAltaReserva extends JFrame {
           buscarCliente(sistema);
         }
       });
-      btnBuscar.setBounds(497, 35, 91, 23);
+      btnBuscar.setBounds(497, 35, 100, 23);
       contentPane.add(btnBuscar);
       
       JLabel lblCliente = new JLabel("Cliente:");
-      lblCliente.setBounds(200, 70, 130, 14);
+      lblCliente.setBounds(189, 65, 130, 20);
       contentPane.add(lblCliente);
       
       textFieldCliente = new JTextField();
-      textFieldCliente.setBounds(337, 67, 150, 20);
+      textFieldCliente.setBounds(337, 65, 150, 20);
       textFieldCliente.setEnabled(false);
       contentPane.add(textFieldCliente);
       textFieldCliente.setColumns(10);
