@@ -1,6 +1,7 @@
 package sistemaReserva;
 //import java.time.LocalDate;
 
+import java.time.LocalDate;
 
 public class test
 {
@@ -10,7 +11,7 @@ public class test
   {
     SistemaReserva sis = new SistemaReserva();
     String numeroHabitacion = "100";
-    
+    /*
     for(String habitacion:sis.getTiposHabitacionesActivas())
       System.out.println(habitacion);
     
@@ -19,6 +20,11 @@ public class test
     System.out.println(habitacion != null);
     
     System.out.println(habitacion.getNumero() +" " +habitacion.getTipo());
+    */
+    int nroReserva = sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala");
+    System.out.println(nroReserva);
+    nroReserva = sis.altaReserva(1, 1, "individual", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala");
+    System.out.println(nroReserva);
     
     /*
     sis.altaTarifa("Doble", 1000f);

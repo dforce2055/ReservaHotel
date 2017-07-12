@@ -6,12 +6,18 @@ import javax.swing.border.EmptyBorder;
 import com.toedter.calendar.JCalendar;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.JDateChooser;
+
+import sun.util.resources.CalendarData;
 
 @SuppressWarnings("serial")
 public class Calendario extends JFrame
 {
+  private JDateChooser dateChooser;
 
   private JPanel contentPane;
 
@@ -37,6 +43,7 @@ public class Calendario extends JFrame
   /**
    * Create the frame.
    */
+  @SuppressWarnings("deprecation")
   public Calendario()
   {
     setResizable(false);//Que no lo puedan maximizar
@@ -50,19 +57,31 @@ public class Calendario extends JFrame
     JCalendar calendario = new JCalendar();
     calendario.setBounds(12, 12, 237, 159);
     contentPane.add(calendario);
+   
+    
     
     JButton boton = new JButton("fecha");
     boton.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent arg0)
       {
-        int dia = calendario.getCalendar().get(Calendar.DAY_OF_MONTH);
-        int mes = calendario.getCalendar().get(Calendar.MONTH);
-        int anio = calendario.getCalendar().get(Calendar.YEAR);
+        int dia = dateChooser.getCalendar().get(Calendar.DAY_OF_MONTH);
+        int mes = dateChooser.getCalendar().get(Calendar.MONTH)+1;
+        int anio = dateChooser.getCalendar().get(Calendar.YEAR);
         
-        System.out.println("Fecha: " +dia +"/" +mes +"/" +anio);
+        
+        
+        LocalDate fecha = LocalDate.of(anio, mes, dia);
+        
+        //System.out.println("Fecha: " +dia +"/" +mes +"/" +anio);
+        System.out.println("Fecha: " +fecha.toString());
       }
     });
     boton.setBounds(261, 12, 117, 25);
     contentPane.add(boton);
+    
+    dateChooser = new JDateChooser();
+    dateChooser.setBounds(22, 182, 89, 20);
+    dateChooser.setMinSelectableDate(new Date(2010,1,1));
+    contentPane.add(dateChooser);
   }
 }
