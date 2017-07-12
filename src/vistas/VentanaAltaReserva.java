@@ -40,6 +40,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Vector;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -64,6 +65,7 @@ public class VentanaAltaReserva extends JFrame {
   private LocalDate fechaIngreso;
   private LocalDate fechaSalida;
   private JTextArea tfObservaciones;
+  private Date fechaActual = new Date(System.currentTimeMillis());
 
 
   /**
@@ -201,6 +203,7 @@ public class VentanaAltaReserva extends JFrame {
     
     calendario_1 = new JDateChooser();
     calendario_1.setBounds(337, 153, 150, 20);
+    calendario_1.setMinSelectableDate(fechaActual);
     contentPane.add(calendario_1);
   
     JLabel lblFechaDeSalida = new JLabel("Fecha de Salida");
@@ -210,6 +213,7 @@ public class VentanaAltaReserva extends JFrame {
   
     calendario_2 = new JDateChooser();
     calendario_2.setBounds(337, 184, 150, 20);
+    calendario_2.setMinSelectableDate(fechaActual);
     contentPane.add(calendario_2);
     
     btnAceptar = new JButton("Aceptar");
