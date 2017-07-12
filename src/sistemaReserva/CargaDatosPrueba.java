@@ -1,5 +1,7 @@
 package sistemaReserva;
 
+import java.time.LocalDate;
+
 public class CargaDatosPrueba
 {
   SistemaReserva s;
@@ -32,16 +34,19 @@ public class CargaDatosPrueba
     s.altaHabitacion("110", "1", "descripcion", "caracteristicas", "Individual");
     s.altaHabitacion("200", "2", "descripcion", "caracteristicas", "Doble");
     
+    
     int clientes = 4;
     for (int i = 0; i < clientes; i++)
       s.altaCliente("Cliente " + i, "Apellido " + i, "DNI", i * 1000 + "",
           "Libertador " + i*i, i*i*i + "", "email" + i + "@asd.com");
     
-    s.altaCliente("Diego", "P�rez", "DNI", "12261201", "Lenguado", "4010-666", "diego@mail.com");
+    s.altaCliente("Diego", "P\u00e9rez", "DNI", "12261201", "Lenguado", "4010-666", "diego@mail.com");
     
     s.altaTrabajador("Pepe", "Argento", "DNI", "666", "Desconocida", "Sin pagar",
         "La internet era cara", "pepe", "chevy");
     s.altaTrabajador("Maria Elena", "Fuseneko", "DNI", "667", "Y candela?",
         "???", "?@?.?", "maria", "whiskey");
+    
+    
   }
 }
