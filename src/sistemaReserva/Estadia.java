@@ -27,11 +27,11 @@ public class Estadia
   private Vector<ServicioAdicional> adicionales;
   private int numero;
   private Trabajador trabajador;
-  private static int proxNumero;
+  private static int proximoNumero;
   
-  private static int getProxNumero()
+  private static int getProximoNumero()
   {
-    return ++proxNumero;
+    return ++proximoNumero;
   }
   
   public Estadia(Reserva reserva, Habitacion habitacion)
@@ -41,12 +41,12 @@ public class Estadia
     this.habitacion = habitacion;
     fechaIngreso = reserva.getFechaIngreso(); 
     fechaSalida = reserva.getFechaSalida();
-    precio = reserva.getCostoReserva();
+    precio = reserva.getPrecio();
     cliente = reserva.getCliente();
     observaciones = reserva.getObservaciones();
     adicionales = new Vector<ServicioAdicional>();
     trabajador = reserva.getTrabajador();
-    numero = getProxNumero();
+    numero = getProximoNumero();
   }
 
   public Estadia(Habitacion habitacion, LocalDate fechaIngreso, 
@@ -153,11 +153,6 @@ public class Estadia
   {
     this.numero = numero;
   }
-
-  public static void setProxNumero(int proxNumero)
-  {
-    Estadia.proxNumero = proxNumero;
-  }
   
   public Trabajador getTrabajador()
   {
@@ -169,7 +164,7 @@ public class Estadia
     this.trabajador = trabajador;
   }
 
-  //experimental
+  //negocio
   public boolean tenesElDia(LocalDate dia)
   {
     if (fechaIngreso.isEqual(dia) || (dia.isAfter(fechaIngreso)) && dia.isBefore(fechaSalida))
@@ -185,7 +180,7 @@ public class Estadia
   
   public String getTipoHabitacion()
   {
-    return habitacion.getTipoHabitacion();
+    return habitacion.getTipo();
   }
   
   public boolean sosEstadia(int num)
@@ -194,7 +189,7 @@ public class Estadia
   }
   
   //devuelve el valor total de la estadia teniendo en cuenta las fechas de entrada y salida
-  public double cerrarEstadia()
+  public double calcularTotal()
   {
     long dias = fechaIngreso.until(fechaSalida, ChronoUnit.DAYS);
     return dias * precio;

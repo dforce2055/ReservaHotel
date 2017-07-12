@@ -82,7 +82,7 @@ public class VentanaAltaReserva extends JFrame {
     
     if(sistema.validarNumeroCliente(codigoCliente))
     {
-      cliente = sistema.buscarClienteViewPorCodigo(Integer.parseInt(codigoCliente));
+      cliente = sistema.buscarClienteViewPorNumero(Integer.parseInt(codigoCliente));
       if(cliente != null)
       {
         textFieldCliente.setEnabled(true);
@@ -174,7 +174,7 @@ public class VentanaAltaReserva extends JFrame {
     
     boxTipoHab = new JComboBox<String>();
     //Agrego habitaciones activas que se pueden elegir
-    Vector<String>tipos = sistema.getTiposHabitacionesActivas();
+    Vector<String>tipos = sistema.getTiposHabitacionesActivos();
     for(String tipo:tipos)
       boxTipoHab.addItem(tipo);
     

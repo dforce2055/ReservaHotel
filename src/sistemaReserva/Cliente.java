@@ -5,48 +5,39 @@
 package sistemaReserva;
 public class Cliente extends Persona
 {
-  private static int proxCodigoCliente;
-  private int codigoCliente;
+  private static int proximoNumero;
+  private int numero;
 
-  private static int getProxCodigo()
+  private static int getProximoNumero()
   {
-    return ++proxCodigoCliente;
+    return ++proximoNumero;
   }
-  
-  /**
-   * public Cliente(String nom, String ape, String tDoc, String nDoc, String dir,
-   * String tel, String eMail, int cod)
-   * {
-   *   super(nom, ape, tDoc, nDoc, dir, tel, eMail);
-   *   codigoCliente = cod;
-   * }si dejamos de usar el static, usar este constructor
-   **/ 
   
   public Cliente(String nom, String ape, String tDoc, String nDoc, String dir, 
       String tel, String eMail)
   {
     super(nom, ape, tDoc, nDoc, dir, tel, eMail);
-    codigoCliente = getProxCodigo();
+    numero = getProximoNumero();
   }
 
-  public int getCodigoCliente()
+  public int getNumero()
   {
-    return codigoCliente;
+    return numero;
   }
 
-  public void setCodigoCliente(int codigoCliente)
+  public void setNumero(int numero)
   {
-    this.codigoCliente = codigoCliente;
+    this.numero = numero;
   }
   
   public boolean sosCliente(int codigo)
   {
-    return codigo == codigoCliente;
+    return codigo == numero;
   }
   
   public ClienteView getView()
   {
-    ClienteView cv = new ClienteView(codigoCliente, nombre, apellido, tipoDocumento,
+    ClienteView cv = new ClienteView(numero, nombre, apellido, tipoDocumento,
         numeroDocumento, direccion, telefono, email);
     return cv;
   }

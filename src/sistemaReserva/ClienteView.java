@@ -4,20 +4,20 @@ public class ClienteView {
   private int numero;
   private String nombre;
   private String apellido;
-  private String tipoDoc;
-  private String numDoc;
+  private String tipoDocumento;
+  private String numeroDocumento;
   private String direccion;
   private String telefono;
   private String email;
   
-  public ClienteView(int numero, String nombre, String apellido, String tipoDoc, String numDoc, String direccion,
+  public ClienteView(int numero, String nombre, String apellido, String tipoDocumento, String numeroDocumento, String direccion,
       String telefono, String email) {
     super();
     this.numero = numero;
     this.nombre = nombre;
     this.apellido = apellido;
-    this.tipoDoc = tipoDoc;
-    this.numDoc = numDoc;
+    this.tipoDocumento = tipoDocumento;
+    this.numeroDocumento = numeroDocumento;
     this.direccion = direccion;
     this.telefono = telefono;
     this.email = email;
@@ -47,20 +47,20 @@ public class ClienteView {
     this.apellido = apellido;
   }
 
-  public String getTipoDoc() {
-    return tipoDoc;
+  public String getTipoDocumento() {
+    return tipoDocumento;
   }
 
-  public void setTipoDoc(String tipoDoc) {
-    this.tipoDoc = tipoDoc;
+  public void setTipoDocumento(String tipoDocumento) {
+    this.tipoDocumento = tipoDocumento;
   }
 
-  public String getNumDoc() {
-    return numDoc;
+  public String getNumeroDocumento() {
+    return numeroDocumento;
   }
 
-  public void setNumDoc(String numDoc) {
-    this.numDoc = numDoc;
+  public void setNumeroDocumento(String numeroDocumento) {
+    this.numeroDocumento = numeroDocumento;
   }
 
   public String getDireccion() {

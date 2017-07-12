@@ -6,17 +6,17 @@ public class Habitacion
   private String descripcion;
   private String caracteristicas;
   private String estado;//DISPONIBLE | OCUPADA | EN_MANTENIMIENTO | INACTIVA
-  private String tipoHabitacion;// INDIVIDUAL | DOBLE | TRIPLE
+  private String tipo;// INDIVIDUAL | DOBLE | TRIPLE
   
   public Habitacion(String numero, String piso, String descripcion, 
-      String caracteristicas,String tipoHabitacion)
+      String caracteristicas,String tipo)
   {
     super();
     this.numero = numero;
     this.piso = piso;
     this.descripcion = descripcion;
     this.caracteristicas = caracteristicas;
-    this.tipoHabitacion = tipoHabitacion;
+    this.tipo = tipo;
     estado = "DISPONIBLE";
   }
   public String getNumero()
@@ -60,13 +60,13 @@ public class Habitacion
   {
     this.estado = estado;
   }
-  public String getTipoHabitacion()
+  public String getTipo()
   {
-    return tipoHabitacion;
+    return tipo;
   }
-  public void setTipoHabitacion(String tipoHabitacion)
+  public void setTipo(String tipo)
   {
-    this.tipoHabitacion = tipoHabitacion;
+    this.tipo = tipo;
   }
   
   //negocio
@@ -85,10 +85,9 @@ public class Habitacion
     estado = "DISPONIBLE";
   }
   
-  //experimental
   public boolean tuTipoEs(String tipo)
   {
-    return tipo.equalsIgnoreCase(tipoHabitacion);
+    return tipo.equalsIgnoreCase(tipo);
   }
   
   public boolean estasInactiva()
@@ -109,7 +108,7 @@ public class Habitacion
   public HabitacionView getView()
   {
     HabitacionView hv = new HabitacionView(numero, piso, descripcion, caracteristicas,
-        tipoHabitacion);
+        tipo);
     return hv;
   }
 }
