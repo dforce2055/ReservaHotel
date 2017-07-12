@@ -16,6 +16,7 @@ public class SistemaReserva
   private Vector<ServicioAdicional> servicios;
   private Vector<ServicioAdicional> serviciosInactivos;
   private Tarifario tarifario;
+  private Trabajador trabajadorValidado;//En futuras versiones un Array
   
   public SistemaReserva()
   {
@@ -232,7 +233,7 @@ public class SistemaReserva
     return false;
   }
   
-  public void altaReserva(int codigoCliente, int legajoTrabajador, 
+  public int altaReserva(int codigoCliente, int legajoTrabajador, 
       String tipoHabitacion, LocalDate fechaIngreso, LocalDate fechaSalida, 
       String observaciones)
   {
@@ -251,10 +252,12 @@ public class SistemaReserva
             double costoReserva = tarifario.getPrecio(tipoHabitacion);
             Reserva reserva = new Reserva(cliente, trabajador, tipoHabitacion, fechaIngreso, fechaSalida, costoReserva, observaciones);
             reservas.add(reserva);
+            reserva.getNroReserva();
           }
         }
       } 
     }
+    return 0;
   }
   
   public void altaEstadiaConReserva(int numeroReserva, String numeroHabitacion)
@@ -880,7 +883,11 @@ public class SistemaReserva
     boolean rta = false;
     Trabajador trabajador = buscarTrabajadorPorUsuario(usuario);
     if (trabajador != null)
+    {
       rta = trabajador.esTuPassword(password);
+      if(rta == true)
+        trabajadorValidado = trabajador;
+    }
     return rta;
   }
   
@@ -999,6 +1006,10 @@ public class SistemaReserva
   TrabajadorView getTrabajadorView(Trabajador trabajador)
   {
     return trabajador.getView();
+  }
+  public TrabajadorView getTrabajadorValidado()
+  {
+    return trabajadorValidado.getView();
   }
   
   public boolean validarNumeroDocumento(String numeroDocumento)
