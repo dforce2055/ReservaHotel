@@ -26,6 +26,9 @@ public class test
     nroReserva = sis.altaReserva(1, 1, "individual", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala");
     System.out.println(nroReserva);
     
+    boolean respuesta = sis.modificarReserva(1, 5, "Cuadruple", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 6, 10), "lalala");
+    System.out.println(respuesta);
+    
     /*
     sis.altaTarifa("Doble", 1000f);
     sis.altaTarifa("Triple", 1250f);

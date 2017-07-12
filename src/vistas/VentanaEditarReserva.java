@@ -1,21 +1,15 @@
 package vistas;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Rectangle;
-import java.awt.Button;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import javax.swing.JTextArea;
 
-import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Vector;
@@ -44,11 +38,15 @@ import java.awt.event.KeyEvent;
 
 public class VentanaEditarReserva extends JFrame {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private JPanel contentPane;
   private JTextField tfCodigoCliente;
   private JTextField tfCreador;
   private JButton btnAceptar;
-  private JButton btnNewButton;
+  private JButton btnCancelar;
   private JComboBox<String> boxTipoHab;
 
   private JTextField tfNroReserva;
@@ -103,7 +101,7 @@ public class VentanaEditarReserva extends JFrame {
         trabajadorValidado = sistema.getTrabajadorValidado();
         
         tfCodigoCliente.setEnabled(true);
-        tfCodigoCliente.setEditable(false);
+        tfCodigoCliente.setEditable(true);
         tfCodigoCliente.setText(cliente.getApellido() +", " +cliente.getNombre());
         
         tfCreador.setEnabled(true);
@@ -128,7 +126,11 @@ public class VentanaEditarReserva extends JFrame {
         
         calendario_2.setEnabled(true);
         
+        tfObservaciones.setEnabled(true);
+        tfObservaciones.setEditable(true);
+        tfObservaciones.setText(reserva.getObservaciones());
         
+        btnAceptar.setEnabled(true);
       }else
       {
         JOptionPane.showMessageDialog(contentPane, "NO SE ENCONTRO UNA RESERVA "
@@ -139,7 +141,53 @@ public class VentanaEditarReserva extends JFrame {
   
   public void editarReserva(SistemaReserva sistema)
   {
+    if(reserva != null)
+      System.out.println(reserva.getNroReserva());
     
+    /*if(reserva != null)
+    {
+      int nroReserva = reserva.getNroReserva();
+      String tipoHabitacionNueva = (String)boxTipoHab.getSelectedItem();
+      String codigoclienteNuevo = tfCodigoCliente.getText();
+      //int legajoEditor = trabajadorValidado.getLegajo();
+      String observacionesNuevas = tfObservaciones.getText();
+
+      Period periodo = Period.between(fechaIngreso, fechaSalida);
+      
+      if(cliente != null)
+      {
+        if(    codigoclienteNuevo.equals("") 
+            && codigoclienteNuevo.equals(reserva.getCliente().getNumero()) 
+            && tipoHabitacionNueva.equals(reserva.getTipoHabitacion()) 
+            && fechaIngreso.isEqual(reserva.getFechaIngreso())
+            && fechaSalida.isEqual(reserva.getFechaSalida()))
+        {
+          JOptionPane.showMessageDialog(contentPane, "LOS DATOS NUEVOS SON IGUALES A LA RESERVA HECHA");
+        }
+        else
+        {
+          if(sistema.modificarReserva(nroReserva, Integer.parseInt(codigoclienteNuevo), 
+              tipoHabitacionNueva, fechaIngreso, fechaSalida, observacionesNuevas))
+          {
+            JOptionPane.showMessageDialog(contentPane, "RESERVA MODIFICADA CORRECTAMENTE.\n" 
+                +"N\u00famero de Reserva: " +reserva.getNroReserva()
+                +"\nCliente: " +cliente.getApellido() +", " +cliente.getNombre()
+                +"\nFecha de ingreso: "+fechaIngreso
+                +"\nFecha de salida: "+fechaSalida
+                +"\nPeriodo de " +periodo.getDays()
+                +" D\u00eda\\s"
+                );
+          }else
+          {
+            JOptionPane.showMessageDialog(contentPane,"NO PUDO REALIZARSE LA RESERVA\n"
+                +"N° de Reserva: " +reserva.getNroReserva());
+          }
+        }
+      }else
+      {
+        JOptionPane.showMessageDialog(contentPane, "Faltan ingresar el Cliente.");
+      }
+    }*/
   }
   
   public VentanaEditarReserva(SistemaReserva sistema)
@@ -199,7 +247,7 @@ public class VentanaEditarReserva extends JFrame {
     lblObservaciones.setBounds(180, 280, 150, 20);
     contentPane.add(lblObservaciones);
     
-    JTextArea tfObservaciones = new JTextArea();
+    tfObservaciones = new JTextArea();
     tfObservaciones.setEnabled(false);
     tfObservaciones.setEditable(false);
     tfObservaciones.setLineWrap(true);
@@ -278,8 +326,8 @@ public class VentanaEditarReserva extends JFrame {
     btnAceptar.setBounds(200, 384, 100, 23);
     contentPane.add(btnAceptar);
     
-    btnNewButton = new JButton("Cancelar");
-    btnNewButton.addKeyListener(new KeyAdapter() {
+    btnCancelar = new JButton("Cancelar");
+    btnCancelar.addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(KeyEvent e)
       {
@@ -287,15 +335,15 @@ public class VentanaEditarReserva extends JFrame {
           dispose();
       }
     });
-    btnNewButton.addMouseListener(new MouseAdapter() {
+    btnCancelar.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent arg0)
       {
         dispose();
       }
     });
-    btnNewButton.setBounds(398, 384, 100, 23);
-    contentPane.add(btnNewButton);
+    btnCancelar.setBounds(398, 384, 100, 23);
+    contentPane.add(btnCancelar);
     
     JLabel lblFechaDeIngreso = new JLabel("Fecha de Ingreso:");
     lblFechaDeIngreso.setBounds(180, 220, 150, 14);
