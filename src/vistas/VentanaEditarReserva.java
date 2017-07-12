@@ -12,37 +12,61 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JPasswordField;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
-import java.awt.Color;
-import javax.swing.border.MatteBorder;
-import javax.swing.border.SoftBevelBorder;
-import javax.swing.border.TitledBorder;
 
-import com.toedter.calendar.JCalendar;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Vector;
+
+
+
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.UIManager;
 import java.awt.Font;
 import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+
+
+import sistemaReserva.ClienteView;
+import sistemaReserva.ReservaView;
 import sistemaReserva.SistemaReserva;
+import sistemaReserva.TrabajadorView;
+
 import javax.swing.JCheckBox;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 
 
 public class VentanaEditarReserva extends JFrame {
 
   private JPanel contentPane;
   private JTextField tfCodigoCliente;
-  private JTextField tfLegajo;
+  private JTextField tfCreador;
   private JButton btnAceptar;
   private JButton btnNewButton;
-  private JDateChooser calendario_1;
+  private JComboBox<String> boxTipoHab;
+
   private JTextField tfNroReserva;
+  private JTextArea tfObservaciones;
+  
+  private TrabajadorView trabajadorValidado;
+  private TrabajadorView trabajador;
+  private ClienteView cliente;
+  private ReservaView reserva;
+  
+  private JDateChooser calendario_1;
+  private JDateChooser calendario_2;
+  private LocalDate fechaIngreso;
+  private LocalDate fechaSalida;
+  private Date fechaActual = new Date(System.currentTimeMillis());
+  private JTextField textEditor;
+  private JTextField fechaIngresoAnterior;
+  private JTextField fechaSalidaAnterior;
 
   /**
    * Launch the application.
@@ -65,6 +89,59 @@ public class VentanaEditarReserva extends JFrame {
   /**
    * Create the frame.
    */
+  public void buscar(SistemaReserva sistema)
+  {
+    String nroReserva = tfNroReserva.getText();
+    
+    if(sistema.validarNumeroReserva(nroReserva))
+    {
+      reserva = sistema.buscarReservaView(nroReserva);
+      if(reserva != null)
+      {
+        cliente = reserva.getCliente();
+        trabajador = reserva.getTrabajador();
+        trabajadorValidado = sistema.getTrabajadorValidado();
+        
+        tfCodigoCliente.setEnabled(true);
+        tfCodigoCliente.setEditable(false);
+        tfCodigoCliente.setText(cliente.getApellido() +", " +cliente.getNombre());
+        
+        tfCreador.setEnabled(true);
+        tfCreador.setEditable(false);
+        tfCreador.setText(trabajador.getApellido() +", " +trabajador.getNombre());
+        
+        
+        textEditor.setEnabled(true);
+        textEditor.setEditable(false);
+        textEditor.setText(trabajadorValidado.getApellido() +", " +trabajadorValidado.getNombre());
+        
+        fechaIngresoAnterior.setEditable(false);
+        fechaIngresoAnterior.setEnabled(true);
+        fechaIngresoAnterior.setText(reserva.getFechaIngreso().toString());
+        
+        fechaSalidaAnterior.setEditable(false);
+        fechaSalidaAnterior.setEnabled(true);
+        fechaSalidaAnterior.setText(reserva.getFechaSalida().toString());
+        
+        calendario_1.setEnabled(true);
+        calendario_1.setDate(fechaActual);
+        
+        calendario_2.setEnabled(true);
+        
+        
+      }else
+      {
+        JOptionPane.showMessageDialog(contentPane, "NO SE ENCONTRO UNA RESERVA "
+            +"con ese n\u00famero(" +nroReserva +")");
+      }
+    }
+  }
+  
+  public void editarReserva(SistemaReserva sistema)
+  {
+    
+  }
+  
   public VentanaEditarReserva(SistemaReserva sistema)
   {
     setResizable(false);//Que no lo puedan maximizar
@@ -76,46 +153,50 @@ public class VentanaEditarReserva extends JFrame {
     contentPane.setLayout(null);
     
     JLabel lblNroReserva = new JLabel("N\u00FAmero de Reserva:");
-    lblNroReserva.setBounds(200, 50, 112, 14);
+    lblNroReserva.setBounds(180, 44, 150, 20);
     contentPane.add(lblNroReserva);
     
     tfNroReserva = new JTextField();
-    tfNroReserva.setEditable(false);
     tfNroReserva.setBounds(337, 44, 150, 20);
     contentPane.add(tfNroReserva);
     tfNroReserva.setColumns(10);
     
-    JLabel lblCodigoCliente = new JLabel("C\u00F3digo de Cliente:");
-    lblCodigoCliente.setBounds(200, 75, 130, 14);
+    JLabel lblCodigoCliente = new JLabel("Cliente:");
+    lblCodigoCliente.setBounds(180, 70, 150, 20);
     contentPane.add(lblCodigoCliente);
     
     tfCodigoCliente = new JTextField();
     tfCodigoCliente.setEditable(false);
-    tfCodigoCliente.setBounds(337, 72, 150, 20);
+    tfCodigoCliente.setBounds(337, 70, 150, 20);
     contentPane.add(tfCodigoCliente);
     tfCodigoCliente.setColumns(10);
     
-    JLabel lblLegajo = new JLabel("Legajo:");
-    lblLegajo.setBounds(200, 100, 130, 14);
-    contentPane.add(lblLegajo);
+    JLabel lblCreador = new JLabel("Creada por:");
+    lblCreador.setBounds(180, 98, 150, 20);
+    contentPane.add(lblCreador);
     
-    tfLegajo = new JTextField();
-    tfLegajo.setEditable(false);
-    tfLegajo.setBounds(337, 97, 150, 20);
-    contentPane.add(tfLegajo);
-    tfLegajo.setColumns(10);
+    tfCreador = new JTextField();
+    tfCreador.setEditable(false);
+    tfCreador.setBounds(337, 98, 150, 20);
+    contentPane.add(tfCreador);
+    tfCreador.setColumns(10);
     
     JLabel lblTipoHab = new JLabel("Tipo de Habitaci\u00F3n:");
-    lblTipoHab.setBounds(200, 125, 130, 14);
+    lblTipoHab.setBounds(180, 165, 150, 14);
     contentPane.add(lblTipoHab);
     
-    JComboBox boxTipoHab = new JComboBox();
-    boxTipoHab.setModel(new DefaultComboBoxModel(new String[] {"Tipo de Habitacion"}));
-    boxTipoHab.setBounds(337, 122, 150, 20);
+    boxTipoHab = new JComboBox<String>();
+    //Agrego habitaciones activas que se pueden elegir
+    Vector<String>tipos = sistema.getTiposHabitacionesActivas();
+    for(String tipo:tipos)
+      boxTipoHab.addItem(tipo);
+    
+    
+    boxTipoHab.setBounds(337, 165, 150, 20);
     contentPane.add(boxTipoHab);
     
     JLabel lblObservaciones = new JLabel("Observaciones:");
-    lblObservaciones.setBounds(200, 256, 130, 14);
+    lblObservaciones.setBounds(180, 280, 150, 20);
     contentPane.add(lblObservaciones);
     
     JTextArea tfObservaciones = new JTextArea();
@@ -124,69 +205,173 @@ public class VentanaEditarReserva extends JFrame {
     tfObservaciones.setLineWrap(true);
     tfObservaciones.setFont(new Font("Tahoma", Font.PLAIN, 11));
     tfObservaciones.setBorder(UIManager.getBorder("TextField.border"));
-    tfObservaciones.setBounds(337, 251, 150, 100);
+    tfObservaciones.setBounds(337, 275, 150, 100);
     contentPane.add(tfObservaciones);
     
     btnAceptar = new JButton("Aceptar");
-    btnAceptar.setEnabled(false);
-    btnAceptar.addActionListener(new ActionListener() {
-      
-      String codigocliente = tfCodigoCliente.getText();
-      String legajo = tfLegajo.getText();
-      String tipohab = (String)boxTipoHab.getSelectedItem();
-      String observaciones = tfObservaciones.getText();
-      
-      
-      
-      public void actionPerformed(ActionEvent arg0) {
-        
-        if (tfCodigoCliente.equals("") || tfLegajo.equals("") || boxTipoHab.equals("") || observaciones.equals(""))
+    btnAceptar.addMouseListener(new MouseAdapter()
+    {
+      @Override
+      public void mouseClicked(MouseEvent e)
+      {
+        try
         {
-          JOptionPane.showMessageDialog(contentPane, "Faltan ingresar datos.");
-        }
-        else
+          if(calendario_1 != null && calendario_2 != null)
+          {
+            int dia = calendario_1.getCalendar().get(Calendar.DAY_OF_MONTH);
+            int mes = calendario_1.getCalendar().get(Calendar.MONTH)+1;
+            int anio = calendario_1.getCalendar().get(Calendar.YEAR);
+            
+            fechaIngreso = LocalDate.of(anio, mes, dia);
+            
+            dia = calendario_2.getCalendar().get(Calendar.DAY_OF_MONTH);
+            mes = calendario_2.getCalendar().get(Calendar.MONTH)+1;
+            anio = calendario_2.getCalendar().get(Calendar.YEAR);
+            
+            fechaSalida = LocalDate.of(anio, mes, dia);
+            
+            editarReserva(sistema);
+          }
+        }catch(Exception E)
         {
-          //TODO: Agregar reserva.
+          E.printStackTrace();
+          JOptionPane.showMessageDialog(contentPane, "ERROR COMPLETE FECHA INGRESO Y SALIDA");
         }
         
       }
     });
-    btnAceptar.setBounds(200, 384, 89, 23);
+    btnAceptar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+        {
+          try
+          {
+            if(calendario_1 != null && calendario_2 != null)
+            {
+              int dia = calendario_1.getCalendar().get(Calendar.DAY_OF_MONTH);
+              int mes = calendario_1.getCalendar().get(Calendar.MONTH)+1;
+              int anio = calendario_1.getCalendar().get(Calendar.YEAR);
+              
+              fechaIngreso = LocalDate.of(anio, mes, dia);
+              
+              dia = calendario_2.getCalendar().get(Calendar.DAY_OF_MONTH);
+              mes = calendario_2.getCalendar().get(Calendar.MONTH)+1;
+              anio = calendario_2.getCalendar().get(Calendar.YEAR);
+              
+              fechaSalida = LocalDate.of(anio, mes, dia);
+              
+              editarReserva(sistema);
+            }
+          }catch(Exception E)
+          {
+            E.printStackTrace();
+            JOptionPane.showMessageDialog(contentPane, "ERROR COMPLETE FECHA INGRESO Y SALIDA");
+          }
+          
+        }
+      }
+    });
+    btnAceptar.setEnabled(false);
+    btnAceptar.setBounds(200, 384, 100, 23);
     contentPane.add(btnAceptar);
     
     btnNewButton = new JButton("Cancelar");
-    btnNewButton.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent arg0) {
+    btnNewButton.addKeyListener(new KeyAdapter() {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          dispose();
+      }
+    });
+    btnNewButton.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent arg0)
+      {
         dispose();
       }
     });
-    btnNewButton.setBounds(398, 384, 89, 23);
+    btnNewButton.setBounds(398, 384, 100, 23);
     contentPane.add(btnNewButton);
     
     JLabel lblFechaDeIngreso = new JLabel("Fecha de Ingreso:");
-    lblFechaDeIngreso.setBounds(200, 159, 130, 14);
+    lblFechaDeIngreso.setBounds(180, 220, 150, 14);
     contentPane.add(lblFechaDeIngreso);
     
-    JDateChooser calendario_1;
+
     calendario_1 = new JDateChooser();
-      calendario_1.setBounds(337, 153, 150, 20);
-      contentPane.add(calendario_1);
+    calendario_1.setBounds(337, 220, 150, 20);
+    calendario_1.setMinSelectableDate(fechaActual);
+    calendario_1.setEnabled(false);
+    contentPane.add(calendario_1);
     
     JLabel lblFechaDeSalida = new JLabel("Fecha de Salida");
-    lblFechaDeSalida.setBounds(200, 190, 130, 14);
+    lblFechaDeSalida.setBounds(180, 250, 150, 14);
     contentPane.add(lblFechaDeSalida);
     
-    JDateChooser calendario_2;
+    
     calendario_2 = new JDateChooser();
-      calendario_2.setBounds(337, 184, 150, 20);
-      contentPane.add(calendario_2);
-      
-      JButton btnBuscar = new JButton("Buscar");
-      btnBuscar.setBounds(497, 43, 91, 23);
-      contentPane.add(btnBuscar);
-      
-      JCheckBox chckbxEliminar = new JCheckBox("Eliminar");
-      chckbxEliminar.setBounds(597, 413, 97, 23);
-      contentPane.add(chckbxEliminar);
+    calendario_2.setBounds(337, 250, 150, 20);
+    calendario_2.setMinSelectableDate(fechaActual);
+    calendario_2.setEnabled(false);
+    contentPane.add(calendario_2);
+    
+    JButton btnBuscar = new JButton("Buscar");
+    btnBuscar.addMouseListener(new MouseAdapter()
+    {
+      @Override
+      public void mouseClicked(MouseEvent e)
+      {
+        buscar(sistema);
+      }
+    });
+    btnBuscar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          buscar(sistema);
+      }
+    });
+    btnBuscar.setBounds(497, 43, 100, 23);
+    contentPane.add(btnBuscar);
+    
+    JCheckBox chckbxEliminar = new JCheckBox("Eliminar");
+    chckbxEliminar.setBounds(597, 413, 97, 23);
+    contentPane.add(chckbxEliminar);
+    
+    JLabel lblEditor = new JLabel("Editada Por:");
+    lblEditor.setBounds(180, 130, 150, 15);
+    contentPane.add(lblEditor);
+    
+    textEditor = new JTextField();
+    textEditor.setEditable(false);
+    textEditor.setBounds(337, 130, 150, 20);
+    contentPane.add(textEditor);
+    textEditor.setColumns(10);
+    
+    fechaIngresoAnterior = new JTextField();
+    fechaIngresoAnterior.setEditable(false);
+    fechaIngresoAnterior.setBounds(500, 220, 114, 19);
+    contentPane.add(fechaIngresoAnterior);
+    fechaIngresoAnterior.setColumns(10);
+    
+    fechaSalidaAnterior = new JTextField();
+    fechaSalidaAnterior.setEditable(false);
+    fechaSalidaAnterior.setBounds(500, 250, 114, 19);
+    contentPane.add(fechaSalidaAnterior);
+    fechaSalidaAnterior.setColumns(10);
+    
+    JLabel lblFechaNueva = new JLabel("Fecha Nueva");
+    lblFechaNueva.setBounds(337, 200, 130, 15);
+    contentPane.add(lblFechaNueva);
+    
+    JLabel lblFechaAnterior = new JLabel("Fecha Anterior");
+    lblFechaAnterior.setBounds(500, 200, 130, 15);
+    contentPane.add(lblFechaAnterior);
   }
 }
