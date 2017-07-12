@@ -238,6 +238,7 @@ public class SistemaReserva
       String observaciones)
   {
     boolean resultado = existeTipoHabitacion(tipoHabitacion); 
+    
     if (resultado == true)
     {
       Cliente cliente = buscarCliente(codigoCliente);
@@ -252,7 +253,7 @@ public class SistemaReserva
             double costoReserva = tarifario.getPrecio(tipoHabitacion);
             Reserva reserva = new Reserva(cliente, trabajador, tipoHabitacion, fechaIngreso, fechaSalida, costoReserva, observaciones);
             reservas.add(reserva);
-            reserva.getNroReserva();
+            return reserva.getNroReserva();
           }
         }
       } 
