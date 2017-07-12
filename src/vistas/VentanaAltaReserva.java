@@ -121,13 +121,14 @@ public class VentanaAltaReserva extends JFrame {
       {
         int nroReserva = sistema.altaReserva(Integer.parseInt(codigocliente), legajo, tipoHabitacion, 
             fechaIngreso, fechaSalida, observaciones);
-        
-          JOptionPane.showMessageDialog(contentPane, "RESERVA CORRECTA.\n" 
+        if(nroReserva > 0)
+        {
+          JOptionPane.showMessageDialog(contentPane, "RESERVA REALIZADA CORRECTAMENTE.\n" 
               +"N\u00famero de Reserva: " +nroReserva
               +"\nCliente: " +cliente.getApellido() +", " +cliente.getNombre()
               +"\nFecha de ingreso: "+fechaIngreso
               +"\nFecha de salida: "+fechaSalida);
-        
+        }
       }
     }else
     {
