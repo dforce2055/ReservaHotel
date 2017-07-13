@@ -77,7 +77,7 @@ public class SistemaReserva
     return cliente != null;
   }
   
-  public ItemTarifaView buscarTarifaView(String tipoHabitacion)
+  public ItemTarifaView buscarItemTarifaView(String tipoHabitacion)
   {
 	  return tarifario.buscarItemTarifaView(tipoHabitacion);
   }
