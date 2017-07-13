@@ -398,7 +398,7 @@ public class SistemaReserva
     }
   }
 
-  public void bajaTarifa(String tipoHabitacion)
+  public boolean bajaTarifa(String tipoHabitacion)
   {
     boolean resultado = existeTipoHabitacion(tipoHabitacion); 
     if (resultado == true)
@@ -408,8 +408,10 @@ public class SistemaReserva
       if ( cantidad == 0)
       {
         tarifario.bajaItem(tipoHabitacion);
+        return true;
       }
     }
+    return false;
   }
   
   public void bajaEstadia(int numero)
