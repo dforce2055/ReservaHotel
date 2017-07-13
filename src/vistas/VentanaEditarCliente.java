@@ -14,7 +14,9 @@ import javax.swing.DefaultComboBoxModel;
 import sistemaReserva.SistemaReserva;
 import sistemaReserva.ClienteView;
 import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;;
 public class VentanaEditarCliente extends JFrame {
 
   /**
@@ -33,7 +35,9 @@ public class VentanaEditarCliente extends JFrame {
   private JComboBox<String> boxtipoDoc;
   private JTextField tfNroCliente;
   private JButton btnBuscar;
-
+  private JButton btnEliminar;
+  private ClienteView cliente;
+  
   /**
    * Launch the application.
    */
@@ -63,7 +67,7 @@ public class VentanaEditarCliente extends JFrame {
     String codigoCliente = tfNroCliente.getText();
     if(sistema.validarNumeroCliente(codigoCliente))
     {
-      ClienteView cliente = sistema.buscarClienteViewPorNumero(Integer.parseInt(codigoCliente));
+      cliente = sistema.buscarClienteViewPorNumero(Integer.parseInt(codigoCliente));
       
       if(cliente != null)
       {
@@ -89,6 +93,7 @@ public class VentanaEditarCliente extends JFrame {
         tfEmail.setEnabled(true);
         tfEmail.setText(cliente.getEmail());
         
+        btnEliminar.setEnabled(true);
         btnAceptar.setEnabled(true);
       }else
       {
@@ -151,6 +156,23 @@ public class VentanaEditarCliente extends JFrame {
       JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00FAMEROS");
     }
   }
+  
+  public void baja(SistemaReserva sistema)
+  {
+      if (cliente != null)
+      {
+		  int respuesta = JOptionPane.showConfirmDialog(contentPane, "Esta seguro que desea ELIMINAR el cliente #" +
+		  cliente.getNumero());
+	      if(respuesta == JOptionPane.YES_OPTION)
+	      {
+	        sistema.bajaCliente(cliente.getNumero());
+	        JOptionPane.showMessageDialog(contentPane, "CLIENTE # " 
+	        +cliente.getNumero() +"\nELIMINADO");
+	        dispose();
+	      }
+      }
+  }
+  
   public VentanaEditarCliente(SistemaReserva sistema)
   {
     setResizable(false);//Que no lo puedan maximizar
@@ -301,7 +323,17 @@ public class VentanaEditarCliente extends JFrame {
         dispose();
       }
     });
-    btnCancelar.setBounds(398, 296, 89, 23);
+    btnCancelar.setBounds(337, 296, 89, 23);
     contentPane.add(btnCancelar);
+    
+    btnEliminar = new JButton("Eliminar");
+    btnEliminar.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+    		baja(sistema);
+    	}
+    });
+    btnEliminar.setEnabled(false);
+    btnEliminar.setBounds(497, 296, 89, 23);
+    contentPane.add(btnEliminar);
   }
 }
