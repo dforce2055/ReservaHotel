@@ -70,6 +70,14 @@ public class SistemaReserva
   }
   
   
+  public ServicioAdicionalView buscarServicioAdicionalView(int codigo)
+  {
+    ServicioAdicional servicio = buscarServicioAdicional(codigo);
+    if (servicio != null)
+      return servicio.getView();
+    return null;
+  }
+  
   private boolean existeClienteConEseDocumento(String tipoDoc, String numDoc)
   {
     Cliente cliente = buscarClientePorDocumento(tipoDoc, numDoc);
