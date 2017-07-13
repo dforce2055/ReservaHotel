@@ -24,7 +24,7 @@ public class Estadia
   private double precio;
   private Cliente cliente;
   private String observaciones;
-  private Vector<ServicioAdicional> adicionales;
+  private Vector<ItemAdicionalEstadia> adicionales;
   private int numero;
   private Trabajador trabajador;
   private static int proximoNumero;
@@ -44,7 +44,7 @@ public class Estadia
     precio = reserva.getPrecio();
     cliente = reserva.getCliente();
     observaciones = reserva.getObservaciones();
-    adicionales = new Vector<ServicioAdicional>();
+    adicionales = new Vector<ItemAdicionalEstadia>();
     trabajador = reserva.getTrabajador();
     numero = getProximoNumero();
   }
@@ -61,7 +61,7 @@ public class Estadia
     this.precio = precio;
     this.cliente = cliente;
     this.observaciones = observaciones;
-    adicionales = new Vector<ServicioAdicional>();
+    adicionales = new Vector<ItemAdicionalEstadia>();
   }
 
   public Reserva getReserva()
@@ -134,12 +134,12 @@ public class Estadia
     this.observaciones = observaciones;
   }
 
-  public Vector<ServicioAdicional> getAdicionales()
+  public Vector<ItemAdicionalEstadia> getAdicionales()
   {
     return adicionales;
   }
 
-  public void setAdicionales(Vector<ServicioAdicional> adicionales)
+  public void setAdicionales(Vector<ItemAdicionalEstadia> adicionales)
   {
     this.adicionales = adicionales;
   }
@@ -199,19 +199,28 @@ public class Estadia
   {
     ReservaView rv = null;
     if (reserva != null)
-      rv = reserva.getView();
+    	rv = reserva.getView();
     HabitacionView hv = habitacion.getView();
     ClienteView cv = cliente.getView();
-    Vector<ServicioAdicionalView> adicionalesv = new Vector<ServicioAdicionalView>();
-    for (ServicioAdicional sa: adicionales)
+    Vector<ItemAdicionalEstadiaView> adicionalesView = new Vector<ItemAdicionalEstadiaView>();
+    for (ItemAdicionalEstadia item: adicionales)
     {
-      ServicioAdicionalView sav = sa.getView();
-      adicionalesv.add(sav);
+    	ItemAdicionalEstadiaView itemView = item.getView();
+    	adicionalesView.add(itemView);
     }
     TrabajadorView tv = trabajador.getView();
     
     EstadiaView ev = new EstadiaView(rv, hv, fechaIngreso, fechaSalida, precio, 
-        cv, observaciones, adicionalesv, numero, tv);
+        cv, observaciones, adicionalesView, numero, tv);
     return ev;
+  }
+  
+  public void agregarAdicional(ServicioAdicional adicional, int cantidad)
+  {
+	  if (adicional != null)
+	  {
+		  ItemAdicionalEstadia item = new ItemAdicionalEstadia(adicional, cantidad);
+		  adicionales.add(item);
+	  }
   }
 }
