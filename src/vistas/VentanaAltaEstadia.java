@@ -116,6 +116,29 @@ public class VentanaAltaEstadia extends JFrame {
     }
   }
   
+  public void buscarCliente(SistemaReserva sistema)
+  {
+    String numeroCliente = tfNroCliente.getText();
+    if(sistema.validarNumeroCliente(numeroCliente))
+    {
+      cliente = sistema.buscarClienteViewPorNumero(Integer.parseInt(numeroCliente));
+      if(cliente != null)
+      {
+        tfNombreCliente.setEnabled(true);
+        tfNombreCliente.setEditable(false);
+        tfNombreCliente.setText(cliente.getApellido() +", " +cliente.getNombre());
+        
+        tpObservaciones.setEnabled(true);
+        tpObservaciones.setEditable(true);
+        
+        boxTipoHab.setEnabled(true);
+        boxTipoHab.setEditable(true);
+        
+        btnAsignar.setEnabled(true);
+      }
+    }
+  }
+  
   public void altaEstadiaConReserva(SistemaReserva sistema)
   {
     if(reserva != null)
@@ -142,8 +165,8 @@ public class VentanaAltaEstadia extends JFrame {
           dispose();
         }else
         {
-          JOptionPane.showMessageDialog(contentPane,"NO PUDO REALIZARSE LA RESERVA\n"
-              +"N\u00famero de Reserva: " +nroEstadia);
+          JOptionPane.showMessageDialog(contentPane,"NO PUDO ASIGNARSE LA ESTADIA\n"
+              +"N\u00famero de Estadia: " +nroEstadia);
         }
       }
     }
@@ -151,7 +174,40 @@ public class VentanaAltaEstadia extends JFrame {
   
   public void altaEstadiaSinReserva(SistemaReserva sistema)
   {
+    String tipoHabitacion = (String)boxTipoHab.getSelectedItem();
+    String observaciones = tpObservaciones.getText();
+    Period periodo = Period.between(fechaIngreso, fechaSalida);
+    Vector<String>habitacionesDisponibles = sistema.getListadoHabitacionesDisponiblesHoyPorTipo(tipoHabitacion);
     
+    if(habitacionesDisponibles != null)
+    {
+      String numeroHabitacion = habitacionesDisponibles.elementAt(0);
+      if(cliente != null)
+      {
+        int nroEstadia = sistema.altaEstadiaSinReserva(numeroHabitacion, 
+        fechaIngreso, fechaSalida, cliente.getNumero(), 
+        trabajadorValidado.getLegajo(), observaciones);
+        
+        if(nroEstadia > 0)
+        {
+          estadia = sistema.buscarEstadiaView(nroEstadia);
+          JOptionPane.showMessageDialog(contentPane, "ESTADIA REALIZADA CORRECTAMENTE.\n" 
+              +"N\u00famero de Estadia: " +nroEstadia
+              +"\nCliente: " +cliente.getApellido() +", " +cliente.getNombre()
+              +"\nFecha de ingreso: "+estadia.getFechaIngreso().toString()
+              +"\nFecha de salida: "+estadia.getFechaSalida().toString()
+              +"\nPeriodo de " +periodo.getDays()
+              +" D\u00eda\\s"
+              );
+          dispose();
+        }else
+        {
+          JOptionPane.showMessageDialog(contentPane,"NO PUDO ASIGNARSE LA ESTADIA\n"
+              +"N\u00famero de Estadia: " +nroEstadia);
+        }
+      }
+    }
+
   }
   
   public VentanaAltaEstadia(SistemaReserva sistema) {
@@ -470,6 +526,7 @@ public class VentanaAltaEstadia extends JFrame {
       public void mouseClicked(MouseEvent e)
       {
         //BUscar Cliente
+        buscarCliente(sistema);
       }
     });
     btnBuscarcliente.setEnabled(false);
