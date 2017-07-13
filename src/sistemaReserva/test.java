@@ -21,12 +21,23 @@ public class test
     
     System.out.println(habitacion.getNumero() +" " +habitacion.getTipo());
     */
-    int nroReserva = sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala");
-    System.out.println(nroReserva);
-    nroReserva = sis.altaReserva(1, 1, "individual", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala");
-    System.out.println(nroReserva);
+    System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
+    System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
     
-    boolean respuesta = sis.modificarReserva(1, 5, "Cuadruple", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 6, 10), "lalala");
+    System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
+    System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
+    
+    System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
+    System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
+    
+    System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
+    System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
+    
+    System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
+    System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
+
+    
+    boolean respuesta = sis.modificarReserva(1, 5, "qwd", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 6, 10), "lalala");
     System.out.println(respuesta);
     
     /*
