@@ -163,6 +163,14 @@ public class SistemaReserva
     return null;
   }
   
+  public EstadiaView buscarEstadiaView(int numero)
+  {
+    for (Estadia e: estadias)
+      if (e.sosEstadia(numero))
+        return e.getView();
+    return null;
+  }
+  
   private ServicioAdicional buscarServicioAdicional(int codigo)
   {
     for (ServicioAdicional s: servicios)
