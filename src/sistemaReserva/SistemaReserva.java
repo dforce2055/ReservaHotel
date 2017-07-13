@@ -275,7 +275,7 @@ public class SistemaReserva
     return 0;
   }
   
-  public void altaEstadiaConReserva(int numeroReserva, String numeroHabitacion)
+  public int altaEstadiaConReserva(int numeroReserva, String numeroHabitacion)
   { 
     Reserva reserva = buscarReserva(numeroReserva);
     if (reserva != null)
@@ -289,8 +289,10 @@ public class SistemaReserva
         reservasInactivas.add(reserva);
         reservas.remove(reserva);
         estadias.add(estadia);
+        return estadia.getNumero();
       }
     }
+    return 0;
   }
   
   public void altaEstadiaSinReserva(String numeroHabitacion, 
