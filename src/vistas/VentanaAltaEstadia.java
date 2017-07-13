@@ -13,12 +13,16 @@ import com.toedter.calendar.JDateChooser;
 import sistemaReserva.SistemaReserva;
 import sistemaReserva.TrabajadorView;
 import sistemaReserva.ClienteView;
+import sistemaReserva.EstadiaView;
 import sistemaReserva.ReservaView;
 
 import javax.swing.JTextPane;
 import javax.swing.JSeparator;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Calendar;
 import java.util.Vector;
 
 public class VentanaAltaEstadia extends JFrame {
@@ -35,6 +39,8 @@ public class VentanaAltaEstadia extends JFrame {
   private JTextField tfNombreTrabajador;
   private JTextField tfFechaIngresoConReserva;
   private JTextField tfFechaSalidaConReserva;
+  private LocalDate fechaIngreso;
+  private LocalDate fechaSalida;
   
   private JButton btnBuscarcliente;
   private JButton btnBuscarReserva;
@@ -44,6 +50,7 @@ public class VentanaAltaEstadia extends JFrame {
   private JDateChooser dcFechaSalidaSinReserva;
   private JTextPane tpObservaciones;
   
+  private EstadiaView estadia;
   private ReservaView reserva;
   private ClienteView cliente;
   private TrabajadorView trabajadorValidado;
@@ -111,15 +118,32 @@ public class VentanaAltaEstadia extends JFrame {
   {
     if(reserva != null)
     {
+      Period periodo = Period.between(reserva.getFechaIngreso(), reserva.getFechaSalida());
       Vector<String>habitacionesDisponibles = sistema.getListadoHabitacionesDisponiblesHoyPorTipo(reserva.getTipoHabitacion());
       
       if(habitacionesDisponibles != null)
       {
         String numeroHabitacion = habitacionesDisponibles.elementAt(0);
-        sistema.altaEstadiaConReserva(reserva.getNumero(), String.valueOf(numeroHabitacion));
+        int nroEstadia = sistema.altaEstadiaConReserva(reserva.getNumero(), String.valueOf(numeroHabitacion));
+        
+        if(nroEstadia > 0)
+        {
+          estadia = sistema.buscarEstadiaView(nroEstadia);
+          JOptionPane.showMessageDialog(contentPane, "ESTADIA REALIZADA CORRECTAMENTE.\n" 
+              +"N\u00famero de Estadia: " +nroEstadia
+              +"\nCliente: " +cliente.getApellido() +", " +cliente.getNombre()
+              +"\nFecha de ingreso: "+estadia.getFechaIngreso().toString()
+              +"\nFecha de salida: "+estadia.getFechaSalida().toString()
+              +"\nPeriodo de " +periodo.getDays()
+              +" D\u00eda\\s"
+              );
+          dispose();
+        }else
+        {
+          JOptionPane.showMessageDialog(contentPane,"NO PUDO REALIZARSE LA RESERVA\n"
+              +"N\u00famero de Reserva: " +nroEstadia);
+        }
       }
-      
-      
     }
   }
   
@@ -202,6 +226,7 @@ public class VentanaAltaEstadia extends JFrame {
           tfNombreTrabajador.setEditable(false);
           
           boxTipoHab.setEditable(false);
+          boxTipoHab.setEnabled(false);
           dcFechaIngresoSinReserva.setEnabled(false);
           dcFechaSalidaSinReserva.setEnabled(false);
           tpObservaciones.setEditable(true);
@@ -292,13 +317,44 @@ public class VentanaAltaEstadia extends JFrame {
       @Override
       public void mouseClicked(MouseEvent arg0)
       {
-        if(rdbtnConReserva.isSelected())
+        try
         {
-          altaEstadiaConReserva(sistema);
-        }else
+          if(rdbtnConReserva.isSelected())
+          {
+            altaEstadiaConReserva(sistema);
+          }else
+          {
+            if(dcFechaIngresoSinReserva != null)
+            {
+              int dia = dcFechaIngresoSinReserva.getCalendar().get(Calendar.DAY_OF_MONTH);
+              int mes = dcFechaIngresoSinReserva.getCalendar().get(Calendar.MONTH)+1;
+              int anio = dcFechaIngresoSinReserva.getCalendar().get(Calendar.YEAR);
+              
+              fechaIngreso = LocalDate.of(anio, mes, dia);
+            }else
+            {
+              
+            }
+            
+            if(dcFechaSalidaSinReserva != null)
+            {
+              int dia = dcFechaSalidaSinReserva.getCalendar().get(Calendar.DAY_OF_MONTH);
+              int mes = dcFechaSalidaSinReserva.getCalendar().get(Calendar.MONTH)+1;
+              int anio = dcFechaSalidaSinReserva.getCalendar().get(Calendar.YEAR);
+              
+              fechaSalida = LocalDate.of(anio, mes, dia);
+            }else
+            {
+            }
+            
+            altaEstadiaSinReserva(sistema);
+          }
+        }catch(Exception e)
         {
-          altaEstadiaSinReserva(sistema);
+          e.printStackTrace();
+          JOptionPane.showMessageDialog(contentPane, "ERROR COMPLETE FECHA INGRESO Y SALIDA");
         }
+        
         
       }
     });
