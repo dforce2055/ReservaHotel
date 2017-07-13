@@ -1001,7 +1001,7 @@ public class SistemaReserva
   }
   
   public String getUsuarioSinDominio(String email)
-  {
+  {//
     String regEx = "@[A-Za-z0-9]";
     String usuario[] = email.split(regEx);
     return usuario[0];
