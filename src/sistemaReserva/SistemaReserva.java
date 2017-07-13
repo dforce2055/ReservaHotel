@@ -664,7 +664,7 @@ public class SistemaReserva
               return false;
           }
           
-          if (fechaIngreso.isBefore(fechaSalidaReserva) && fechaSalida.isAfter(fechaIngresoReserva))
+          if (fechaSalida.isBefore(fechaSalidaReserva) && fechaSalida.isAfter(fechaIngresoReserva))
           {
             resultado = hayDisponibilidadPorTipo(tipoHabitacion, fechaIngresoReserva, fechaSalida);
             if (resultado == true)
