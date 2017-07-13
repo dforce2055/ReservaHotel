@@ -295,7 +295,7 @@ public class SistemaReserva
     return 0;
   }
   
-  public void altaEstadiaSinReserva(String numeroHabitacion, 
+  public int altaEstadiaSinReserva(String numeroHabitacion, 
       LocalDate fechaIngreso, LocalDate fechaSalida, int numeroCliente, 
       int legajoTrabajador, String observaciones)
   {
@@ -316,10 +316,12 @@ public class SistemaReserva
             double precio = tarifario.getPrecio(tipoHabitacion);
             Estadia estadia = new Estadia(habitacion, fechaIngreso, fechaSalida, precio, cliente, trabajador, observaciones);
             estadias.add(estadia);
+            return estadia.getNumero();
           }
         }
       }
     }
+    return 0;
   }
   
   public void altaServicioAdicional(int codigo, String descripcion, double precio)
