@@ -43,6 +43,9 @@ public class VentanaEditarTrabajador extends JFrame {
   private JLabel lblContraseaNueva;
   private JPasswordField passwordOLD;
   private JPasswordField passwordNEW;
+  
+  private TrabajadorView trabajador;
+  private JButton btnEliminar;
 
   /**
    * Launch the application.
@@ -72,7 +75,7 @@ public class VentanaEditarTrabajador extends JFrame {
     //Buscar trabajador por numero de legajo
     if(sistema.validarNumeroLegajoTrabajador(legajo))
     {
-      TrabajadorView trabajador = sistema.buscarTrabajadorView(Integer.parseInt(legajo));
+      trabajador = sistema.buscarTrabajadorView(Integer.parseInt(legajo));
       if(trabajador != null)
       {
         tfLegajo.setEnabled(true);
@@ -102,7 +105,7 @@ public class VentanaEditarTrabajador extends JFrame {
         passwordOLD.setEnabled(false);
         passwordOLD.setText(trabajador.getPassword());
         
-        
+        btnEliminar.setEnabled(true);
         btnAceptar.setEnabled(true);
       }else
       {
@@ -169,6 +172,21 @@ public class VentanaEditarTrabajador extends JFrame {
     
   }
   
+  public void baja(SistemaReserva sistema)
+  {
+      if (trabajador != null)
+      {
+		  int respuesta = JOptionPane.showConfirmDialog(contentPane, "Esta seguro que desea ELIMINAR el trbajador #" +
+		  trabajador.getLegajo());
+	      if(respuesta == JOptionPane.YES_OPTION)
+	      {
+	        sistema.bajaTrabajador(trabajador.getLegajo());
+	        JOptionPane.showMessageDialog(contentPane, "TRABAJADOR #" 
+	        +trabajador.getLegajo() +"\nELIMINADO");
+	        dispose();
+	      }
+      }
+  }
   
   public VentanaEditarTrabajador(SistemaReserva sistema)
   {
@@ -284,7 +302,7 @@ public class VentanaEditarTrabajador extends JFrame {
         dispose();
       }
     });
-    btnCancelar.setBounds(398, 350, 100, 23);
+    btnCancelar.setBounds(337, 350, 100, 23);
     contentPane.add(btnCancelar);
     
     lblLegajo = new JLabel("Ingresar Legajo:");
@@ -359,5 +377,15 @@ public class VentanaEditarTrabajador extends JFrame {
     passwordNEW.setEnabled(false);
     passwordNEW.setBounds(337, 295, 150, 19);
     contentPane.add(passwordNEW);
+    
+    btnEliminar = new JButton("Eliminar");
+    btnEliminar.setEnabled(false);
+    btnEliminar.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+    		baja(sistema);
+    	}
+    });
+    btnEliminar.setBounds(508, 350, 89, 23);
+    contentPane.add(btnEliminar);
   }
 }
