@@ -341,9 +341,18 @@ public class VentanaMenuPrincipal extends JFrame
     btnAltaDeServicioAdicional.setBounds(420, 252, 180, 23);
     menuPrincipal.add(btnAltaDeServicioAdicional);
     
-    JButton btnNewButton_2 = new JButton("New button");
-    btnNewButton_2.setBounds(612, 252, 180, 23);
-    menuPrincipal.add(btnNewButton_2);
+
+
+
+    JButton EditarServicioAdicional = new JButton("Editar servicio adicional");
+    EditarServicioAdicional.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent arg0) {
+        VentanaEditarServicioAdicional editarAdicional = new VentanaEditarServicioAdicional(sistema);
+        editarAdicional.setVisible(true);
+      }
+    });
+    EditarServicioAdicional.setBounds(612, 252, 180, 23);
+    menuPrincipal.add(EditarServicioAdicional);
     
     JLabel lblNewLabel = new JLabel("fondo");
     lblNewLabel.setBounds(0, 0, 800, 480);
