@@ -33,7 +33,7 @@ public class test
     System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
     System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
     
-    System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
+    System.out.println(sis.altaReserva(5, 1, "asd", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
     System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
 
     
