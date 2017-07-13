@@ -268,6 +268,59 @@ public class VentanaAltaEstadia extends JFrame {
       public void mouseClicked(MouseEvent e)
       {
         //Habilitar busqueda de cliente
+        if(rdbtnSinReserva.isSelected())
+        {
+          //DESHABILITAR
+          tfNroReserva.setEnabled(false);
+          tfNroReserva.setEditable(false);
+          
+          btnBuscarReserva.setEnabled(false);
+
+          tfTipoHabitacion.setEnabled(false);
+          
+          tfFechaIngresoConReserva.setEnabled(false);
+          tfFechaIngresoConReserva.setEditable(false);
+          
+          tfFechaSalidaConReserva.setEnabled(false);
+          tfFechaSalidaConReserva.setEditable(false);
+          
+          //HABILITAR
+          tfNroCliente.setEditable(false);
+          tfNombreCliente.setEditable(false);
+          tfNombreTrabajador.setEditable(false);
+          
+          boxTipoHab.setEditable(false);
+          boxTipoHab.setEnabled(false);
+          dcFechaIngresoSinReserva.setEnabled(false);
+          dcFechaSalidaSinReserva.setEnabled(false);
+          tpObservaciones.setEditable(true);
+        }else
+        {
+        //DESHabilitar
+          tfNroReserva.setEnabled(false);
+          tfNroReserva.setEditable(false);
+          
+          btnBuscarReserva.setEnabled(false);
+
+          tfTipoHabitacion.setEnabled(false);
+          
+          tfFechaIngresoConReserva.setEnabled(false);
+          tfFechaIngresoConReserva.setEditable(false);
+          
+          tfFechaSalidaConReserva.setEnabled(false);
+          tfFechaSalidaConReserva.setEditable(false);
+          
+          //Habilitar
+          tfNroCliente.setEditable(true);
+          tfNombreCliente.setEditable(true);
+          
+          btnBuscarcliente.setEnabled(true);
+          
+          boxTipoHab.setEditable(true);
+          dcFechaIngresoSinReserva.setEnabled(true);
+          dcFechaSalidaSinReserva.setEnabled(true);
+          tpObservaciones.setEditable(true);
+        }
       }
     });
     rdbtnSinReserva.setBounds(30, 125, 130, 22);
