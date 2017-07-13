@@ -10,35 +10,11 @@ public class test
   public static void main(String[] args)
   {
     SistemaReserva sis = new SistemaReserva();
-    String numeroHabitacion = "100";
-    /*
-    for(String habitacion:sis.getTiposHabitacionesActivas())
-      System.out.println(habitacion);
     
-    HabitacionView habitacion = sis.buscarHabitacionView(numeroHabitacion);
-    System.out.println(sis.validarNumeroHabitacion(numeroHabitacion));
-    System.out.println(habitacion != null);
     
-    System.out.println(habitacion.getNumero() +" " +habitacion.getTipo());
-    */
-    System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
-    System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
+    int nroEstadia = sis.altaEstadiaSinReserva("200", LocalDate.of(2017, 07, 20), LocalDate.of(2017, 07, 30), 5, 1, "Nueva Estadia");
     
-    System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
-    System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
-    
-    System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
-    System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
-    
-    System.out.println(sis.altaReserva(5, 1, "Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
-    System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
-    
-    System.out.println(sis.altaReserva(5, 1, "asd", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10), "lalala"));
-    System.out.println("Hay disponibilidad " +sis.hayDisponibilidadPorTipo("Doble", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 8, 10)));
-
-    
-    boolean respuesta = sis.modificarReserva(1, 5, "qwd", LocalDate.of(2017, 8, 01), LocalDate.of(2017, 6, 10), "lalala");
-    System.out.println(respuesta);
+    System.out.println(nroEstadia);
     
     /*
     sis.altaTarifa("Doble", 1000f);
