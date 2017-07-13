@@ -71,8 +71,8 @@ public class VentanaMenuPrincipal extends JFrame
     
     JButton btnAltaDeCliente = new JButton("Alta de Cliente");
     btnAltaDeCliente.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    	}
+      public void actionPerformed(ActionEvent e) {
+      }
     });
     btnAltaDeCliente.addKeyListener(new KeyAdapter() {
       @Override
@@ -258,8 +258,8 @@ public class VentanaMenuPrincipal extends JFrame
     
     JButton btnEditarEstadia = new JButton("Editar Estad\u00EDa");
     btnEditarEstadia.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    	}
+      public void actionPerformed(ActionEvent e) {
+      }
     });
     btnEditarEstadia.addKeyListener(new KeyAdapter() {
       @Override
@@ -307,16 +307,25 @@ public class VentanaMenuPrincipal extends JFrame
     btnEditarReserva.setBounds(610, 322, 180, 25);
     menuPrincipal.add(btnEditarReserva);
     
-    JButton btnNewButton = new JButton("New button");
-    btnNewButton.setBounds(612, 218, 180, 23);
-    menuPrincipal.add(btnNewButton);
+
+    JButton btnEditarTarifa = new JButton("Editar Tarifa");
+    btnEditarTarifa.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        VentanaEditarTarifa editarTarifa = new VentanaEditarTarifa(sistema);
+        editarTarifa.setVisible(true);
+      }
+    });
+
+    btnEditarTarifa.setBounds(612, 218, 180, 23);
+
+    menuPrincipal.add(btnEditarTarifa);
     
     JButton btnAltadeTarifa = new JButton("Alta de Tarifa");
     btnAltadeTarifa.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    		VentanaAltaTarifa altaTarifa = new VentanaAltaTarifa(sistema);
-    		altaTarifa.setVisible(true);
-    	}
+      public void actionPerformed(ActionEvent e) {
+        VentanaAltaTarifa altaTarifa = new VentanaAltaTarifa(sistema);
+        altaTarifa.setVisible(true);
+      }
     });
     
     btnAltadeTarifa.setBounds(420, 218, 180, 23);
@@ -324,10 +333,10 @@ public class VentanaMenuPrincipal extends JFrame
     
     JButton btnAltaDeServicioAdicional = new JButton("Alta de Servicio adicional");
     btnAltaDeServicioAdicional.addActionListener(new ActionListener() {
-    	public void actionPerformed(ActionEvent e) {
-    		VentanaAltaServicioAdicional altaAdicional = new VentanaAltaServicioAdicional(sistema);
-    		altaAdicional.setVisible(true);
-    	}
+      public void actionPerformed(ActionEvent e) {
+        VentanaAltaServicioAdicional altaAdicional = new VentanaAltaServicioAdicional(sistema);
+        altaAdicional.setVisible(true);
+      }
     });
     btnAltaDeServicioAdicional.setBounds(420, 252, 180, 23);
     menuPrincipal.add(btnAltaDeServicioAdicional);
