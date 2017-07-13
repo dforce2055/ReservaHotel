@@ -119,7 +119,7 @@ public class VentanaAltaReserva extends JFrame {
               +"\nFecha de ingreso: "+fechaIngreso
               +"\nFecha de salida: "+fechaSalida
               +"\nPeriodo de " +periodo.getDays()
-              +" D\u00eda\\s"
+              +" D\u00edas"
               );
           dispose();
         }else

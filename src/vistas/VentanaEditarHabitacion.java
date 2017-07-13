@@ -38,6 +38,8 @@ public class VentanaEditarHabitacion extends JFrame {
   private JTextArea tfDescripcion;
   private JTextArea textAreaCaracte;
 
+  private HabitacionView habitacion;
+  private JButton btnEliminar;
   /**
    * Launch the application.
    
@@ -63,7 +65,7 @@ public class VentanaEditarHabitacion extends JFrame {
 
     if(sistema.validarNumeroHabitacion(numeroHabitacion))
     {
-      HabitacionView habitacion = sistema.buscarHabitacionView(numeroHabitacion);
+      habitacion = sistema.buscarHabitacionView(numeroHabitacion);
       
       if(habitacion != null)
       {
@@ -82,6 +84,7 @@ public class VentanaEditarHabitacion extends JFrame {
         textAreaCaracte.setEnabled(true);
         textAreaCaracte.setText(habitacion.getCaracteristicas());
         
+        btnEliminar.setEnabled(true);
         btnAceptar.setEnabled(true);
       }else
       {
@@ -130,6 +133,22 @@ public class VentanaEditarHabitacion extends JFrame {
     }
   }
   
+  public void baja(SistemaReserva sistema)
+  {
+      if (habitacion != null)
+      {
+		  int respuesta = JOptionPane.showConfirmDialog(contentPane, "Esta seguro que desea ELIMINAR la habitacion #" +
+		  habitacion.getNumero());
+	      if(respuesta == JOptionPane.YES_OPTION)
+	      {
+	        sistema.bajaHabitacion(habitacion.getNumero());
+	        JOptionPane.showMessageDialog(contentPane, "HABITACION # " 
+	        +habitacion.getNumero() +"\nELIMINADA");
+	        dispose();
+	      }
+      }
+  }
+  
   public VentanaEditarHabitacion(SistemaReserva sistema)
   {
     setResizable(false);//Que no lo puedan maximizar
@@ -150,6 +169,10 @@ public class VentanaEditarHabitacion extends JFrame {
     tfNroHabitacion.setColumns(10);
     
     JButton btnBuscar = new JButton("Buscar");
+    btnBuscar.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+    	}
+    });
     btnBuscar.addMouseListener(new MouseAdapter()
     {
       @Override
@@ -266,7 +289,7 @@ public class VentanaEditarHabitacion extends JFrame {
         dispose();
       }
     });
-    btnNewButton.setBounds(398, 389, 100, 23);
+    btnNewButton.setBounds(337, 389, 100, 23);
     contentPane.add(btnNewButton);
     
     textAreaCaracte = new JTextArea();
@@ -277,5 +300,15 @@ public class VentanaEditarHabitacion extends JFrame {
     JLabel lblCaracter = new JLabel("Características:");
     lblCaracter.setBounds(205, 277, 130, 15);
     contentPane.add(lblCaracter);
+    
+    btnEliminar = new JButton("Eliminar");
+    btnEliminar.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+    		baja(sistema);
+    	}
+    });
+    btnEliminar.setEnabled(false);
+    btnEliminar.setBounds(496, 389, 89, 23);
+    contentPane.add(btnEliminar);
   }
 }

@@ -134,7 +134,8 @@ public class SistemaReserva
   {
     for (Habitacion h: habitaciones)
       if (h.sosHabitacion(numero))
-        return h;
+    	  if (!h.estasInactiva())
+    		  return h;
     return null;
   }
   
