@@ -16,6 +16,8 @@ import sistemaReserva.SistemaReserva;
 import sistemaReserva.Trabajador;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VentanaMenuPrincipal extends JFrame
 {
@@ -68,6 +70,10 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(lblBienvenido);
     
     JButton btnAltaDeCliente = new JButton("Alta de Cliente");
+    btnAltaDeCliente.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+    	}
+    });
     btnAltaDeCliente.addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(KeyEvent e)
@@ -154,7 +160,7 @@ public class VentanaMenuPrincipal extends JFrame
         altaEstadia.setVisible(true);
       }
     });
-    btnAltaDeEstadia.setBounds(420, 219, 180, 25);
+    btnAltaDeEstadia.setBounds(420, 286, 180, 25);
     menuPrincipal.add(btnAltaDeEstadia);
     
     JButton btnAltaDeReserva = new JButton("Alta de Reserva");
@@ -178,7 +184,7 @@ public class VentanaMenuPrincipal extends JFrame
         altaReserva.setVisible(true);
       }
     });
-    btnAltaDeReserva.setBounds(420, 256, 180, 25);
+    btnAltaDeReserva.setBounds(420, 322, 180, 25);
     menuPrincipal.add(btnAltaDeReserva);
     
     JButton btnEditarCliente = new JButton("Editar Cliente");
@@ -251,6 +257,10 @@ public class VentanaMenuPrincipal extends JFrame
     menuPrincipal.add(btnEditarHabitacion);
     
     JButton btnEditarEstadia = new JButton("Editar Estad\u00EDa");
+    btnEditarEstadia.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+    	}
+    });
     btnEditarEstadia.addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(KeyEvent e)
@@ -270,7 +280,7 @@ public class VentanaMenuPrincipal extends JFrame
         editarEstadia.setVisible(true);
       }
     });
-    btnEditarEstadia.setBounds(612, 219, 180, 25);
+    btnEditarEstadia.setBounds(610, 286, 180, 25);
     menuPrincipal.add(btnEditarEstadia);
     
     JButton btnEditarReserva = new JButton("Editar Reserva");
@@ -294,8 +304,37 @@ public class VentanaMenuPrincipal extends JFrame
         editarReserva.setVisible(true);
       }
     });
-    btnEditarReserva.setBounds(612, 256, 180, 25);
+    btnEditarReserva.setBounds(610, 322, 180, 25);
     menuPrincipal.add(btnEditarReserva);
+    
+    JButton btnNewButton = new JButton("New button");
+    btnNewButton.setBounds(612, 218, 180, 23);
+    menuPrincipal.add(btnNewButton);
+    
+    JButton btnAltadeTarifa = new JButton("Alta de Tarifa");
+    btnAltadeTarifa.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+    		VentanaAltaTarifa altaTarifa = new VentanaAltaTarifa(sistema);
+    		altaTarifa.setVisible(true);
+    	}
+    });
+    
+    btnAltadeTarifa.setBounds(420, 218, 180, 23);
+    menuPrincipal.add(btnAltadeTarifa);
+    
+    JButton btnAltaDeServicioAdicional = new JButton("Alta de Servicio adicional");
+    btnAltaDeServicioAdicional.addActionListener(new ActionListener() {
+    	public void actionPerformed(ActionEvent e) {
+    		VentanaAltaServicioAdicional altaAdicional = new VentanaAltaServicioAdicional(sistema);
+    		altaAdicional.setVisible(true);
+    	}
+    });
+    btnAltaDeServicioAdicional.setBounds(420, 252, 180, 23);
+    menuPrincipal.add(btnAltaDeServicioAdicional);
+    
+    JButton btnNewButton_2 = new JButton("New button");
+    btnNewButton_2.setBounds(612, 252, 180, 23);
+    menuPrincipal.add(btnNewButton_2);
     
     JLabel lblNewLabel = new JLabel("fondo");
     lblNewLabel.setBounds(0, 0, 800, 480);

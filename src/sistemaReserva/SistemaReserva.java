@@ -332,14 +332,16 @@ public class SistemaReserva
     return 0;
   }
   
-  public void altaServicioAdicional(int codigo, String descripcion, double precio)
+  public boolean altaServicioAdicional(int codigo, String descripcion, double precio)
   {
     ServicioAdicional servicio = buscarServicioAdicional(codigo);
     if (servicio == null)
     {
       servicio = new ServicioAdicional(codigo, descripcion, precio);
       servicios.add(servicio);
+      return true;
     }
+    return false;
   }
 
   public boolean altaTarifa(String tipoHabitacion, double precio)
