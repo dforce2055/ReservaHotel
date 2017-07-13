@@ -121,10 +121,11 @@ public class VentanaAltaReserva extends JFrame {
               +"\nPeriodo de " +periodo.getDays()
               +" D\u00eda\\s"
               );
+          dispose();
         }else
         {
           JOptionPane.showMessageDialog(contentPane,"NO PUDO REALIZARSE LA RESERVA\n"
-              +"N° de Reserva: " +nroReserva);
+              +"N\u00famero de Reserva: " +nroReserva);
         }
       }
     }else
@@ -243,7 +244,6 @@ public class VentanaAltaReserva extends JFrame {
             fechaSalida = LocalDate.of(anio, mes, dia);
             
             altaReserva(sistema);
-            dispose();
           }
         }catch(Exception e)
         {
