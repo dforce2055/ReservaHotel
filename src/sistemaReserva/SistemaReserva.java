@@ -77,6 +77,11 @@ public class SistemaReserva
     return cliente != null;
   }
   
+  public ItemTarifaView buscarItemTarifaView(String tipoHabitacion)
+  {
+	  return tarifario.buscarItemTarifaView(tipoHabitacion);
+  }
+  
   public Vector<ItemTarifaView> buscarTarifasView()
   {
 	  return tarifario.getView();
@@ -393,7 +398,7 @@ public class SistemaReserva
     }
   }
 
-  public void bajaTarifa(String tipoHabitacion)
+  public boolean bajaTarifa(String tipoHabitacion)
   {
     boolean resultado = existeTipoHabitacion(tipoHabitacion); 
     if (resultado == true)
@@ -403,8 +408,10 @@ public class SistemaReserva
       if ( cantidad == 0)
       {
         tarifario.bajaItem(tipoHabitacion);
+        return true;
       }
     }
+    return false;
   }
   
   public void bajaEstadia(int numero)
@@ -994,7 +1001,7 @@ public class SistemaReserva
   }
   
   public String getUsuarioSinDominio(String email)
-  {
+  {//
     String regEx = "@[A-Za-z0-9]";
     String usuario[] = email.split(regEx);
     return usuario[0];

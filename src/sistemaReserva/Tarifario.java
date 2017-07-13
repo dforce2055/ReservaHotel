@@ -93,4 +93,12 @@ public class Tarifario
 	  }
 	  return tarifarioView;
   }
+  
+  public ItemTarifaView buscarItemTarifaView(String tipoHabitacion)
+  {
+	  ItemTarifa item = buscarItem(tipoHabitacion);
+	  if (item != null)
+		  return item.getView();
+	  return null;
+  }
 }
