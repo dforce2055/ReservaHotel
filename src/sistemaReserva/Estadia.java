@@ -62,6 +62,8 @@ public class Estadia
     this.cliente = cliente;
     this.observaciones = observaciones;
     adicionales = new Vector<ItemAdicionalEstadia>();
+    this.trabajador = trabajador;
+    numero = getProximoNumero();
   }
 
   public Reserva getReserva()
