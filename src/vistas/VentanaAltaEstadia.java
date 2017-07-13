@@ -1,8 +1,5 @@
 package vistas;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -109,6 +106,28 @@ public class VentanaAltaEstadia extends JFrame {
       JOptionPane.showInternalMessageDialog(contentPane, "INGRESE SOLO N\u00daMEROS");
     }
   }
+  
+  public void altaEstadiaConReserva(SistemaReserva sistema)
+  {
+    if(reserva != null)
+    {
+      Vector<String>habitacionesDisponibles = sistema.getListadoHabitacionesDisponiblesHoyPorTipo(reserva.getTipoHabitacion());
+      
+      if(habitacionesDisponibles != null)
+      {
+        String numeroHabitacion = habitacionesDisponibles.elementAt(0);
+        sistema.altaEstadiaConReserva(reserva.getNumero(), String.valueOf(numeroHabitacion));
+      }
+      
+      
+    }
+  }
+  
+  public void altaEstadiaSinReserva(SistemaReserva sistema)
+  {
+    
+  }
+  
   public VentanaAltaEstadia(SistemaReserva sistema) {
     setTitle("Alta Estadia");
     setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -269,6 +288,20 @@ public class VentanaAltaEstadia extends JFrame {
     contentPane.add(tpObservaciones);
     
     btnAsignar = new JButton("Asignar");
+    btnAsignar.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent arg0)
+      {
+        if(rdbtnConReserva.isSelected())
+        {
+          altaEstadiaConReserva(sistema);
+        }else
+        {
+          altaEstadiaSinReserva(sistema);
+        }
+        
+      }
+    });
     btnAsignar.setEnabled(false);
     btnAsignar.setBounds(180, 450, 100, 23);
     contentPane.add(btnAsignar);
