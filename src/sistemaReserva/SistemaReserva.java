@@ -330,13 +330,14 @@ public class SistemaReserva
     }
   }
 
-  public void altaTarifa(String tipoHabitacion, double precio)
+  public boolean altaTarifa(String tipoHabitacion, double precio)
   {
     boolean resultado = existeTipoHabitacion(tipoHabitacion);
     if (resultado == false)
     {
       tarifario.agregarItem(tipoHabitacion, precio);
     }
+    return !resultado;
   }
   
   public void bajaCliente(int numero)
