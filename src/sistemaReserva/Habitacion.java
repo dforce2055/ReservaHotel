@@ -87,7 +87,7 @@ public class Habitacion
   
   public boolean tuTipoEs(String tipo)
   {
-    return tipo.equalsIgnoreCase(tipo);
+    return this.tipo.equalsIgnoreCase(tipo);
   }
   
   public boolean estasInactiva()
