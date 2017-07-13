@@ -124,8 +124,9 @@ public class VentanaAltaReserva extends JFrame {
           dispose();
         }else
         {
-          JOptionPane.showMessageDialog(contentPane,"NO PUDO REALIZARSE LA RESERVA\n"
-              +"N\u00famero de Reserva: " +nroReserva);
+          JOptionPane.showMessageDialog(contentPane,"NO SE PUDO REALIZARSE LA "
+              + "RESERVA\n"
+              +"NO HAY DISPONIBILIDAD");
         }
       }
     }else
