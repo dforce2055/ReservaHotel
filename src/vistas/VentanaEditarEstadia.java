@@ -9,6 +9,9 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
+
+import sistemaReserva.SistemaReserva;
+
 import javax.swing.JButton;
 import javax.swing.JTextPane;
 
@@ -19,7 +22,7 @@ public class VentanaEditarEstadia extends JFrame {
 
   /**
    * Launch the application.
-   */
+   
   public static void main(String[] args) {
     EventQueue.invokeLater(new Runnable() {
       public void run() {
@@ -32,11 +35,11 @@ public class VentanaEditarEstadia extends JFrame {
       }
     });
   }
-
+   */
   /**
    * Create the frame.
    */
-  public VentanaEditarEstadia() {
+  public VentanaEditarEstadia(SistemaReserva sistema) {
     setTitle("Modificar Estadia");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setBounds(100, 100, 700, 480);

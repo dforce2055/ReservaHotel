@@ -161,6 +161,9 @@ public class VentanaEditarReserva extends JFrame {
         textEditor.setEditable(false);
         textEditor.setText(trabajadorValidado.getApellido() +", " +trabajadorValidado.getNombre());
         
+        boxTipoHab.setEnabled(true);
+        boxTipoHab.setSelectedItem(reserva.getTipoHabitacion());
+        
         fechaIngresoAnterior.setEditable(false);
         fechaIngresoAnterior.setEnabled(true);
         fechaIngresoAnterior.setText(reserva.getFechaIngreso().toString());

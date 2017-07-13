@@ -141,18 +141,17 @@ public class VentanaMenuPrincipal extends JFrame
       {
         if (e.getKeyCode()==KeyEvent.VK_ENTER)
         {
-          //VentanaAltaEstadia altaEstadia = new VentanaAltaEstadia(sistema);
-          //altaEstadia.setVisible;
+          VentanaAltaEstadia altaEstadia = new VentanaAltaEstadia(sistema);
+          altaEstadia.setVisible(true);
         }
       }
     });
-    btnAltaDeEstadia.setEnabled(false);
     btnAltaDeEstadia.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
       {
-        //VentanaAltaEstadia altaEstadia = new VentanaAltaEstadia(sistema);
-        //altaEstadia.setVisible;
+        VentanaAltaEstadia altaEstadia = new VentanaAltaEstadia(sistema);
+        altaEstadia.setVisible(true);
       }
     });
     btnAltaDeEstadia.setBounds(420, 219, 180, 25);
@@ -258,18 +257,17 @@ public class VentanaMenuPrincipal extends JFrame
       {
         if (e.getKeyCode()==KeyEvent.VK_ENTER)
         {
-          //VentanaEditarEstadia editarEstadia = new VentanaEditarEstadia(sistema);
-          //editarEstadia.setVisible(true);
+          VentanaEditarEstadia editarEstadia = new VentanaEditarEstadia(sistema);
+          editarEstadia.setVisible(true);
         }
       }
     });
-    btnEditarEstadia.setEnabled(false);
     btnEditarEstadia.addMouseListener(new MouseAdapter() {
       @Override
       public void mouseClicked(MouseEvent e)
       {
-        //VentanaEditarEstadia editarEstadia = new VentanaEditarEstadia(sistema);
-        //editarEstadia.setVisible(true);
+        VentanaEditarEstadia editarEstadia = new VentanaEditarEstadia(sistema);
+        editarEstadia.setVisible(true);
       }
     });
     btnEditarEstadia.setBounds(612, 219, 180, 25);
