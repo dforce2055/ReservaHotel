@@ -24,6 +24,8 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.Calendar;
 import java.util.Vector;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class VentanaAltaEstadia extends JFrame {
 
@@ -285,14 +287,18 @@ public class VentanaAltaEstadia extends JFrame {
           tfFechaSalidaConReserva.setEditable(false);
           
           //HABILITAR
-          tfNroCliente.setEditable(false);
+          tfNroCliente.setEditable(true);
+          
+          btnBuscarcliente.setEnabled(true);
+          
           tfNombreCliente.setEditable(false);
           tfNombreTrabajador.setEditable(false);
           
-          boxTipoHab.setEditable(false);
-          boxTipoHab.setEnabled(false);
-          dcFechaIngresoSinReserva.setEnabled(false);
-          dcFechaSalidaSinReserva.setEnabled(false);
+          boxTipoHab.setEditable(true);
+          boxTipoHab.setEnabled(true);
+          
+          dcFechaIngresoSinReserva.setEnabled(true);
+          dcFechaSalidaSinReserva.setEnabled(true);
           tpObservaciones.setEditable(true);
         }else
         {
@@ -353,10 +359,12 @@ public class VentanaAltaEstadia extends JFrame {
     contentPane.add(lblObservaciones);
     
     dcFechaIngresoSinReserva = new JDateChooser();
+    dcFechaIngresoSinReserva.setEnabled(false);
     dcFechaIngresoSinReserva.setBounds(340, 270, 130, 23);
     contentPane.add(dcFechaIngresoSinReserva);
     
     dcFechaSalidaSinReserva = new JDateChooser();
+    dcFechaSalidaSinReserva.setEnabled(false);
     dcFechaSalidaSinReserva.setBounds(340, 310, 130, 23);
     contentPane.add(dcFechaSalidaSinReserva);
     
@@ -416,6 +424,22 @@ public class VentanaAltaEstadia extends JFrame {
     contentPane.add(btnAsignar);
     
     JButton btnCancelar = new JButton("Cancelar");
+    btnCancelar.addKeyListener(new KeyAdapter()
+    {
+      @Override
+      public void keyPressed(KeyEvent e)
+      {
+        if (e.getKeyCode()==KeyEvent.VK_ENTER)
+          dispose();
+      }
+    });
+    btnCancelar.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent arg0)
+      {
+        dispose();
+      }
+    });
     btnCancelar.setBounds(480, 450, 100, 23);
     contentPane.add(btnCancelar);
     
@@ -469,12 +493,16 @@ public class VentanaAltaEstadia extends JFrame {
     contentPane.add(lblFechasreserva);
     
     tfFechaIngresoConReserva = new JTextField();
+    tfFechaIngresoConReserva.setEnabled(false);
+    tfFechaIngresoConReserva.setEditable(false);
     tfFechaIngresoConReserva.setBounds(480, 270, 130, 23);
     contentPane.add(tfFechaIngresoConReserva);
     tfFechaIngresoConReserva.setColumns(10);
     
     tfFechaSalidaConReserva = new JTextField();
     tfFechaSalidaConReserva.setColumns(10);
+    tfFechaSalidaConReserva.setEnabled(false);
+    tfFechaSalidaConReserva.setEditable(false);
     tfFechaSalidaConReserva.setBounds(480, 311, 130, 23);
     contentPane.add(tfFechaSalidaConReserva);
   }
