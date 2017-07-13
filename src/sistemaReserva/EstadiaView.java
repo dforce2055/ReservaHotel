@@ -12,13 +12,13 @@ public class EstadiaView
   private double precio;
   private ClienteView cliente;
   private String observaciones;
-  private Vector<ServicioAdicionalView> adicionales;
+  private Vector<ItemAdicionalEstadiaView> adicionales;
   private int numero;
   private TrabajadorView trabajador;
   
   public EstadiaView(ReservaView reserva, HabitacionView habitacion, LocalDate fechaIngreso, LocalDate fechaSalida,
-    double precio, ClienteView cliente, String observaciones, Vector<ServicioAdicionalView> adicionales,
-    int numero, TrabajadorView trabajador)
+    double precio, ClienteView cliente, String observaciones, 
+    Vector<ItemAdicionalEstadiaView> adicionales, int numero, TrabajadorView trabajador)
   {
     super();
     this.reserva = reserva;
@@ -88,11 +88,11 @@ public class EstadiaView
   {
     this.observaciones = observaciones;
   }
-  public Vector<ServicioAdicionalView> getAdicionales()
+  public Vector<ItemAdicionalEstadiaView> getAdicionales()
   {
     return adicionales;
   }
-  public void setAdicionales(Vector<ServicioAdicionalView> adicionales)
+  public void setAdicionales(Vector<ItemAdicionalEstadiaView> adicionales)
   {
     this.adicionales = adicionales;
   }

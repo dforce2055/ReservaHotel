@@ -988,6 +988,22 @@ public class SistemaReserva
   {
 	  trabajadorValidado = trabajador;
   }
+  
+  public void agregarAdicionalAEstadia(int numeroEstadia, int codigoServicio, int cantidad)
+  {
+	  Estadia estadia = buscarEstadia(numeroEstadia);
+	  if (estadia != null)
+	  {
+		  ServicioAdicional adicional = buscarServicioAdicional(codigoServicio);
+		  if (adicional != null)
+		  {
+			  if (cantidad > 0)
+			  {
+				  estadia.agregarAdicional(adicional, cantidad);
+			  }
+		  }
+	  }
+  }
 } 
 
 
