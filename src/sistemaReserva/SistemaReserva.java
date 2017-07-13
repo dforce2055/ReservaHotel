@@ -77,6 +77,11 @@ public class SistemaReserva
     return cliente != null;
   }
   
+  public ItemTarifaView buscarTarifaView(String tipoHabitacion)
+  {
+	  return tarifario.buscarItemTarifaView(tipoHabitacion);
+  }
+  
   public Vector<ItemTarifaView> buscarTarifasView()
   {
 	  return tarifario.getView();
