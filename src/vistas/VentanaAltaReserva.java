@@ -130,7 +130,7 @@ public class VentanaAltaReserva extends JFrame {
       }
     }else
     {
-      JOptionPane.showMessageDialog(contentPane, "Faltan ingresar el Cliente.");
+      JOptionPane.showMessageDialog(contentPane, "Error. Por favor seleccione un cliente para la reserva. ");
     }
     
       
