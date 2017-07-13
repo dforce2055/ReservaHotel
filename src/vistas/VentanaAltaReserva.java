@@ -93,7 +93,7 @@ public class VentanaAltaReserva extends JFrame {
     
   }
   
-  public void altaEstadia(SistemaReserva sistema)
+  public void altaReserva(SistemaReserva sistema)
   {
     String tipoHabitacion = (String)boxTipoHab.getSelectedItem();
     String codigocliente = tfCodigoCliente.getText();
@@ -218,7 +218,7 @@ public class VentanaAltaReserva extends JFrame {
       public void keyPressed(KeyEvent e)
       {
         if (e.getKeyCode()==KeyEvent.VK_ENTER)
-          altaEstadia(sistema);
+          altaReserva(sistema);
       }
     });
     btnAceptar.addMouseListener(new MouseAdapter()
@@ -242,7 +242,7 @@ public class VentanaAltaReserva extends JFrame {
             
             fechaSalida = LocalDate.of(anio, mes, dia);
             
-            altaEstadia(sistema);
+            altaReserva(sistema);
             dispose();
           }
         }catch(Exception e)
